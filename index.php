@@ -254,21 +254,25 @@
                               <p><?php echo secondsToTime($pt_secs); ?></p>
                               <h4>Rank: </h4>
                               <p><?php echo ucfirst($row->rank); ?></p>
+                              <?php if (isset($_SESSION["loggedin"])) { ?>
+                              <hr>
+                              <?php if ($_SESSION["role"] == "admin") { ?>
+                                <?php if ($row->token != null) { ?>
+                                <h4>Token: </h4>
+                                <p><?php echo $row->token ?></p>
+                              <?php } ?>
+                              <?php } ?>
                               <?php } else { ?>
                               <script>
                               window.location.replace("http://database.vaultmc.net/?search=");
                               </script>
                               <?php } ?>
                               <?php } else { echo "Error: " . $mysqli_d->error; } ?>
-                              <?php if (isset($_SESSION["loggedin"])) { ?>
-                              <?php if (($_SESSION["role"] == "moderator") || ($_SESSION["role"] == "admin") && ($result->num_rows > 0)) { ?>
-                              <hr>
+                              <?php if (($_SESSION["role"] != "moderator") || ($_SESSION["role"] == "admin") && ($result->num_rows > 0)) { ?>
                               <p>
                               <h4>IP: </h4>
                               <a href="https://ipapi.co/<?php echo $row->ip ?>/" target="_blank"><?php echo $row->ip ?></a>
                               </p>
-                              <?php if ($row->token != null) { ?>
-                              <?php } ?>
                               <h4>Possible Alts: </h4>
                               <table class="table table-bordered table-hover">
                                  <thead>
@@ -297,11 +301,7 @@
                                  </tbody>
                               </table>
                               <?php } ?>
-                              <?php if ($_SESSION["role"] == "admin") { ?>
-                                <h4>Token: </h4>
-                                <p><?php echo $row->token ?></p>
-                              <?php } ?>
-                              <?php } ?>
+                            <?php } ?>
                            </div>
                         </div>
                      </div>
