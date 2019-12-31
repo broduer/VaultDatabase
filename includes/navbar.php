@@ -17,12 +17,15 @@ if (!isset($_SESSION))
      <a href="https://database.vaultmc.net/?search=">Search</a>
    </div>
    <div class="col-md-1">
+     <a href="https://database.vaultmc.net/statistics.php">Statistics</a>
+   </div>
+   <div class="col-md-1">
       <a href="https://database.vaultmc.net/help.php">Help</a>
    </div>
       <?php
          if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
          ?>
-      <div class="col-md-6">
+      <div class="col-md-5">
       </div>
       <div class="col-md-1">
       <a href="login.php">Login</a>
@@ -36,7 +39,7 @@ if (!isset($_SESSION))
       <div class="col-md-1">
          <a href="../settings.php">Settings</a>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
       </div>
       <div class="col-md-2" align="right">
          <img src='https://crafatar.com/avatars/<?php echo htmlspecialchars($_SESSION["uuid"])?>?size=24&overlay'> <a href="https://database.vaultmc.net?user=<?php echo htmlspecialchars($_SESSION["username"])?>"><?php echo htmlspecialchars($_SESSION["username"])?></a>

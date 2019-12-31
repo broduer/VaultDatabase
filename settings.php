@@ -154,12 +154,13 @@ function tz_list() {
   <br/>
 
     <div class="row">
+
       <div class="col-md-3">
       </div>
 
       <div class="col-md-6" align="center" style="background-color: #DEE2E6; border-radius: 10px; padding: 10px;">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group">
               <select name="timezone" class="form-control">
                 <option value="">Select a time zone</option>
                 <?php foreach(tz_list() as $t) { ?>
@@ -167,11 +168,11 @@ function tz_list() {
                     <?php echo $t['diff_from_GMT'] . ' - ' . $t['zone']; ?></option>
                 <?php } ?>
               </select>
+            </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
             </div>
         </form>
-      </div>
 
       <div class="col-md-3">
       </div>
