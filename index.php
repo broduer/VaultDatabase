@@ -26,7 +26,8 @@
     ini_set('display_errors', 1);
     require('mojangAPI/mojang-api.class.php');
     include('config.php');
-    include 'includes/navbar.php'
+    include 'includes/navbar.php';
+    include 'functions.php';
     ?>
     <?php if (isset($_SESSION["timezone"])) {
         $timezone = $_SESSION["timezone"];
@@ -219,34 +220,6 @@
                                         $pt_secs = $pt_ticks / 20;
                                         $current_time = time();
                                         $ls_since = $current_time - $ls_seconds;
-
-                                        function secondsToTime($time_in_seconds)
-                                        {
-                                            $secondsInAMinute = 60;
-                                            $secondsInAnHour = 60 * $secondsInAMinute;
-                                            $secondsInADay = 24 * $secondsInAnHour;
-                                            $days = floor($time_in_seconds / $secondsInADay);
-                                            $hourSeconds = $time_in_seconds % $secondsInADay;
-                                            $hours = floor($hourSeconds / $secondsInAnHour);
-                                            $minuteSeconds = $hourSeconds % $secondsInAnHour;
-                                            $minutes = floor($minuteSeconds / $secondsInAMinute);
-                                            $remainingSeconds = $minuteSeconds % $secondsInAMinute;
-                                            $seconds = ceil($remainingSeconds);
-                                            $timeParts = [];
-                                            $sections = [
-                                                'day' => (int)$days,
-                                                'hour' => (int)$hours,
-                                                'minute' => (int)$minutes,
-                                                'second' => (int)$seconds,
-                                            ];
-                                            foreach ($sections as $name => $value) {
-                                                if ($value > 0) {
-                                                    $timeParts[] = $value . ' ' . $name . ($value == 1 ? '' : 's');
-                                                }
-                                            }
-                                            return implode(', ', $timeParts);
-                                        }
-
                                         ?>
                                         <h4>UUID:</h4>
                                         <p><?php echo $full_uuid ?></p>
