@@ -120,7 +120,7 @@
                         exit();
                     }
                     $search = htmlspecialchars($_GET['search']);
-                    $pdoQuery = "SELECT name FROM clans WHERE name LIKE ? AND home IS NOT NULL ORDER BY name";
+                    $pdoQuery = "SELECT name FROM clans WHERE name LIKE ? ORDER BY name";
                     $params = array("%$search%");
                     $pdoResult = $pdoConnect->prepare($pdoQuery);
                     $pdoExec = $pdoResult->execute($params);
@@ -196,37 +196,17 @@
                                     if ($result->num_rows > 0) {
                                         $row = $result->fetch_object();
 
-                                        $fs_milli = $row->firstseen;
-                                        $fs_seconds = $fs_milli / 1000;
-                                        $fs_date = new DateTime();
-                                        if ($timezone != "null") {
-                                            $fs_date->setTimezone(new DateTimeZone($timezone));
-                                        } else {
-                                            $fs_date->setTimezone(new DateTimeZone("America/Vancouver"));
-                                        }
-                                        $fs_date->setTimeStamp($fs_seconds);
-
-                                        $ls_milli = $row->lastseen;
-                                        $ls_seconds = $ls_milli / 1000;
-                                        $ls_date = new DateTime();
-                                        if ($timezone != "null") {
-                                            $ls_date->setTimezone(new DateTimeZone($timezone));
-                                        } else {
-                                            $ls_date->setTimezone(new DateTimeZone("America/Vancouver"));
-                                        }
-                                        $ls_date->setTimeStamp($ls_seconds);
-
                                         $pt_ticks = $row->playtime;
                                         $pt_secs = $pt_ticks / 20;
                                         $current_time = time();
-                                        $ls_since = $current_time - $ls_seconds;
+                                        $ls_since = $current_time - $row->lastseen/1000;
                                         ?>
                                         <h4>UUID:</h4>
                                         <p><?php echo $full_uuid ?></p>
                                         <h4>First Seen: </h4>
-                                        <p><?php echo $fs_date->format("M jS Y h:ia") ?></p>
+                                        <p><?php secondsToDate($row->firstseen/1000, $timezone); ?></p>
                                         <h4>Last Seen: </h4>
-                                        <p><?php echo $ls_date->format("M jS Y h:ia") ?>
+                                        <p><?php secondsToDate($row->lastseen/1000, $timezone); ?>
                                             (<?php echo secondsToTime($ls_since) ?> ago)</p>
                                         <h4>Playtime: </h4>
                                         <p><?php echo secondsToTime($pt_secs); ?></p>
@@ -259,12 +239,9 @@
                                             </thead>
                                             <tbody>
                                             <?php
-                                            // get the records from the database
                                             if ($result = $mysqli_d->query("SELECT uuid, username FROM players WHERE ip = '$row->ip' AND username != '$username' ORDER BY username ASC")) {
-                                                // display records if there are records to display
                                                 if ($result->num_rows > 0) {
                                                     while ($row = $result->fetch_object()) {
-                                                        // set up a row for each record
                                                         echo "<tr>";
                                                         echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='?user=" . $row->username . "'>$row->username</a></td>";
                                                         echo "</tr>";
@@ -311,10 +288,6 @@
                                                 while ($row = $result->fetch_object()) {
                                                     $actoruuid = MojangAPI::getUuid($row->actor);
 
-                                                    $milli = $row->executionTime;
-                                                    $seconds = $milli / 1000;
-                                                    $date = date("M jS Y", $seconds);
-
                                                     $status = null;
 
                                                     if ($row->status) {
@@ -327,7 +300,7 @@
                                                     echo "<tr>";
                                                     echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
                                                     echo "<td>" . $row->reason . "</td>";
-                                                    echo "<td>" . $date . "</td>";
+                                                    echo "<td>" . secondsToDate($row->executionTime/1000) . "</td>";
                                                     echo "<td>" . $status . "</td>";
                                                     echo "</tr>";
                                                 }

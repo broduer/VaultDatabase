@@ -55,17 +55,7 @@
                              echo "</br>";
                              echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
                              echo "</br>";
-                             $fs_milli = $row->lastseen;
-                             $fs_seconds = $fs_milli / 1000;
-                             $fs_date = new DateTime();
-                             if ($timezone != "null") {
-                                 $fs_date->setTimezone(new DateTimeZone($timezone));
-                             } else {
-                                 $fs_date->setTimezone(new DateTimeZone("America/Vancouver"));
-                             }
-                             $fs_date->setTimeStamp($fs_seconds);
-
-                             echo $fs_date->format("M jS Y h:ia");
+                             secondsToDate($row->lastseen/1000, $timezone);
                            }
                        } else {
                            echo "No Data";
@@ -82,17 +72,7 @@
                        echo "</br>";
                        echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
                        echo "</br>";
-                       $fs_milli = $row->firstseen;
-                       $fs_seconds = $fs_milli / 1000;
-                       $fs_date = new DateTime();
-                       if ($timezone != "null") {
-                           $fs_date->setTimezone(new DateTimeZone($timezone));
-                       } else {
-                           $fs_date->setTimezone(new DateTimeZone("America/Vancouver"));
-                       }
-                       $fs_date->setTimeStamp($fs_seconds);
-
-                       echo $fs_date->format("M jS Y h:ia");
+                       secondsToDate($row->firstseen/1000, $timezone);
                      }
                  } else {
                      echo "No Data";
@@ -118,7 +98,6 @@
                        echo "</br>";
                        echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
                        echo "</br>";
-
                        echo secondsToTime($row->playtime / 20);
                      }
                  } else {
