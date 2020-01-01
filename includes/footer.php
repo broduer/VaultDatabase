@@ -1,4 +1,4 @@
-<br />
+<br>
 <footer>
   <div class="container" align="center">
     <figure>

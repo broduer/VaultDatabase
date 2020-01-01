@@ -7,6 +7,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 require_once "config.php";
+include 'functions.php';
 
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
@@ -79,22 +80,10 @@ if(isset($_POST["new_password"])) {
     }
   }
 }
-function tz_list() {
-    $zones_array = array();
-    $timestamp = time();
-    foreach(timezone_identifiers_list() as $key => $zone) {
-      date_default_timezone_set($zone);
-      $zones_array[$key]['zone'] = $zone;
-      $zones_array[$key]['offset'] = (int) ((int) date('O', $timestamp))/100;
-      $zones_array[$key]['diff_from_GMT'] = 'UTC/GMT ' . date('P', $timestamp);
-    }
-    return $zones_array;
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -104,23 +93,24 @@ function tz_list() {
   <title>VaultMC - Database</title>
 </head>
 <body>
-
   <div class="container-fluid">
     <?php include 'includes/navbar.php'; ?>
-  <br/>
+
+  <br>
+
     <div class="row">
       <div class="col-md-12">
         <h1 class="text-center">Reset Password</h1>
       </div>
     </div>
 
-  <br/>
+  <br>
 
     <div class="row">
       <div class="col-md-3">
       </div>
 
-      <div class="col-md-6" align="center" style="background-color: #DEE2E6; border-radius: 10px; padding: 10px;">
+      <div class="col-md-6" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
                 <label>New Password</label>
@@ -137,13 +127,11 @@ function tz_list() {
             </div>
         </form>
       </div>
-
       <div class="col-md-3">
       </div>
-
     </div>
 
-    <br/>
+    <br>
 
     <div class="row">
       <div class="col-md-12">
@@ -151,14 +139,12 @@ function tz_list() {
       </div>
     </div>
 
-  <br/>
+  <br>
 
     <div class="row">
-
       <div class="col-md-3">
       </div>
-
-      <div class="col-md-6" align="center" style="background-color: #DEE2E6; border-radius: 10px; padding: 10px;">
+      <div class="col-md-6" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
               <select name="timezone" class="form-control">
@@ -173,12 +159,9 @@ function tz_list() {
                 <input type="submit" class="btn btn-primary" value="Submit">
             </div>
         </form>
-
       <div class="col-md-3">
       </div>
-
     </div>
-
   </div>
 <?php include 'includes/footer.php' ?>
   </body>

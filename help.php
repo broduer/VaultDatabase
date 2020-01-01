@@ -12,22 +12,22 @@
       <div class="container-fluid">
          <?php
             error_reporting(E_ALL); ini_set('display_errors', 1);
-            require('mojangAPI/mojang-api.class.php');
-            include('config.php');
+            require 'mojangAPI/mojang-api.class.php';
+            include 'config.php';
             include 'includes/navbar.php'
             ?>
-         </br>
+         <br>
          <div class="row">
             <div class="col-md-12">
                <h1 class="text-center">Help</h1>
             </div>
          </div>
-         </br>
+         <br>
          <div class="row" align="center">
             <div class="col-md-3">
             </div>
             <div class="col-md-6">
-               <div class="row" style="background-color:#DEE2E6; border-radius:10px; padding:10px;">
+               <div class="row" style="background-color:#303030; border-radius:10px; padding:10px;">
                   <div class="col-md-12">
                      <h3>Have questions about this service?</h3>
                      <p>This page is intended to help with any questions you may have. Can't find an answer? Ask any of our friendly staff on Discord or in-game!</p>
@@ -37,8 +37,8 @@
             <div class="col-md-3">
             </div>
          </div>
-         </br>
-         </br>
+         <br>
+         <br>
          <div class="row" align="center">
            <div class="col-md-1">
            </div>

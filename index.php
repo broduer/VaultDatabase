@@ -15,7 +15,7 @@
         position: -webkit-sticky;
         position: sticky;
         top: 17px;
-        background-color: #DEE2E6;
+        background-color: #303030;
         border-radius: 10px;
     }
 </style>
@@ -24,8 +24,8 @@
     <?php
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
-    require('mojangAPI/mojang-api.class.php');
-    include('config.php');
+    require 'mojangAPI/mojang-api.class.php';
+    include 'config.php';
     include 'includes/navbar.php';
     include 'functions.php';
     ?>
@@ -34,7 +34,7 @@
     } else {
         $timezone = "null";
     } ?>
-    <br/>
+    <br>
     <!-- search -->
     <?php if (isset($_GET["search"])) { ?>
         <div class="row">
@@ -42,10 +42,10 @@
                 <h1 class="text-center">Search for a Player</h1>
             </div>
         </div>
-        <br/>
+        <br>
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-6" align="center" style="background-color:#DEE2E6; border-radius:10px; padding:10px;">
+            <div class="col-md-6" align="center" style="background-color: #303030; border-radius:10px; padding:10px;">
                 <h3>Player & Clan Information</h3>
                 <form action="?" method="get">
                     <div class="form-group">
@@ -58,7 +58,7 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        <br/>
+        <br>
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-3">
@@ -160,7 +160,7 @@
     <?php }
     $full_uuid = MojangAPI::formatUuid($uuid);
     ?>
-        <br/>
+        <br>
         <div class="row">
             <div class="col-md-3">
             </div>
@@ -168,7 +168,7 @@
                 <h1 class="text-center">User Information</h1>
             </div>
         </div>
-        <br/>
+        <br>
         <div class="row">
             <div class="col-md-3" align="center">
                 <div class="info">
@@ -317,7 +317,7 @@
                                         ?>
                                         </tbody>
                                     </table>
-                                    <br/>
+                                    <br>
                                     <h4>Tempbans</h4>
                                     <table class="table table-bordered table-hover">
                                         <thead>
@@ -374,7 +374,7 @@
                                         ?>
                                         </tbody>
                                     </table>
-                                    <br/>
+                                    <br>
                                     <h4>Mutes</h4>
                                     <table class="table table-bordered table-hover">
                                         <thead>
@@ -427,7 +427,7 @@
                                         ?>
                                         </tbody>
                                     </table>
-                                    <br/>
+                                    <br>
                                     <h4>Tempmutes</h4>
                                     <table class="table table-bordered table-hover">
                                         <thead>
@@ -484,7 +484,7 @@
                                         ?>
                                         </tbody>
                                     </table>
-                                    <br/>
+                                    <br>
                                     <h4>Kicks</h4>
                                     <table class="table table-bordered table-hover">
                                         <thead>
@@ -582,7 +582,7 @@
         <div class="col-md-3">
         </div>
     </div>
-    <br/>
+    <br>
     <div class="row">
         <div class="col-md-3" align="center">
             <div class="info">
@@ -669,12 +669,12 @@
             <h1 class="text-center">VaultMC Database</h1>
         </div>
     </div>
-    <br/>
+    <br>
     <div class="row" align="center">
         <div class="col-md-3">
         </div>
         <div class="col-md-6">
-            <div class="row" style="background-color:#DEE2E6; border-radius:10px; padding:10px;">
+            <div class="row" style="background-color:#303030; border-radius:10px; padding:10px;">
                 <div class="col-md-6">
                     <h3>Player & Clan Information</h3>
                     <form role="form" action="?" method="get">

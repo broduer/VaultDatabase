@@ -12,8 +12,8 @@
       <div class="container-fluid">
          <?php
             error_reporting(E_ALL); ini_set('display_errors', 1);
-            require('mojangAPI/mojang-api.class.php');
-            include('config.php');
+            require 'mojangAPI/mojang-api.class.php';
+            include 'config.php';
             include 'includes/navbar.php';
             include 'functions.php';
             ?>
@@ -32,10 +32,10 @@
             <div class="col-md-3">
             </div>
             <div class="col-md-6">
-               <div class="row" style="background-color:#DEE2E6; border-radius:10px; padding:10px;">
+               <div class="row" style="background-color:#303030; border-radius:10px; padding:10px;">
                   <div class="col-md-12">
-                     <h3>Check out some cool statistics about VaultMC!</h3>
-                     <p>Find some neat statistics generated from the player data we collect here!</p>
+                     <h3>Check out some cool statistics!</h3>
+                     <p>Find some neat statistics generated from the player data we collect here.</p>
                   </div>
                </div>
             </div>
@@ -135,7 +135,7 @@
                    if ($result->num_rows > 0) {
                        while ($row = $result->fetch_object()) {
                          if ($row->clan == NULL) {
-                           echo "<i>Currently all equal</i>";
+                           echo "<i>Multiple Clans are tied</i>";
                          } else {
                            echo "<a href='https://database.vaultmc.net/?clan=" . $row->clan . "'>$row->clan</a>";
                            echo "</br>";

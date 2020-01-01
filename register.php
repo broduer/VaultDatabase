@@ -2,6 +2,7 @@
 session_start();
 
 require_once "config.php";
+include 'functions.php';
 error_reporting(E_ALL); ini_set('display_errors', 1);
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
   if(isset($_SERVER['HTTP_REFERER'])) {
@@ -18,9 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty(trim($_POST["token"]))){
         $token_err = "Please enter a token.";
     }
-
     else {
-
       $token = htmlspecialchars($_POST["token"]);
 
       if ($result = $mysqli_d->query("SELECT username FROM players WHERE token = '$token'")) {
@@ -37,7 +36,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           echo "Error: " . $mysqli_d->error;
       }
     }
-
     // Validate password
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter a password.";
@@ -46,7 +44,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else{
         $password = trim($_POST["password"]);
     }
-
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
         $confirm_password_err = "Please confirm password.";
@@ -56,12 +53,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $confirm_password_err = "Password did not match.";
         }
     }
-
     // Check input errors before inserting in database
     if (empty($token_err) && empty($password_err) && empty($confirm_password_err)) {
 
       $param_password = password_hash($password, PASSWORD_DEFAULT);
-
       $timezone = $_POST["timezone"];
 
         $sql = "UPDATE players SET password = '$param_password', timezone = '$timezone' WHERE username = '$username'";
@@ -78,17 +73,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
     mysqli_close($mysqli_d);
-}
-function tz_list() {
-    $zones_array = array();
-    $timestamp = time();
-    foreach(timezone_identifiers_list() as $key => $zone) {
-      date_default_timezone_set($zone);
-      $zones_array[$key]['zone'] = $zone;
-      $zones_array[$key]['offset'] = (int) ((int) date('O', $timestamp))/100;
-      $zones_array[$key]['diff_from_GMT'] = 'UTC/GMT ' . date('P', $timestamp);
-    }
-    return $zones_array;
 }
 ?>
 <!DOCTYPE html>
@@ -119,7 +103,7 @@ function tz_list() {
       <div class="col-md-3">
       </div>
 
-      <div class="col-md-6" align="center" style="background-color: #DEE2E6; border-radius: 10px; padding: 10px;">
+      <div class="col-md-6" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group <?php echo (!empty($token_err)) ? 'has-error' : ''; ?>">
                 <label>Token</label>
@@ -136,7 +120,7 @@ function tz_list() {
                 <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
-
+          </br>
             <div class="form-group">
               <select name="timezone" id="timezone" class="form-control">
                 <option value="">Select a time zone</option>
