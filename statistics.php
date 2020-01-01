@@ -5,7 +5,7 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="shortcut icon" href="https://www.vaultmc.net/favicon.ico" type="image/png">
-      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">
       <title>VaultMC - Database</title>
    </head>
    <body>
@@ -27,7 +27,7 @@
                <h1 class="text-center">Statistics</h1>
             </div>
          </div>
-         </br>
+         <br>
          <div class="row" align="center">
             <div class="col-md-3">
             </div>
@@ -42,7 +42,7 @@
             <div class="col-md-3">
             </div>
          </div>
-       </br>
+       <br>
          <div class="row" align="center">
            <div class="col-md-3">
            </div>
@@ -52,9 +52,9 @@
                    if ($result = $mysqli_d->query("SELECT uuid, username, lastseen FROM players ORDER BY lastseen DESC LIMIT 1")) {
                        if ($result->num_rows > 0) {
                            while ($row = $result->fetch_object()) {
-                             echo "</br>";
+                             echo "<br>";
                              echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
-                             echo "</br>";
+                             echo "<br>";
                              secondsToDate($row->lastseen/1000, $timezone);
                            }
                        } else {
@@ -69,9 +69,9 @@
              if ($result = $mysqli_d->query("SELECT uuid, username, firstseen FROM players ORDER BY firstseen DESC LIMIT 1")) {
                  if ($result->num_rows > 0) {
                      while ($row = $result->fetch_object()) {
-                       echo "</br>";
+                       echo "<br>";
                        echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
-                       echo "</br>";
+                       echo "<br>";
                        secondsToDate($row->firstseen/1000, $timezone);
                      }
                  } else {
@@ -95,9 +95,9 @@
              if ($result = $mysqli_d->query("SELECT uuid, username, playtime FROM players ORDER BY playtime DESC LIMIT 1")) {
                  if ($result->num_rows > 0) {
                      while ($row = $result->fetch_object()) {
-                       echo "</br>";
+                       echo "<br>";
                        echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
-                       echo "</br>";
+                       echo "<br>";
                        echo secondsToTime($row->playtime / 20);
                      }
                  } else {
@@ -112,7 +112,7 @@
                  if ($result = $mysqli_d->query("SELECT SUM(playtime) AS playtime_sum FROM players")) {
                      if ($result->num_rows > 0) {
                          while ($row = $result->fetch_object()) {
-                           echo "</br>";
+                           echo "<br>";
                            echo secondsToLongTime($row->playtime_sum);
                          }
                      } else {
@@ -138,7 +138,7 @@
                            echo "<i>Multiple Clans are tied</i>";
                          } else {
                            echo "<a href='https://database.vaultmc.net/?clan=" . $row->clan . "'>$row->clan</a>";
-                           echo "</br>";
+                           echo "<br>";
                            echo "Currently has " . $row->members . " members.";
                          }
                        }
@@ -155,7 +155,7 @@
                  if ($result->num_rows > 0) {
                      while ($row = $result->fetch_object()) {
                        echo "<a href='https://database.vaultmc.net/?clan=" . $row->name . "'>$row->name</a>";
-                       echo "</br>";
+                       echo "<br>";
                        echo "Level " . $row->level . ", " .$row->experience . " xp";
                      }
                  } else {

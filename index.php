@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="https://www.vaultmc.net/favicon.ico" type="image/png">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">
     <title>VaultMC - Database</title>
 </head>
 <body>
@@ -269,6 +269,49 @@
                             <div id="collapsePunish" class="collapse" aria-labelledby="headingPunish"
                                  data-parent="#accordion">
                                 <div class="card-body">
+                                  <h4>Kicks</h4>
+                                  <table class="table table-bordered table-hover">
+                                      <thead>
+                                      <tr>
+                                          <th>Issuer</th>
+                                          <th>Reason</th>
+                                          <th>Date</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                      <?php
+                                      // get the records from the database
+                                      if ($result = $mysqli_p->query("SELECT actor, reason, executionTime FROM kicks WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
+                                          // display records if there are records to display
+                                          if ($result->num_rows > 0) {
+                                              while ($row = $result->fetch_object()) {
+                                                  $actoruuid = MojangAPI::getUuid($row->actor);
+
+                                                  $milli = $row->executionTime;
+                                                  $seconds = $milli / 1000;
+                                                  $date = date("M jS Y", $seconds);
+
+                                                  // set up a row for each record
+                                                  echo "<tr>";
+                                                  echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
+                                                  echo "<td>" . $row->reason . "</td>";
+                                                  echo "<td>" . $date . "</td>";
+                                                  echo "</tr>";
+                                              }
+                                          } // if there are no records in the database, display an alert message
+                                          else {
+                                              echo "<tr>";
+                                              echo "<td align=\"center\" colspan=\"4\">No Kicks</td>";
+                                              echo "</tr>";
+                                          }
+                                      } // show an error if there is an issue with the database query
+                                      else {
+                                          echo "Error: " . $mysqli_p->error;
+                                      }
+                                      ?>
+                                      </tbody>
+                                  </table>
+                                  <br>
                                     <h4>Bans</h4>
                                     <table class="table table-bordered table-hover">
                                         <thead>
@@ -331,9 +374,7 @@
                                         </thead>
                                         <tbody>
                                         <?php
-                                        // get the records from the database
                                         if ($result = $mysqli_p->query("SELECT actor, reason, executionTime, expiry, status FROM tempbans WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
-                                            // display records if there are records to display
                                             if ($result->num_rows > 0) {
                                                 while ($row = $result->fetch_object()) {
                                                     $actoruuid = MojangAPI::getUuid($row->actor);
@@ -342,7 +383,7 @@
                                                     $seconds = $milli / 1000;
                                                     $date = date("M jS Y", $seconds);
 
-                                                    $expiry = $milli + $row->expiry;
+                                                    $expiry = $row->expiry;
                                                     $seconds = $expiry / 1000;
                                                     $expiry = date("M jS Y", $seconds);
 
@@ -351,8 +392,6 @@
                                                     } else {
                                                         $status = "<span class=\"badge badge-danger\">Banned</span>";
                                                     }
-
-                                                    // set up a row for each record
                                                     echo "<tr>";
                                                     echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
                                                     echo "<td>" . $row->reason . "</td>";
@@ -361,13 +400,13 @@
                                                     echo "<td>" . $status . "</td>";
                                                     echo "</tr>";
                                                 }
-                                            } // if there are no records in the database, display an alert message
+                                              }
                                             else {
                                                 echo "<tr>";
                                                 echo "<td align=\"center\" colspan=\"5\">No Bans</td>";
                                                 echo "</tr>";
                                             }
-                                        } // show an error if there is an issue with the database query
+                                        }
                                         else {
                                             echo "Error: " . $mysqli_p->error;
                                         }
@@ -452,17 +491,15 @@
                                                     $seconds = $milli / 1000;
                                                     $date = date("M jS Y", $seconds);
 
-                                                    $expiry = $milli + $row->expiry;
+                                                    $expiry = $row->expiry;
                                                     $seconds = $expiry / 1000;
                                                     $expiry = date("M jS Y", $seconds);
 
                                                     if (!$row->status) {
                                                         $status = "<span class=\"badge badge-success\">Expired</span>";
                                                     } else {
-                                                        $status = "<span class=\"badge badge-danger\">Banned</span>";
+                                                        $status = "<span class=\"badge badge-danger\">Muted</span>";
                                                     }
-
-                                                    // set up a row for each record
                                                     echo "<tr>";
                                                     echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
                                                     echo "<td>" . $row->reason . "</td>";
@@ -475,49 +512,6 @@
                                             else {
                                                 echo "<tr>";
                                                 echo "<td align=\"center\" colspan=\"5\">No Mutes</td>";
-                                                echo "</tr>";
-                                            }
-                                        } // show an error if there is an issue with the database query
-                                        else {
-                                            echo "Error: " . $mysqli_p->error;
-                                        }
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                    <br>
-                                    <h4>Kicks</h4>
-                                    <table class="table table-bordered table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>Issuer</th>
-                                            <th>Reason</th>
-                                            <th>Date</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                        // get the records from the database
-                                        if ($result = $mysqli_p->query("SELECT actor, reason, executionTime FROM kicks WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
-                                            // display records if there are records to display
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_object()) {
-                                                    $actoruuid = MojangAPI::getUuid($row->actor);
-
-                                                    $milli = $row->executionTime;
-                                                    $seconds = $milli / 1000;
-                                                    $date = date("M jS Y", $seconds);
-
-                                                    // set up a row for each record
-                                                    echo "<tr>";
-                                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
-                                                    echo "<td>" . $row->reason . "</td>";
-                                                    echo "<td>" . $date . "</td>";
-                                                    echo "</tr>";
-                                                }
-                                            } // if there are no records in the database, display an alert message
-                                            else {
-                                                echo "<tr>";
-                                                echo "<td align=\"center\" colspan=\"4\">No Kicks</td>";
                                                 echo "</tr>";
                                             }
                                         } // show an error if there is an issue with the database query
@@ -542,9 +536,7 @@
                                  data-parent="#accordion">
                                 <div class="card-body">
                                     <?php
-                                    // get the records from the database
                                     if ($result = $mysqli_c->query("SELECT clan, rank FROM playerClans WHERE player = '$full_uuid'")) {
-                                        // display records if there are records to display
                                         if ($result->num_rows > 0) {
                                             $row = $result->fetch_object();
                                             ?>
@@ -704,6 +696,6 @@
 <?php include 'includes/footer.php' ?>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>

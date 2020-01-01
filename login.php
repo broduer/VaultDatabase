@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-md-3">
         </div>
 
-        <div class="col-md-6" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
+        <div class="col-md-6" align="center" style="background-color: #DEE2E6; border-radius: 10px; padding: 10px;">
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <h3>Enter your credentials below</h3>
             <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
