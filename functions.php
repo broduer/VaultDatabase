@@ -26,15 +26,7 @@ function secondsToTime($seconds)
     return implode(', ', $timeParts);
 }
 
-function secondsToLongTime($seconds)
-{
-  $date1 = new DateTime("@0");
-  $date2 = new DateTime("@$seconds");
-  $interval =  date_diff($date1, $date2);
-  return $interval->format('%y year, %m months, %d days, %h hours, %i minutes and %s seconds');
-}
-
-function secondsToDate($seconds, $timezone)
+function secondsToDate($seconds, $timezone, $timestamp)
 {
   $date = new DateTime();
   if ($timezone != "null") {
@@ -43,7 +35,12 @@ function secondsToDate($seconds, $timezone)
       $date->setTimezone(new DateTimeZone("America/Vancouver"));
   }
   $date->setTimeStamp($seconds);
-  echo $date->format("M jS Y h:ia");
+  if ($timestamp == true){
+    return $date->format("M jS Y h:ia");
+  }
+  else {
+    return $date->format("M jS Y");
+  }
 }
 
 function tz_list() {
