@@ -3,6 +3,7 @@ session_start();
 
 require_once "config.php";
 include 'functions.php';
+require('mojangAPI/mojang-api.class.php');
 error_reporting(E_ALL); ini_set('display_errors', 1);
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
   if(isset($_SERVER['HTTP_REFERER'])) {
@@ -29,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           else {
             while ($row = $result->fetch_object()) {
             $username = $row->username;
-          }
+            }
           }
             }
       else {
@@ -59,7 +60,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $param_password = password_hash($password, PASSWORD_DEFAULT);
       $timezone = $_POST["timezone"];
 
-        $sql = "UPDATE players SET password = '$param_password', timezone = '$timezone' WHERE username = '$username'";
+        $sql = "UPDATE web_accounts SET username = '$username', password = '$param_password', timezone = '$timezone' WHERE token = '$token'";
 
         if ($stmt = mysqli_prepare($mysqli_d, $sql)) {
 
@@ -124,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
               <select name="timezone" id="timezone" class="form-control">
                 <option value="">Select a time zone</option>
-                <?php foreach(tz_list() as $t) { ?>
+                <?php foreach(listTimezones() as $t) { ?>
                     <option value="<?php echo $t['zone']; ?>">
                     <?php echo $t['diff_from_GMT'] . ' - ' . $t['zone']; ?></option>
                 <?php } ?>

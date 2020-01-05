@@ -26,20 +26,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = trim($_POST["password"]);
     }
     if (empty($username_err) && empty($password_err)) {
-        $sql = "SELECT username, rank, password, timezone FROM players WHERE username = ?";
+        $sql = "SELECT uuid, username, role, password, timezone FROM web_accounts WHERE username = ?";
         if ($stmt = mysqli_prepare($mysqli_d, $sql)) {
             mysqli_stmt_bind_param($stmt, "s", $param_username);
             $param_username = $username;
             if (mysqli_stmt_execute($stmt)) {
                 mysqli_stmt_store_result($stmt);
                 if (mysqli_stmt_num_rows($stmt) == 1) {
-                    mysqli_stmt_bind_result($stmt, $username, $role, $hashed_password, $timezone);
+                    mysqli_stmt_bind_result($stmt, $uuid, $username, $role, $hashed_password, $timezone);
                     if (mysqli_stmt_fetch($stmt)) {
                         if (password_verify($password, $hashed_password)) {
                             $_SESSION["loggedin"] = true;
                             $_SESSION["username"] = $username;
-                            $_SESSION["uuid"] = MojangAPI::getUuid($username);
-                            if ($timezone == null) {
+                            $_SESSION["uuid"] = $uuid;
+                            if ($timezone == NULL) {
                               $_SESSION["timezone"] = null;
                             } else {
                             $_SESSION["timezone"] = $timezone;
@@ -63,22 +63,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             header('location: https://database.vaultmc.net');
                         } else {
-                            // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
                         }
                     }
                 } else {
-                    // Display an error message if username doesn't exist
                     $username_err = "No account found with that username.";
                 }
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
-        // Close statement
         mysqli_stmt_close($stmt);
     }
-    // Close connection
     mysqli_close($mysqli_d);
 }
 ?>

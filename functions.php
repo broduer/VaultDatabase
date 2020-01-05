@@ -43,7 +43,8 @@ function secondsToDate($seconds, $timezone, $timestamp)
   }
 }
 
-function tz_list() {
+function listTimezones()
+{
     $zones_array = array();
     $timestamp = time();
     foreach(timezone_identifiers_list() as $key => $zone) {
@@ -53,5 +54,55 @@ function tz_list() {
       $zones_array[$key]['diff_from_GMT'] = 'UTC/GMT ' . date('P', $timestamp);
     }
     return $zones_array;
+}
+/* mysql login */
+$player_data = "mysql:host=localhost;dbname=VaultMC_Data";
+$punishment_data = "mysql:host=localhost;dbname=VaultMC_Punishments";
+$clan_data = "mysql:host=localhost;dbname=VaultMC_Clans";
+$username = "tadhg";
+$password = "Stjames123b!";
+
+// need to return an array so that when called, we can modify data however we want...
+function pdoQueryStatement($database, $select, $from, $where, $is, $target, $extra) {
+
+  global $username;
+  global $password;
+
+  $query = "SELECT " . $select . " FROM " . $from . " WHERE " . $where . " " . $is . " '" . $target . "' " . $extra . "";
+  echo $query;
+  $pdo = new PDO($database, $username, $password);
+  $stmt = $pdo->prepare($query);
+  $stmt->execute();
+
+  $selection = explode(", ", $select);
+
+  if ($stmt->rowCount() > 0) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      foreach ($selection as $sel) {
+        echo $row[$sel];
+        echo "<br>";
+      }
+    }
+  } else {
+    print_r($stmt->errorInfo());
+  }
+  $pdo = null;
+}
+
+// can only set one value at a time right now
+function pdoUpdateStatement($database, $update, $set, $to, $where, $is)
+{
+  global $username;
+  global $password;
+
+  $query = "UPDATE " . $update . " SET " . $set . " = '" . $to . "' WHERE " . $where . " = '" . $is . "'";
+  echo $query;
+  $pdo = new PDO($database, $username, $password);
+  $stmt = $pdo->prepare($query);
+
+  if (!$stmt->execute()) {
+    print_r($stmt->errorInfo());
+  }
+  $pdo = null;
 }
 ?>

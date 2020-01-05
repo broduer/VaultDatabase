@@ -14,7 +14,7 @@ $new_password_err = $confirm_password_err = "";
 
 $username = $_SESSION["username"];
 
-$result = $mysqli_d->query("SELECT timezone FROM players WHERE username = '$username'");
+$result = $mysqli_d->query("SELECT timezone FROM web_accounts WHERE username = '$username'");
 $row = $result->fetch_object();
 $timezone = $row->timezone;
 
@@ -40,7 +40,7 @@ if(isset($_POST["new_password"])) {
     }
 
     if(empty($new_password_err) && empty($confirm_password_err)){
-        $sql = "UPDATE players SET password = ? WHERE username = ?";
+        $sql = "UPDATE web_accounts SET password = ? WHERE username = ?";
 
         if($stmt = mysqli_prepare($mysqli_d, $sql)){
 
@@ -63,7 +63,7 @@ if(isset($_POST["new_password"])) {
   //timezone code
   if(isset($_POST["timezone"])) {
     $new_timezone = $_POST["timezone"];
-    $sql = "UPDATE players SET timezone = '$new_timezone' WHERE username = '$username'";
+    $sql = "UPDATE web_accounts SET timezone = '$new_timezone' WHERE username = '$username'";
 
     if ($stmt = mysqli_prepare($mysqli_d, $sql)) {
 
@@ -149,7 +149,7 @@ if(isset($_POST["new_password"])) {
             <div class="form-group">
               <select name="timezone" class="form-control">
                 <option value="">Select a time zone</option>
-                <?php foreach(tz_list() as $t) { ?>
+                <?php foreach(listTimezones() as $t) { ?>
                     <option value="<?php echo $t['zone']; ?>" <?php if ($t['zone'] == $timezone) echo "selected"?>>
                     <?php echo $t['diff_from_GMT'] . ' - ' . $t['zone']; ?></option>
                 <?php } ?>

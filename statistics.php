@@ -46,6 +46,20 @@
          <div class="row" align="center">
            <div class="col-md-4">
              <h4>New Players this week</h4>
+             <?php
+             if ($result = $mysqli_d->query("SELECT uuid, username, firstseen FROM players WHERE firstseen + 604800000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 604800000 ORDER BY firstseen DESC")) {
+                 if ($result->num_rows > 0) {
+                     while ($row = $result->fetch_object()) {
+                       echo "<br>";
+                       echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
+                       echo "<br>";
+                       echo secondsToDate($row->firstseen/1000, $timezone, true);
+                     }
+                 } else {
+                     echo "No Data";
+                 }
+             }
+             ?>
            </div>
            <div class="col-md-4">
              <h4>Latest Player to Join</h4>
