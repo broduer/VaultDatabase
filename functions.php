@@ -59,8 +59,8 @@ function listTimezones()
 $player_data = "mysql:host=localhost;dbname=VaultMC_Data";
 $punishment_data = "mysql:host=localhost;dbname=VaultMC_Punishments";
 $clan_data = "mysql:host=localhost;dbname=VaultMC_Clans";
-$username = "tadhg";
-$password = "Stjames123b!";
+$DBusername = "tadhg";
+$DBpassword = "Stjames123b!";
 
 // need to return an array so that when called, we can modify data however we want...
 function pdoQueryStatement($database, $select, $from, $where, $is, $target, $extra) {

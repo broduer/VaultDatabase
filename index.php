@@ -71,12 +71,7 @@
                     <tbody>
                     <?php
                     $search = "";
-                    try {
-                        $pdoConnect = new PDO("mysql:host=localhost;dbname=VaultMC_Data", "tadhg", "Stjames123b!");
-                    } catch (PDOException $exc) {
-                        echo $exc->getMessage();
-                        exit();
-                    }
+                    $pdoConnect = new PDO($player_data, $DBusername, $DBpassword);
                     $search = htmlspecialchars($_GET['search']);
                     $pdoQuery = "SELECT uuid, username FROM players WHERE username LIKE ? ORDER BY username";
                     $params = array("%$search%");
@@ -113,14 +108,9 @@
                     <tbody>
                     <?php
                     $search = "";
-                    try {
-                        $pdoConnect = new PDO("mysql:host=localhost;dbname=VaultMC_Clans", "tadhg", "Stjames123b!");
-                    } catch (PDOException $exc) {
-                        echo $exc->getMessage();
-                        exit();
-                    }
+                    $pdoConnect = new PDO($clan_data, $DBusername, $DBpassword);
                     $search = htmlspecialchars($_GET['search']);
-                    $pdoQuery = "SELECT name FROM clans WHERE name LIKE ? ORDER BY name";
+                    $pdoQuery = "SELECT name FROM clans WHERE name LIKE ? AND system_clan <> 1 ORDER BY name";
                     $params = array("%$search%");
                     $pdoResult = $pdoConnect->prepare($pdoQuery);
                     $pdoExec = $pdoResult->execute($params);
