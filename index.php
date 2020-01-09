@@ -150,35 +150,34 @@
     ?>
         <br>
         <div class="row">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-9">
-                <h1 class="text-center">User Information</h1>
-            </div>
+          <div class="col-md-12">
+            <h1 class="text-center">User Information</h1>
+          </div>
         </div>
         <br>
         <div class="row">
-            <div class="col-md-3" align="center">
+              <div class="col-md-3" align="center">
                 <div class="info">
                     <h2><?php echo $username ?></h2>
                     <img alt="<?php echo $username ?>"
                          src=" https://crafatar.com/renders/body/<?php echo $uuid ?>?overlay" style="padding:10px"/>
+                       </div>
+              </div>
+              <div class="col-md-3">
+                    <h2>will be used for more info</h2>
+              </div>
+
+            <div class="col-md-6">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab" aria-controls="nav-general" aria-selected="true">General</a>
+                  <a class="nav-item nav-link" id="nav-punishments-tab" data-toggle="tab" href="#nav-punishments" role="tab" aria-controls="nav-punishments" aria-selected="false">Punishments</a>
+                  <a class="nav-item nav-link" id="nav-clans-tab" data-toggle="tab" href="#nav-clans" role="tab" aria-controls="nav-clans" aria-selected="false">Clans</a>
                 </div>
-            </div>
-            <div class="col-md-9">
-                <div class="bs-example">
-                    <div class="accordion" id="accordion">
-                        <div class="card">
-                            <div class="card-header" id="headingFour">
-                                <h2 class="mb-0">
-                                    <button type="button" class="btn btn-link collapsed" data-toggle="collapse"
-                                            data-target="#collapseStats">General
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapseStats" class="collapse show" aria-labelledby="headingStats"
-                                 data-parent="#accordion">
-                                <div class="card-body">
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
+                          <br>
                                     <?php
                                     if ($result = $mysqli_d->query("SELECT firstseen, lastseen, playtime, rank, ip, token FROM players WHERE uuid = '$full_uuid'")) {
                                     if ($result->num_rows > 0) {
@@ -213,11 +212,9 @@
                                         </script>
                                     <?php } ?>
                                     <?php if (isset($_SESSION["loggedin"]) && ($_SESSION["role"] == "admin") && ($result->num_rows > 0)) { ?>
-                                        <p>
                                         <h4>IP: </h4>
                                         <a href="https://ipapi.co/<?php echo $row->ip ?>/"
                                            target="_blank"><?php echo $row->ip ?></a>
-                                        </p>
                                         <h4>Possible Alts: </h4>
                                         <table class="table table-bordered table-hover">
                                             <thead>
@@ -243,20 +240,9 @@
                                         </table>
                                       <?php } ?>
                                     <?php } ?>
-                                </div>
-                            </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h2 class="mb-0">
-                                    <button type="button" class="btn btn-link" data-toggle="collapse"
-                                            data-target="#collapsePunish">Punishments
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapsePunish" class="collapse" aria-labelledby="headingPunish"
-                                 data-parent="#accordion">
-                                <div class="card-body">
+                        <div class="tab-pane fade" id="nav-punishments" role="tabpanel" aria-labelledby="nav-punishments-tab">
+                          <br>
                                   <h4>Kicks</h4>
                                   <table class="table table-bordered table-hover">
                                       <thead>
@@ -474,21 +460,10 @@
                                         ?>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h2 class="mb-0">
-                                    <button type="button" class="btn btn-link collapsed" data-toggle="collapse"
-                                            data-target="#collapseClans">Clans
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapseClans" class="collapse" aria-labelledby="headingClans"
-                                 data-parent="#accordion">
-                                <div class="card-body">
-                                    <?php
+                        <div class="tab-pane fade" id="nav-clans" role="tabpanel" aria-labelledby="nav-clans-tab">
+                          <br>
+                                  <?php
                                     if ($result = $mysqli_c->query("SELECT clan, rank FROM playerClans WHERE player = '$full_uuid'")) {
                                         if ($result->num_rows > 0) {
                                             $row = $result->fetch_object();
@@ -508,11 +483,7 @@
                                         echo "Error: " . $mysqli_d->error;
                                     }
                                     ?>
-                                </div>
-                            </div>
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
         <!-- clan -->
@@ -536,9 +507,7 @@
                 if ($result = $mysqli_c->query("SELECT description FROM clans WHERE name = '$clan'")) {
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_object();
-                        ?>
-                        <p><?php echo $row->description; ?></p>
-                        <?php
+                        echo $row->description;
                     }
                 }
                 ?>
