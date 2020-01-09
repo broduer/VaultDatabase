@@ -44,11 +44,11 @@
            </div>
            <div class="col-md-3">
              <h4>What data do you collect?</h4>
-               <p>Each time you log and out of VaultMC we save some of your data. This includes (and is not limited to) your Minecraft UUID, Username, IP, In-Game Rank, Firstseen, Lastseen and your Playtime. We use this data to assist with your in-game experience, along with ensuring the safety of our server from things such as bot attacks.</p>
+               <p>Each time you login and out of VaultMC we save some of your data. This includes (and is not limited to) your Minecraft UUID, Username, IP, In-Game Rank, Firstseen, Lastseen and your Playtime. We use this data to assist with your in-game experience, along with ensuring the safety of our server from things such as bot attacks.</p>
            </div>
            <div class="col-md-4">
              <h4>How do I register?</h4>
-               <p>To register for this database service (includes some fun perks!) you will need your VaultMC token. If you do not have a token run <kbd>/token</kbd> in-game. (Do not lose this token, as it will connect you to our Discord server, this website and more to come soon!) Once you have your token register <a href="https://database.vaultmc.net/register.php">here</a>.</p>
+               <p>To register for this database service (includes some fun perks!) you will need your VaultMC token. If you do not have a token run <code>/token</code> in-game. (Do not lose this token, as it will connect you to our Discord server, this website and more to come soon!) Once you have your token register <a href="https://database.vaultmc.net/register.php">here</a>.</p>
            </div>
            <div class="col-md-3">
              <h4>Where do you get my skin image from?</h4>

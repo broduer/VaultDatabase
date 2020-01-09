@@ -39,7 +39,7 @@
     <?php if (isset($_GET["search"])) { ?>
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-center">Search for a Player</h1>
+                <h1 class="text-center">Search the Database</h1>
             </div>
         </div>
         <br>
@@ -71,11 +71,10 @@
                     <tbody>
                     <?php
                     $search = "";
-                    $pdoConnect = new PDO($player_data, $DBusername, $DBpassword);
                     $search = htmlspecialchars($_GET['search']);
                     $pdoQuery = "SELECT uuid, username FROM players WHERE username LIKE ? ORDER BY username";
                     $params = array("%$search%");
-                    $pdoResult = $pdoConnect->prepare($pdoQuery);
+                    $pdoResult = $pdo_d->prepare($pdoQuery);
                     $pdoExec = $pdoResult->execute($params);
 
                     if ($pdoExec) {
@@ -108,11 +107,10 @@
                     <tbody>
                     <?php
                     $search = "";
-                    $pdoConnect = new PDO($clan_data, $DBusername, $DBpassword);
                     $search = htmlspecialchars($_GET['search']);
                     $pdoQuery = "SELECT name FROM clans WHERE name LIKE ? AND system_clan <> 1 ORDER BY name";
                     $params = array("%$search%");
-                    $pdoResult = $pdoConnect->prepare($pdoQuery);
+                    $pdoResult = $pdo_c->prepare($pdoQuery);
                     $pdoExec = $pdoResult->execute($params);
 
                     if ($pdoExec) {
@@ -278,7 +276,7 @@
                                                   echo "<tr>";
                                                   echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
                                                   echo "<td>" . $row->reason . "</td>";
-                                                  echo "<td>" . secondsToDate($row->executionTime/1000, $timezone, true) . "</td>";
+                                                  echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                                   echo "</tr>";
                                               }
                                           }
@@ -321,7 +319,7 @@
                                                     echo "<tr>";
                                                     echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
                                                     echo "<td>" . $row->reason . "</td>";
-                                                    echo "<td>" . secondsToDate($row->executionTime/1000, $timezone, true) . "</td>";
+                                                    echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                                     echo "<td>" . $status . "</td>";
                                                     echo "</tr>";
                                                 }
@@ -347,37 +345,35 @@
                                             <th>Reason</th>
                                             <th>Date</th>
                                             <th>Expiry</th>
+                                            <th>Length</th>
                                             <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                        if ($result = $mysqli_p->query("SELECT actor, reason, executionTime, expiry, status FROM tempbans WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
+                                        if ($result = $mysqli_p->query("SELECT actor, reason, executionTime, expiry FROM tempbans WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
                                             if ($result->num_rows > 0) {
                                                 while ($row = $result->fetch_object()) {
                                                     $actoruuid = MojangAPI::getUuid($row->actor);
 
-                                                    $expiry = $row->expiry;
-                                                    $seconds = $expiry / 1000;
-                                                    $expiry = date("M jS Y", $seconds);
-
-                                                    if (!$row->status) {
-                                                        $status = "<span class=\"badge badge-success\">Expired</span>";
+                                                    if (time() - $row->executionTime > 0) {
+                                                        $status = "<span class=\"badge badge-success\">Not Banned</span>";
                                                     } else {
                                                         $status = "<span class=\"badge badge-danger\">Banned</span>";
                                                     }
                                                     echo "<tr>";
                                                     echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
                                                     echo "<td>" . $row->reason . "</td>";
-                                                    echo "<td>" . secondsToDate($row->executionTime/1000, $timezone, true) . "</td>";
-                                                    echo "<td>" . secondsToDate($row->expiry/1000, $timezone, true) . "</td>";
+                                                    echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
+                                                    echo "<td>" . secondsToDate($row->expiry, $timezone, true) . "</td>";
+                                                    echo "<td>" . secondsToTime($row->expiry-$row->executionTime) . "</td>";
                                                     echo "<td>" . $status . "</td>";
                                                     echo "</tr>";
                                                 }
                                               }
                                             else {
                                                 echo "<tr>";
-                                                echo "<td align=\"center\" colspan=\"5\">No Bans</td>";
+                                                echo "<td align=\"center\" colspan=\"6\">No Bans</td>";
                                                 echo "</tr>";
                                             }
                                         }
@@ -407,14 +403,14 @@
                                                     $status = null;
 
                                                     if ($row->status) {
-                                                        $status = "<span class=\"badge badge-danger\">Muted</span>";
-                                                    } else {
                                                         $status = "<span class=\"badge badge-success\">Pardoned</span>";
+                                                    } else {
+                                                        $status = "<span class=\"badge badge-danger\">Muted</span>";
                                                     }
                                                     echo "<tr>";
                                                     echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
                                                     echo "<td>" . $row->reason . "</td>";
-                                                    echo "<td>" . secondsToDate($row->executionTime/1000, $timezone, true) . "</td>";
+                                                    echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                                     echo "<td>" . $status . "</td>";
                                                     echo "</tr>";
                                                 }
@@ -440,35 +436,35 @@
                                             <th>Reason</th>
                                             <th>Date</th>
                                             <th>Expiry</th>
+                                            <th>Length</th>
                                             <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                        // get the records from the database
-                                        if ($result = $mysqli_p->query("SELECT actor, reason, executionTime, expiry, status FROM tempmutes WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
-                                            // display records if there are records to display
+                                        if ($result = $mysqli_p->query("SELECT actor, reason, executionTime, expiry FROM tempmutes WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
                                             if ($result->num_rows > 0) {
                                                 while ($row = $result->fetch_object()) {
                                                     $actoruuid = MojangAPI::getUuid($row->actor);
 
-                                                    if (!$row->status) {
-                                                        $status = "<span class=\"badge badge-success\">Expired</span>";
+                                                    if (time() - $row->executionTime > 0) {
+                                                        $status = "<span class=\"badge badge-success\">Not Muted</span>";
                                                     } else {
                                                         $status = "<span class=\"badge badge-danger\">Muted</span>";
                                                     }
                                                     echo "<tr>";
                                                     echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?user=" . $row->actor . "'>$row->actor</a></td>";
                                                     echo "<td>" . $row->reason . "</td>";
-                                                    echo "<td>" . secondsToDate($row->executionTime/1000, $timezone, true) . "</td>";
-                                                    echo "<td>" . secondsToDate($row->expiry/1000, $timezone, true) . "</td>";
+                                                    echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
+                                                    echo "<td>" . secondsToDate($row->expiry, $timezone, true) . "</td>";
+                                                    echo "<td>" . secondsToTime($row->expiry-$row->executionTime) . "</td>";
                                                     echo "<td>" . $status . "</td>";
                                                     echo "</tr>";
                                                 }
                                             }
                                             else {
                                                 echo "<tr>";
-                                                echo "<td align=\"center\" colspan=\"5\">No Mutes</td>";
+                                                echo "<td align=\"center\" colspan=\"6\">No Mutes</td>";
                                                 echo "</tr>";
                                             }
                                         }

@@ -121,8 +121,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
-          </br>
             <div class="form-group">
+              <label>Select a time zone</label>
               <select name="timezone" id="timezone" class="form-control">
                 <option value="">Select a time zone</option>
                 <?php foreach(listTimezones() as $t) { ?>
