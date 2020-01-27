@@ -209,6 +209,10 @@
                                         </script>
                                     <?php } ?>
                                     <?php if (isset($_SESSION["loggedin"]) && (($_SESSION["role"] == "admin") || ($_SESSION["role"] == "moderator")) && ($result->num_rows > 0)) { ?>
+                                      <h4>Latest IP: </h4>
+                                      <?php echo "<a href='https://ipapi.co/" . $row->ip . "' target=\"_blank\">$row->ip</a>" ?>
+                                      <br>
+                                      <br>
                                    <h4>Possible Alts: </h4>
                                    <i>Based off their latest IP address.</i>
                                    <table class="table table-bordered table-hover">
@@ -247,7 +251,7 @@
                                                if ($result->num_rows > 0) {
                                                    while ($row = $result->fetch_object()) {
                                                        echo "<tr>";
-                                                       echo "<td><a href='https://ipapi.co/" . $row->ip . "'>$row->ip</a></td>";
+                                                       echo "<td><a href='https://ipapi.co/" . $row->ip . "' target=\"_blank\">$row->ip</a></td>";
                                                        echo "<td>" . secondsToDate($row->start_time/1000, $timezone, true) . "</td>";
                                                        echo "</tr>";
                                                    }
