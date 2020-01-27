@@ -46,7 +46,7 @@
        <br>
          <div class="row" align="center">
            <div class="col-md-3">
-             <h4>3 New Players this Week</h4>
+             <h4>New Players this Week</h4>
              <?php
              if ($result = $mysqli_d->query("SELECT uuid, username, firstseen FROM players WHERE firstseen + 604800000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 604800000 ORDER BY firstseen DESC LIMIT 3")) {
                  if ($result->num_rows > 0) {
@@ -80,7 +80,19 @@
                    ?>
            </div>
            <div class="col-md-3">
-             <h4>Sessions this week</h4>
+             <h4>Sessions</h4>
+             <?php
+             if ($result = $mysqli_d->query("SELECT COUNT(session_id) AS total_sessions, COUNT(DISTINCT username) AS players FROM sessions")) {
+                 if ($result->num_rows > 0) {
+                     while ($row = $result->fetch_object()) {
+                       echo "<br>";
+                       echo "There have been " . $row->total_sessions . " logins in all time from " . $row->players . " players.";
+                     }
+                 } else {
+                     echo "No Data";
+                 }
+             }
+             ?>
              <?php
              if ($result = $mysqli_d->query("SELECT COUNT(session_id) AS total_sessions, COUNT(DISTINCT username) AS players FROM sessions WHERE start_time + 604800000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 604800000")) {
                  if ($result->num_rows > 0) {
@@ -114,9 +126,9 @@
          <br>
          <div class="row" align="center">
            <div class="col-md-3">
-             <h4>Player with most Playtime</h4>
+             <h4>Players with most Playtime</h4>
              <?php
-             if ($result = $mysqli_d->query("SELECT uuid, username, playtime FROM players ORDER BY playtime DESC LIMIT 1")) {
+             if ($result = $mysqli_d->query("SELECT uuid, username, playtime FROM players ORDER BY playtime DESC LIMIT 5")) {
                  if ($result->num_rows > 0) {
                      while ($row = $result->fetch_object()) {
                        echo "<br>";
@@ -144,22 +156,66 @@
                      }
                  }
                  ?>
+                 <br>
+               </br>
+                 <h4>Player average Playtime</h4>
+                     <?php
+                     if ($result = $mysqli_d->query("SELECT AVG(playtime) AS playtime_avg FROM players")) {
+                         if ($result->num_rows > 0) {
+                             while ($row = $result->fetch_object()) {
+                               echo "<br>";
+                               echo secondsToTime($row->playtime_avg/20);
+                             }
+                         } else {
+                             echo "No Data";
+                         }
+                     }
+                     ?>
            </div>
+
            <div class="col-md-3">
-             <h4>Player average Playtime</h4>
+             <h4>Total Players</h4>
                  <?php
-                 if ($result = $mysqli_d->query("SELECT AVG(playtime) AS playtime_avg FROM players")) {
+                 if ($result = $mysqli_d->query("SELECT COUNT(uuid) AS total_players FROM players")) {
                      if ($result->num_rows > 0) {
                          while ($row = $result->fetch_object()) {
                            echo "<br>";
-                           echo secondsToTime($row->playtime_avg/20);
+                           echo "A total of " . $row->total_players . " players have joined VaultMC.";
                          }
                      } else {
                          echo "No Data";
                      }
                  }
                  ?>
+                 <br>
+               </br>
+                 <h4>Active / Inactive</h4>
+                     <?php
+                     if ($result = $mysqli_d->query("SELECT COUNT(uuid) AS active_players FROM players WHERE lastseen + 2592000000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 2592000000")) {
+                         if ($result->num_rows > 0) {
+                             while ($row = $result->fetch_object()) {
+                               echo "<br>";
+                               echo "There are currently " . $row->active_players . " active players";
+                             }
+                         } else {
+                             echo "No Data";
+                         }
+                     }
+                     ?>
+                     <?php
+                     if ($result = $mysqli_d->query("SELECT COUNT(uuid) AS inactive_players FROM players WHERE lastseen + 2592000000 < ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 2592000000")) {
+                         if ($result->num_rows > 0) {
+                             while ($row = $result->fetch_object()) {
+                               echo "<br>";
+                               echo "There are currently " . $row->inactive_players . " inactive players";
+                             }
+                         } else {
+                             echo "No Data";
+                         }
+                     }
+                     ?>
            </div>
+
            <div class="col-md-3">
              <h4>Average TPS & Ping</h4>
                  <?php
@@ -180,7 +236,6 @@
          <br>
          <div class="row" align="center">
            <div class="col-md-3">
-             <h4>Clan stat here</h4>
            </div>
            <div class="col-md-3">
              <h4>Clan with most Members</h4>
