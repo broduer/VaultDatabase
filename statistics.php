@@ -36,7 +36,7 @@
                <div class="row" style="background-color:#303030; border-radius:10px; padding:10px;">
                   <div class="col-md-12">
                      <h3>Check out some cool statistics!</h3>
-                     <p>Find some neat statistics generated from the player data we collect here.</p>
+                     <p>Find some neat statistics generated from the player data we collect.</p>
                   </div>
                </div>
             </div>
@@ -63,9 +63,9 @@
              ?>
            </div>
            <div class="col-md-3">
-             <h4>Latest Player to Join</h4>
+             <h4>Last seen Players</h4>
                    <?php
-                   if ($result = $mysqli_d->query("SELECT uuid, username, lastseen FROM players ORDER BY lastseen DESC LIMIT 1")) {
+                   if ($result = $mysqli_d->query("SELECT uuid, username, lastseen FROM players ORDER BY lastseen DESC LIMIT 3")) {
                        if ($result->num_rows > 0) {
                            while ($row = $result->fetch_object()) {
                              echo "<br>";
@@ -82,11 +82,11 @@
            <div class="col-md-3">
              <h4>Sessions</h4>
              <?php
-             if ($result = $mysqli_d->query("SELECT COUNT(session_id) AS total_sessions, COUNT(DISTINCT username) AS players FROM sessions")) {
+             if ($result = $mysqli_d->query("SELECT COUNT(session_id) AS total_sessions, COUNT(DISTINCT uuid) AS players FROM sessions")) {
                  if ($result->num_rows > 0) {
                      while ($row = $result->fetch_object()) {
                        echo "<br>";
-                       echo "There have been " . $row->total_sessions . " logins in all time from " . $row->players . " players.";
+                       echo "There have been " . $row->total_sessions . " logins over all time from " . $row->players . " players.";
                      }
                  } else {
                      echo "No Data";
@@ -128,7 +128,7 @@
            <div class="col-md-3">
              <h4>Players with most Playtime</h4>
              <?php
-             if ($result = $mysqli_d->query("SELECT uuid, username, playtime FROM players ORDER BY playtime DESC LIMIT 5")) {
+             if ($result = $mysqli_d->query("SELECT uuid, username, playtime FROM players ORDER BY playtime DESC LIMIT 3")) {
                  if ($result->num_rows > 0) {
                      while ($row = $result->fetch_object()) {
                        echo "<br>";
@@ -190,10 +190,12 @@
                  <br>
                </br>
                  <h4>Active / Inactive</h4>
+                 <i>Active meaning being online in the last month</i>
                      <?php
                      if ($result = $mysqli_d->query("SELECT COUNT(uuid) AS active_players FROM players WHERE lastseen + 2592000000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 2592000000")) {
                          if ($result->num_rows > 0) {
                              while ($row = $result->fetch_object()) {
+                               echo "<br>";
                                echo "<br>";
                                echo "There are currently " . $row->active_players . " active players";
                              }
@@ -238,9 +240,9 @@
            <div class="col-md-3">
            </div>
            <div class="col-md-3">
-             <h4>Clan with most Members</h4>
+             <h4>Clans with most Members</h4>
                <?php
-               if ($result = $mysqli_c->query("SELECT COUNT(clan) AS members, clan FROM playerClans GROUP BY clan ORDER BY COUNT(*) DESC LIMIT 1")) {
+               if ($result = $mysqli_c->query("SELECT COUNT(clan) AS members, clan FROM playerClans GROUP BY clan ORDER BY COUNT(*) DESC LIMIT 5")) {
                    if ($result->num_rows > 0) {
                        while ($row = $result->fetch_object()) {
                          if ($row->clan == NULL) {
@@ -248,7 +250,7 @@
                          } else {
                            echo "<a href='https://database.vaultmc.net/?clan=" . $row->clan . "'>$row->clan</a>";
                            echo "<br>";
-                           echo "Currently has " . $row->members . " member(s).";
+                           echo "Currently has " . $row->members . " " . (($row->members == 1) ? "member." : "members.");
                          }
                        }
                    } else {
@@ -258,9 +260,9 @@
                ?>
            </div>
            <div class="col-md-3">
-             <h4>Clan with highest Level</h4>
+             <h4>Clans with highest Level</h4>
              <?php
-             if ($result = $mysqli_c->query("SELECT name, level, experience FROM clans WHERE system_clan <> 1 ORDER BY experience DESC LIMIT 1")) {
+             if ($result = $mysqli_c->query("SELECT name, level, experience FROM clans WHERE system_clan <> 1 ORDER BY experience DESC LIMIT 5")) {
                  if ($result->num_rows > 0) {
                      while ($row = $result->fetch_object()) {
                        echo "<a href='https://database.vaultmc.net/?clan=" . $row->name . "'>$row->name</a>";
@@ -272,6 +274,8 @@
                  }
              }
              ?>
+           </div>
+           <div class="col-md-3">
            </div>
          </div>
       </div>

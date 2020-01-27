@@ -183,10 +183,7 @@
                                     if ($result->num_rows > 0) {
                                         $row = $result->fetch_object();
 
-                                        $pt_ticks = $row->playtime;
-                                        $pt_secs = $pt_ticks / 20;
-                                        $current_time = time();
-                                        $ls_since = $current_time - $row->lastseen/1000;
+                                        $ls_since = time() - $row->lastseen/1000;
                                         ?>
                                         <h4>UUID:</h4>
                                         <p><?php echo $full_uuid ?></p>
@@ -196,7 +193,7 @@
                                         <p><?php echo secondsToDate($row->lastseen/1000, $timezone, true); ?>
                                             (<?php echo secondsToTime($ls_since) ?> ago)</p>
                                         <h4>Playtime: </h4>
-                                        <p><?php echo secondsToTime($pt_secs); ?></p>
+                                        <p><?php echo secondsToTime($row->playtime/20); ?></p>
                                         <h4>Rank: </h4>
                                         <p><?php echo ucfirst($row->rank); ?></p>
                                   <?php if (isset($_SESSION["loggedin"]) && ($_SESSION["role"] == "admin")) { ?>
@@ -211,33 +208,56 @@
                                             window.location.replace("http://database.vaultmc.net/?search=");
                                         </script>
                                     <?php } ?>
-                                    <?php if (isset($_SESSION["loggedin"]) && ($_SESSION["role"] == "admin") && ($result->num_rows > 0)) { ?>
-                                        <h4>IP: </h4>
-                                        <a href="https://ipapi.co/<?php echo $row->ip ?>/"
-                                           target="_blank"><?php echo $row->ip ?></a>
-                                        <h4>Possible Alts: </h4>
+                                    <?php if (isset($_SESSION["loggedin"]) && (($_SESSION["role"] == "admin") || ($_SESSION["role"] == "moderator")) && ($result->num_rows > 0)) { ?>
+                                   <h4>Possible Alts: </h4>
+                                   <i>Based off their latest IP address.</i>
+                                   <table class="table table-bordered table-hover">
+                                       <thead>
+                                       <tr>
+                                           <th>Username</th>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
+                                       <?php
+                                       if ($result = $mysqli_d->query("SELECT uuid, username FROM players WHERE ip = '$row->ip' AND username != '$username' ORDER BY username ASC")) {
+                                           if ($result->num_rows > 0) {
+                                               while ($row = $result->fetch_object()) {
+                                                   echo "<tr>";
+                                                   echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='?user=" . $row->username . "'>$row->username</a></td>";
+                                                   echo "</tr>";
+                                               }
+                                           } else {
+                                               echo "<tr align=\"center\"><td>No users share this IP</td></tr>";
+                                           }
+                                       }
+                                       ?>
+                                       </tbody>
+                                   </table>
+                                        <h4>IP History: </h4>
                                         <table class="table table-bordered table-hover">
                                             <thead>
                                             <tr>
-                                                <th>Username</th>
+                                              <th>IP</th>
+                                              <th>Last used</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <?php
-                                            if ($result = $mysqli_d->query("SELECT uuid, username FROM players WHERE ip = '$row->ip' AND username != '$username' ORDER BY username ASC")) {
-                                                if ($result->num_rows > 0) {
-                                                    while ($row = $result->fetch_object()) {
-                                                        echo "<tr>";
-                                                        echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='?user=" . $row->username . "'>$row->username</a></td>";
-                                                        echo "</tr>";
-                                                    }
-                                                } else {
-                                                    echo "<tr align=\"center\"><td>No users share this IP</td></tr>";
-                                                }
-                                            }
-                                            ?>
-                                            </tbody>
-                                        </table>
+                                           <?php
+                                           if ($result = $mysqli_d->query("SELECT DISTINCT ip, ANY_VALUE(start_time) AS start_time FROM sessions WHERE uuid = '$full_uuid' GROUP BY ip ORDER BY start_time DESC")) {
+                                               if ($result->num_rows > 0) {
+                                                   while ($row = $result->fetch_object()) {
+                                                       echo "<tr>";
+                                                       echo "<td><a href='https://ipapi.co/" . $row->ip . "'>$row->ip</a></td>";
+                                                       echo "<td>" . secondsToDate($row->start_time/1000, $timezone, true) . "</td>";
+                                                       echo "</tr>";
+                                                   }
+                                               } else {
+                                                   echo "No Data";
+                                               }
+                                           }
+                                           ?>
+                                         </tbody>
+                                     </table>
                                       <?php } ?>
                                     <?php } ?>
                         </div>
