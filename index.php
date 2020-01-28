@@ -13,12 +13,18 @@
 <body>
 
     <style>
-        div.info {
+        div.info-pfp {
             position: -webkit-sticky;
             position: sticky;
             top: 17px;
             background-color: #303030;
             border-radius: 10px;
+        }
+
+        div.info {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 17px;
         }
     </style>
 
@@ -158,13 +164,25 @@
             <br>
             <div class="row">
                 <div class="col-md-3" align="center">
-                    <div class="info">
-                        <h2><?php echo $username ?></h2>
+                    <div class="info-pfp">
+                        <h3><?php echo $username ?></h3>
                         <img alt="<?php echo $username ?>" src=" https://crafatar.com/renders/body/<?php echo $uuid ?>?overlay" style="padding:10px" />
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <h2>will be used for more info</h2>
+                    <div class="info">
+                        <br>
+                        <h4>Is Staff <span class="badge badge-success">Yes</span></h4>
+                        <br>
+                        <h4>Has Web Account <span class="badge badge-success">Yes</span></h4>
+                        <br>
+                        <h4>Is Active <span class="badge badge-danger">No</span></h4>
+                        <br>
+                        <h4>Times Logged In <span class="badge badge-secondary">233</span></h4>
+                        <br>
+
+                        <h4>Average Session Length <span class="badge badge-secondary">5 minutes, 13 seconds</span></h4>
+                    </div>
                 </div>
 
                 <div class="col-md-6">
@@ -219,15 +237,17 @@
                                         <thead>
                                             <tr>
                                                 <th>Username</th>
+                                                <th>Last Seen</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            if ($result = $mysqli_d->query("SELECT uuid, username FROM players WHERE ip = '$row->ip' AND username != '$username' ORDER BY username ASC")) {
+                                            if ($result = $mysqli_d->query("SELECT uuid, username, lastseen FROM players WHERE ip = '$row->ip' AND username != '$username' ORDER BY username ASC")) {
                                                 if ($result->num_rows > 0) {
                                                     while ($row = $result->fetch_object()) {
                                                         echo "<tr>";
                                                         echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='?user=" . $row->username . "'>$row->username</a></td>";
+                                                        echo "<td>" . secondsToDate($row->lastseen / 1000, $timezone, true) . "</td>";
                                                         echo "</tr>";
                                                     }
                                                 } else {
@@ -242,7 +262,7 @@
                                         <thead>
                                             <tr>
                                                 <th>IP</th>
-                                                <th>Last used</th>
+                                                <th>First Used</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -493,8 +513,6 @@
                                     <p>This player is not in a clan!</p>
                             <?php
                                 }
-                            } else {
-                                echo "Error: " . $mysqli_d->error;
                             }
                             ?>
                         </div>
