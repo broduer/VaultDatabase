@@ -55,4 +55,3 @@ function listTimezones()
     }
     return $zones_array;
 }
-?>
