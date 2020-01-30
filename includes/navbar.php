@@ -16,13 +16,13 @@ error_reporting(E_ALL); ini_set('display_errors', 1);
   <div class="collapse navbar-collapse" id="navbarColor02">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="../">Home</a>
+        <a class="nav-link" href="../?action=home">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../?search=">Search</a>
+        <a class="nav-link" href="../?action=search&query=">Search</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../statistics.php">Statistics</a>
+        <a class="nav-link" href="../?action=statistics">Statistics</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../help.php">Help</a>
@@ -49,7 +49,7 @@ error_reporting(E_ALL); ini_set('display_errors', 1);
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li class="nav-item">
-         <a class="nav-link" href="../?user=<?php echo $_SESSION["username"]?>">
+         <a class="nav-link" href="../?action=user&user=<?php echo $_SESSION["username"]?>">
            <img src='https://crafatar.com/avatars/<?php echo $_SESSION["uuid"]?>?size=24&overlay'>
            <?php echo $_SESSION["username"]?>
          </a>
