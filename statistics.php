@@ -50,37 +50,56 @@
     <div class="row" align="center">
       <div class="col-md-3">
         <h4>New Players this Week</h4>
-        <?php
-        if ($result = $mysqli_d->query("SELECT uuid, username, firstseen FROM players WHERE firstseen + 604800000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 604800000 ORDER BY firstseen DESC LIMIT 3")) {
-          if ($result->num_rows > 0) {
-            while ($row = $result->fetch_object()) {
-              echo "<br>";
-              echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
-              echo "<br>";
-              echo secondsToDate($row->firstseen / 1000, $timezone, true);
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>First Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            if ($result = $mysqli_d->query("SELECT uuid, username, firstseen FROM players WHERE firstseen + 604800000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 604800000 ORDER BY firstseen DESC LIMIT 3")) {
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_object()) {
+                  echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a></td>";
+                  echo "<td>" . secondsToDate($row->firstseen / 1000, $timezone, true) . "</td>";
+                  echo "</tr>";
+                }
+              } else {
+                echo "No Data";
+              }
             }
-          } else {
-            echo "No Data";
-          }
-        }
-        ?>
+            ?>
+          </tbody>
+        </table>
       </div>
       <div class="col-md-3">
         <h4>Last seen Players</h4>
-        <?php
-        if ($result = $mysqli_d->query("SELECT uuid, username, lastseen FROM players ORDER BY lastseen DESC LIMIT 3")) {
-          if ($result->num_rows > 0) {
-            while ($row = $result->fetch_object()) {
-              echo "<br>";
-              echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
-              echo "<br>";
-              echo secondsToDate($row->lastseen / 1000, $timezone, true);
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Last Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            if ($result = $mysqli_d->query("SELECT uuid, username, lastseen FROM players ORDER BY lastseen DESC LIMIT 3")) {
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_object()) {
+                  echo "<tr>";
+                  echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a></td>";
+                  echo "<td>" . secondsToDate($row->lastseen / 1000, $timezone, true) . "</td>";
+                  echo "</tr>";
+                }
+              } else {
+                echo "No Data";
+              }
             }
-          } else {
-            echo "No Data";
-          }
-        }
-        ?>
+            ?>
+          </tbody>
+        </table>
       </div>
       <div class="col-md-3">
         <h4>Sessions</h4>
@@ -130,20 +149,30 @@
     <div class="row" align="center">
       <div class="col-md-3">
         <h4>Players with most Playtime</h4>
-        <?php
-        if ($result = $mysqli_d->query("SELECT uuid, username, playtime FROM players ORDER BY playtime DESC LIMIT 3")) {
-          if ($result->num_rows > 0) {
-            while ($row = $result->fetch_object()) {
-              echo "<br>";
-              echo "<img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a>";
-              echo "<br>";
-              echo secondsToTime($row->playtime / 20);
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Playtime</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            if ($result = $mysqli_d->query("SELECT uuid, username, playtime FROM players ORDER BY playtime DESC LIMIT 3")) {
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_object()) {
+                  echo "<tr>";
+                  echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?user=" . $row->username . "'>$row->username</a></td>";
+                  echo "<td>" . secondsToTime($row->playtime / 20) . "</td>";
+                  echo "</tr>";
+                }
+              } else {
+                echo "No Data";
+              }
             }
-          } else {
-            echo "No Data";
-          }
-        }
-        ?>
+            ?>
+          </tbody>
+        </table>
       </div>
       <div class="col-md-3">
         <h4>Server total Playtime</h4>
@@ -244,39 +273,61 @@
       </div>
       <div class="col-md-3">
         <h4>Clans with most Members</h4>
-        <?php
-        if ($result = $mysqli_c->query("SELECT COUNT(clan) AS members, clan FROM playerClans GROUP BY clan ORDER BY COUNT(*) DESC LIMIT 5")) {
-          if ($result->num_rows > 0) {
-            while ($row = $result->fetch_object()) {
-              if ($row->clan == NULL) {
-                echo "<i>Multiple Clans are tied. Click </i><a href='/?search='>here</a><i> to view all clans. </i>";
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th># of Members</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            if ($result = $mysqli_c->query("SELECT COUNT(clan) AS members, clan FROM playerClans GROUP BY clan ORDER BY COUNT(*) DESC LIMIT 5")) {
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_object()) {
+                  if ($row->clan == NULL) {
+                    echo "<i>Multiple Clans are tied. Click </i><a href='/?search='>here</a><i> to view all clans. </i>";
+                  } else {
+                    echo "<tr>";
+                    echo "<td><a href='https://database.vaultmc.net/?clan=" . $row->clan . "'>$row->clan</a></td>";
+                    echo "<td>" . $row->members . " " . (($row->members == 1) ? "member." : "members.") . "</td>";
+                    echo "</tr>";
+                  }
+                }
               } else {
-                echo "<a href='https://database.vaultmc.net/?clan=" . $row->clan . "'>$row->clan</a>";
-                echo "<br>";
-                echo "Currently has " . $row->members . " " . (($row->members == 1) ? "member." : "members.");
+                echo "No Data";
               }
             }
-          } else {
-            echo "No Data";
-          }
-        }
-        ?>
+            ?>
+          </tbody>
+        </table>
       </div>
       <div class="col-md-3">
         <h4>Clans with highest Level</h4>
-        <?php
-        if ($result = $mysqli_c->query("SELECT name, level, experience FROM clans WHERE system_clan <> 1 ORDER BY experience DESC LIMIT 5")) {
-          if ($result->num_rows > 0) {
-            while ($row = $result->fetch_object()) {
-              echo "<a href='https://database.vaultmc.net/?clan=" . $row->name . "'>$row->name</a>";
-              echo "<br>";
-              echo "Level " . $row->level . ", " . $row->experience . " xp";
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Level, Experience</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            if ($result = $mysqli_c->query("SELECT name, level, experience FROM clans WHERE system_clan <> 1 ORDER BY experience DESC LIMIT 5")) {
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_object()) {
+                  echo "<tr>";
+                  echo "<td><a href='https://database.vaultmc.net/?clan=" . $row->name . "'>$row->name</a></td>";
+                  echo "<td>Level " . $row->level . ", " . $row->experience . " xp</td>";
+                  echo "</tr>";
+                }
+              } else {
+                echo "No Data";
+              }
             }
-          } else {
-            echo "No Data";
-          }
-        }
-        ?>
+            ?>
+          </tbody>
+        </table>
       </div>
       <div class="col-md-3">
       </div>
