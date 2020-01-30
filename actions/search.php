@@ -52,8 +52,9 @@
                             echo "</tr>";
                         }
                     } else {
-                        echo 'No users to display!';
-                    }
+                        echo "<tr align=\"center\">
+                        <td><i>No users to display<i></td>
+                        </tr>";                    }
                 } else {
                     echo 'ERROR Data Not Inserted';
                 }
@@ -91,8 +92,9 @@
                             echo "</tr>";
                         }
                     } else {
-                        echo 'No clans to display!';
-                    }
+                        echo "<tr align=\"center\">
+                        <td><i>No clans to display<i></td>
+                        </tr>";                     }
                 } else {
                     echo 'ERROR Data Not Inserted';
                 }

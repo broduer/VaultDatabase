@@ -104,7 +104,9 @@
                                                 echo "</tr>";
                                             }
                                         } else {
-                                            echo "<tr align=\"center\"><td>No users share this IP</td></tr>";
+                                            echo "<tr align=\"center\">
+                                            <td colspan=\"2\">No users share this IP</td>
+                                            </tr>";
                                         }
                                     }
                                     ?>
@@ -129,7 +131,9 @@
                                                 echo "</tr>";
                                             }
                                         } else {
-                                            echo "No Data";
+                                            echo "<tr align=\"center\">
+                                            <td colspan=\"2\">No IP Data</td>
+                                            </tr>";
                                         }
                                     }
                                     ?>
