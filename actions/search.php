@@ -26,7 +26,8 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Players</th>
+                <th scope="col">Players</th>
+                <th scope="col">Rank</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +37,7 @@
                 } else {
                     $search = htmlspecialchars($_GET['query']);
                 }
-                $pdoQuery = "SELECT uuid, username FROM players WHERE username LIKE ? ORDER BY username";
+                $pdoQuery = "SELECT uuid, username, rank FROM players WHERE username LIKE ? ORDER BY username";
                 $params = array("%$search%");
                 $pdoResult = $pdo_d->prepare($pdoQuery);
                 $pdoExec = $pdoResult->execute($params);
@@ -49,14 +50,13 @@
                         foreach ($pdoResult as $row) {
                             echo "<tr>";
                             echo "<td><img src='https://crafatar.com/avatars/" . $row['uuid'] . "?size=24&overlay'> <a href=https://database.vaultmc.net/?action=user&user=" . $row['username'] . ">" . $row['username'] . "</a></td>";
+                            echo "<td>" . ucfirst($row['rank']) . "</td>";
                             echo "</tr>";
                         }
                     } else {
                         echo "<tr align=\"center\">
                         <td><i>No users to display<i></td>
                         </tr>";                    }
-                } else {
-                    echo 'ERROR Data Not Inserted';
                 }
                 ?>
             </tbody>
@@ -95,8 +95,6 @@
                         echo "<tr align=\"center\">
                         <td><i>No clans to display<i></td>
                         </tr>";                     }
-                } else {
-                    echo 'ERROR Data Not Inserted';
                 }
                 ?>
             </tbody>

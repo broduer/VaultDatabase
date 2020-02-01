@@ -72,14 +72,14 @@
                                <?php if ($row->token != null) { ?>
                                    <h4>Token: </h4>
                                    <p><?php echo $row->token ?></p>
-                               <?php } ?>
-                           <?php } ?>
-                       <?php } else { ?>
+                           <?php }
+                            }
+                        } else { ?>
                            <script>
                                window.location.replace("http://database.vaultmc.net/?search=");
                            </script>
-                       <?php } ?>
-                       <?php if (isset($_SESSION["loggedin"]) && (($_SESSION["role"] == "admin") || ($_SESSION["role"] == "moderator")) && ($result->num_rows > 0)) { ?>
+                       <?php }
+                       if (isset($_SESSION["loggedin"]) && (($_SESSION["role"] == "admin") || ($_SESSION["role"] == "moderator")) && ($result->num_rows > 0)) { ?>
                            <h4>Latest IP: </h4>
                            <?php echo "<a href='https://ipapi.co/" . $row->ip . "' target=\"_blank\">$row->ip</a>" ?>
                            <br>
@@ -105,7 +105,7 @@
                                             }
                                         } else {
                                             echo "<tr align=\"center\">
-                                            <td colspan=\"2\">No users share this IP</td>
+                                            <td colspan=\"2\"><i>No users share this IP<i></td>
                                             </tr>";
                                         }
                                     }
@@ -132,7 +132,7 @@
                                             }
                                         } else {
                                             echo "<tr align=\"center\">
-                                            <td colspan=\"2\">No IP Data</td>
+                                            <td colspan=\"2\"><i>No IP Data</i></td>
                                             </tr>";
                                         }
                                     }
@@ -168,7 +168,7 @@
                                     }
                                 } else {
                                     echo "<tr>";
-                                    echo "<td align=\"center\" colspan=\"4\">No Kicks</td>";
+                                    echo "<td align=\"center\" colspan=\"4\"><i>No Kicks</i></td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -210,7 +210,7 @@
                                     }
                                 } else {
                                     echo "<tr>";
-                                    echo "<td align=\"center\" colspan=\"4\">No Bans</td>";
+                                    echo "<td align=\"center\" colspan=\"4\"><i>No Bans</i></td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -255,7 +255,7 @@
                                     }
                                 } else {
                                     echo "<tr>";
-                                    echo "<td align=\"center\" colspan=\"6\">No Bans</td>";
+                                    echo "<td align=\"center\" colspan=\"6\"><i>No Bans</i></td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -297,7 +297,7 @@
                                     }
                                 } else {
                                     echo "<tr>";
-                                    echo "<td align=\"center\" colspan=\"4\">No Bans</td>";
+                                    echo "<td align=\"center\" colspan=\"4\"><i>No Bans</i></td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -342,7 +342,7 @@
                                     }
                                 } else {
                                     echo "<tr>";
-                                    echo "<td align=\"center\" colspan=\"6\">No Mutes</td>";
+                                    echo "<td align=\"center\" colspan=\"6\"><i>No Mutes</i></td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -365,10 +365,9 @@
                            </p>
                            <h4>Rank: </h4>
                            <p><?php echo ucfirst($row->rank) ?></p>
-                       <?php
-                        } else { ?>
-                           <p>This player is not in a clan!</p>
                    <?php
+                        } else {
+                            echo "This player is not in a clan.";
                         }
                     }
                     ?>
