@@ -23,14 +23,12 @@
 <br>
 <div class="row">
     <?php
-
     if (empty($_GET['query'])) {
         $search = "";
     } else {
         $search = htmlspecialchars($_GET['query']);
     }
     $pdoQuery = "SELECT uuid, username, rank FROM players WHERE username LIKE ?";
-
     if (isset($_GET['order'])) {
         switch ($_GET['order']) {
             case "u-asc":
@@ -63,12 +61,14 @@
                 break;
             default:
                 $pdoQuery .= " ORDER BY username";
-                $u_link = "u-asc";
+                $u_link = "u-desc";
+                $u_icon = "fa fa-sort-up";
                 $r_link = "r-asc";
+                $r_icon = "fa fa-sort";
         }
     } else {
         $pdoQuery .= " ORDER BY username";
-        $u_link = "u-asc";
+        $u_link = "u-desc";
         $u_icon = "fa fa-sort-up";
         $r_link = "r-asc";
         $r_icon = "fa fa-sort";
@@ -106,7 +106,7 @@
                         }
                     } else {
                         echo "<tr align=\"center\">
-                        <td><i>No users to display<i></td>
+                        <td colspan=\"2\"><i>No users to display<i></td>
                         </tr>";
                     }
                 }

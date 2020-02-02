@@ -3,6 +3,7 @@ session_start();
 
 require_once "config.php";
 include 'functions.php';
+include 'navbar.php';
 require('mojangAPI/mojang-api.class.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -107,17 +108,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="form-group <?php echo (!empty($token_err)) ? 'has-error' : ''; ?>">
             <label>Token</label>
             <input type="text" name="token" class="form-control" value="<?php echo $token; ?>">
-            <span class="help-block"><?php echo $token_err; ?></span>
+            <span class="help-block" style="color:red"><?php echo $token_err; ?></span>
           </div>
           <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
             <label>Password</label>
             <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
-            <span class="help-block"><?php echo $password_err; ?></span>
+            <span class="help-block" style="color:red"><?php echo $password_err; ?></span>
           </div>
           <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
             <label>Confirm Password</label>
             <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
-            <span class="help-block"><?php echo $confirm_password_err; ?></span>
+            <span class="help-block" style="color:red"><?php echo $confirm_password_err; ?></span>
           </div>
           <div class="form-group">
             <label>Select a time zone</label>
