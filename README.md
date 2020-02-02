@@ -5,9 +5,10 @@ Code live on: https://database.vaultmc.net
 
 # Road Map:
 **High to Low sorting**
-- Better layout of the [statistics](https://database.vaultmc.net/?action=statistics) page.
+- Better layout of the [statistics](https://database.vaultmc.net/statistics.php) page.
 - Reusable PDO connection
 - Sortable tables sitewide
+  - _Pages: ~~Search page~~ **(complete!)**, User page, Clans page, Statistics page. (Maybe make it a function for easier and more centralized use?)_
 - Admin mode - Edit, delete and add punishments
 
 # Pull Requests
