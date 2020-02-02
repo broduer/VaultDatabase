@@ -1,3 +1,4 @@
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-12">
         <h1 class="text-center">Search the Database</h1>
@@ -9,7 +10,7 @@
     <div class="col-md-6" align="center" style="background-color: #303030; border-radius:10px; padding:10px;">
         <h3>Player & Clan Information</h3>
         <form action="?" method="get">
-        <input type='hidden' name='action' value='search'/>
+            <input type='hidden' name='action' value='search' />
             <div class="form-group">
                 <label for="playername">Search for a player or clan below</label>
                 <input type="text" class="form-control" id="playername" name="query" placeholder="Enter your query here.">
@@ -21,23 +22,60 @@
 </div>
 <br>
 <div class="row">
+    <?php
+
+    if (empty($_GET['query'])) {
+        $search = "";
+    } else {
+        $search = htmlspecialchars($_GET['query']);
+    }
+    $pdoQuery = "SELECT uuid, username, rank FROM players WHERE username LIKE ?";
+
+    if (isset($_GET['order'])) {
+        switch ($_GET['order']) {
+            case "u-asc":
+                $pdoQuery .= " ORDER BY username";
+                $u_link = "u-desc";
+                break;
+            case "u-desc":
+                $pdoQuery .= " ORDER BY username DESC";
+                $u_link = "u-asc";
+                break;
+            case "r-asc":
+                $pdoQuery .= " ORDER BY rank";
+                $r_link = "r-desc";
+                break;
+            case "r-desc":
+                $pdoQuery .= " ORDER BY rank DESC";
+                $r_link = "r-asc";
+                break;
+            default:
+                $pdoQuery .= " ORDER BY username";
+                $u_link = "u-desc";
+                $r_link = "r-desc";
+        }
+    } else {
+        $pdoQuery .= " ORDER BY username";
+        $u_link = "u-desc";
+        $r_link = "r-desc";
+    }
+
+    ?>
     <div class="col-md-3"></div>
     <div class="col-md-3">
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                <th scope="col">Players</th>
-                <th scope="col">Rank</th>
+                    <th scope="col"><a href="<?php echo currentUrl() . "&order=" . $u_link ?>">Players</a>
+                        <i class="fa fa-sort">
+                    </th>
+                    <th scope="col"><a href="<?php echo currentUrl() . "&order=" . $r_link ?>">Rank</a>
+                        <i class="fa fa-sort">
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                if (empty($_GET['query'])) {
-                    $search = "";
-                } else {
-                    $search = htmlspecialchars($_GET['query']);
-                }
-                $pdoQuery = "SELECT uuid, username, rank FROM players WHERE username LIKE ? ORDER BY username";
                 $params = array("%$search%");
                 $pdoResult = $pdo_d->prepare($pdoQuery);
                 $pdoExec = $pdoResult->execute($params);
@@ -56,7 +94,8 @@
                     } else {
                         echo "<tr align=\"center\">
                         <td><i>No users to display<i></td>
-                        </tr>";                    }
+                        </tr>";
+                    }
                 }
                 ?>
             </tbody>
@@ -94,7 +133,8 @@
                     } else {
                         echo "<tr align=\"center\">
                         <td><i>No clans to display<i></td>
-                        </tr>";                     }
+                        </tr>";
+                    }
                 }
                 ?>
             </tbody>

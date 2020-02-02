@@ -37,14 +37,14 @@
             'home',
             'search',
             'user',
-            'clan',
-            'statistics'
+            'clan'
         );
 
         if (isset($_GET['action']) && in_array($_GET['action'], $actions)) {
             include("actions/" . $_GET['action'] . '.php');
-        } 
-        else {
+        } else if (isset($_GET['page']) && in_array($_GET['page'], $pages)) {
+            include("pages/" . $_GET['page'] . '.php');
+        } else {
             header('Location: https://database.vaultmc.net/?action=home');
             exit;
         }

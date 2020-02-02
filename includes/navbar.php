@@ -22,7 +22,7 @@ error_reporting(E_ALL); ini_set('display_errors', 1);
         <a class="nav-link" href="../?action=search&query=">Search</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../?action=statistics">Statistics</a>
+        <a class="nav-link" href="../statistics.php">Statistics</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../help.php">Help</a>
