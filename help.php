@@ -73,7 +73,7 @@
             <p>Great question! If you register on this website, you can customize your timezone while viewing player statistics, edit your clan description and manage the players in your clan (if you are the owner). More to come soon!</p>
          </div>
          <div class="col-md-3">
-            <h4></h4>
+            <h4>Is the Vault Database open source?</h4>
             <p></p>
          </div>
          <div class="col-md-1">

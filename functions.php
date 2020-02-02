@@ -26,6 +26,10 @@ function secondsToTime($seconds)
   return implode(', ', $timeParts);
 }
 
+/**
+ * @author Tadhg Boyle
+ * @return string Date with timezone applied
+ */
 function secondsToDate($seconds, $timezone, $timestamp)
 {
   $date = new DateTime();
@@ -55,13 +59,29 @@ function listTimezones()
   return $zones_array;
 }
 
-
+/**
+ * @author Tadhg Boyle
+ * @return string Full url from when it was called
+ */
 function currentUrl()
 {
   $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ? 'http' : 'https';
-  $host     = $_SERVER['HTTP_HOST'];
-  $script   = $_SERVER['SCRIPT_NAME'];
-  $params   = $_SERVER['QUERY_STRING'];
+  $host = $_SERVER['HTTP_HOST'];
+  $script = $_SERVER['SCRIPT_NAME'];
+  $params = $_SERVER['QUERY_STRING'];
 
   return $protocol . '://' . $host . $script . '?' . $params;
+}
+
+/**
+ * @author Tadhg Boyle
+ * @return string URL without the param
+ */
+function stripUrlParam($url, $parameter)
+{
+  if (substr($url, 0, strpos($url, "&" . $parameter)) == null) {
+    return $url;
+  } else {
+    return substr($url, 0, strpos($url, "&" . $parameter));
+  }
 }

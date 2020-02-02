@@ -24,6 +24,7 @@
        </div>
        <div class="col-md-3">
            <div class="info">
+                // this is all static right now -- fix/support this soon
                <br>
                <h4>Is Staff <span class="badge badge-success">Yes</span></h4>
                <br>
@@ -361,7 +362,7 @@
                     ?>
                            <h4>Clan:</h4>
                            <p>
-                               <a href="../?clan=<?php echo htmlspecialchars($row->clan) ?>"><?php echo htmlspecialchars($row->clan) ?></a>
+                               <a href="../?action=clan&clan=<?php echo htmlspecialchars($row->clan) ?>"><?php echo htmlspecialchars($row->clan) ?></a>
                            </p>
                            <h4>Rank: </h4>
                            <p><?php echo ucfirst($row->rank) ?></p>
