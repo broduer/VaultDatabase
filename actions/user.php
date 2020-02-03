@@ -24,18 +24,87 @@
        </div>
        <div class="col-md-3">
            <div class="info">
-                // this is all static right now -- fix/support this soon
                <br>
-               <h4>Is Staff <span class="badge badge-success">Yes</span></h4>
+               <?php
+                if ($result = $mysqli_d->query("SELECT rank FROM players WHERE uuid = '$full_uuid'")) {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_object()) {
+                            switch ($row->rank) {
+                                case "admin":
+                                    $is_staff = true;
+                                    break;
+                                case "moderator":
+                                    $is_staff = true;
+                                    break;
+                                default:
+                                    $is_staff = false;
+                                    break;
+                            }
+                        }
+                    } else {
+                        echo "<tr align=\"center\">
+                            <td colspan=\"2\"><i>No Rank Data</i></td>
+                            </tr>";
+                    }
+                }
+                ?>
+               <h4>Is Staff <?php echo (($is_staff) ? "<span class=\"badge badge-success\">Yes</span>" : "<span class=\"badge badge-danger\">No</span>") ?></h4>
                <br>
-               <h4>Has Web Account <span class="badge badge-success">Yes</span></h4>
+               <?php
+                if ($result = $mysqli_d->query("SELECT role FROM web_accounts WHERE uuid = '$full_uuid'")) {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_object()) {
+                            $web_account = true;
+                        }
+                    } else {
+                        $web_account = false;
+                    }
+                }
+                ?>
+               <h4>Has Web Account <?php echo (($web_account) ? "<span class=\"badge badge-success\">Yes</span>" : "<span class=\"badge badge-danger\">No</span>") ?></h4>
                <br>
-               <h4>Is Active <span class="badge badge-danger">No</span></h4>
+               <?php
+                if ($result = $mysqli_d->query("SELECT lastseen FROM players WHERE uuid = '$full_uuid'")) {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_object()) {
+                            if ($row->lastseen + 2592000000 > (time() * 1000) - 2592000000) {
+                                $active = true;
+                            } else {
+                                $active = false;
+                            }
+                        }
+                    } else {
+                        $active = "An Error has occured. Please contact an Administrator.";
+                    }
+                }
+                ?>
+               <h4>Is Active <?php echo (($active) ? "<span class=\"badge badge-success\">Yes</span>" : "<span class=\"badge badge-danger\">No</span>") ?></h4>
                <br>
-               <h4>Times Logged In <span class="badge badge-secondary">233</span></h4>
+               <?php
+                if ($result = $mysqli_d->query("SELECT COUNT(*) AS logged_in_count FROM sessions WHERE uuid = '$full_uuid'")) {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_object()) {
+                            $logged_in_count = $row->logged_in_count;
+                        }
+                    } else {
+                        $logged_in_count = "An Error has occured. Please contact an Administrator.";
+                    }
+                }
+                ?>
+               <h4>Times Logged In <span class="badge badge-secondary"><?php echo $logged_in_count ?></span></h4>
                <br>
-
-               <h4>Average Session Length <span class="badge badge-secondary">5 minutes, 13 seconds</span></h4>
+               <?php
+                if ($result = $mysqli_d->query("SELECT AVG(duration) AS average_duration FROM sessions WHERE uuid = '$full_uuid'")) {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_object()) {
+                            $average_duration = $row->average_duration;
+                        }
+                    } else {
+                        $average_duration = "An Error has occured. Please contact an Administrator.";
+                    }
+                }
+                ?>
+               <h4>Average Session Length <span class="badge badge-secondary"><?php echo secondsToTime($average_duration/1000) ?></span></h4>
            </div>
        </div>
 
@@ -80,7 +149,7 @@
                                window.location.replace("http://database.vaultmc.net/?search=");
                            </script>
                        <?php }
-                       if (isset($_SESSION["loggedin"]) && (($_SESSION["role"] == "admin") || ($_SESSION["role"] == "moderator")) && ($result->num_rows > 0)) { ?>
+                        if (isset($_SESSION["loggedin"]) && (($_SESSION["role"] == "admin") || ($_SESSION["role"] == "moderator")) && ($result->num_rows > 0)) { ?>
                            <h4>Latest IP: </h4>
                            <?php echo "<a href='https://ipapi.co/" . $row->ip . "' target=\"_blank\">$row->ip</a>" ?>
                            <br>
