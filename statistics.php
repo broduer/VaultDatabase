@@ -222,9 +222,9 @@
         <br>
         </br>
         <h4>Active / Inactive</h4>
-        <i>Active meaning being online in the last month.</i>
+        <i>Active meaning being online in the last 2 weeks.</i>
         <?php
-        if ($result = $mysqli_d->query("SELECT COUNT(uuid) AS active_players FROM players WHERE lastseen + 2592000000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 2592000000")) {
+        if ($result = $mysqli_d->query("SELECT COUNT(uuid) AS active_players FROM players WHERE lastseen + 1209600000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 1209600000")) {
           if ($result->num_rows > 0) {
             while ($row = $result->fetch_object()) {
               echo "<br>";
@@ -237,7 +237,7 @@
         }
         ?>
         <?php
-        if ($result = $mysqli_d->query("SELECT COUNT(uuid) AS inactive_players FROM players WHERE lastseen + 2592000000 < ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 2592000000")) {
+        if ($result = $mysqli_d->query("SELECT COUNT(uuid) AS inactive_players FROM players WHERE lastseen + 1209600000 < ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 1209600000")) {
           if ($result->num_rows > 0) {
             while ($row = $result->fetch_object()) {
               echo "<br>";

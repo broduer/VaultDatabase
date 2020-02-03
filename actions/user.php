@@ -67,7 +67,7 @@
                 if ($result = $mysqli_d->query("SELECT lastseen FROM players WHERE uuid = '$full_uuid'")) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_object()) {
-                            if ($row->lastseen + 2592000000 > (time() * 1000) - 2592000000) {
+                            if ($row->lastseen + 1209600000 > (time() * 1000) - 1209600000) {
                                 $active = true;
                             } else {
                                 $active = false;
