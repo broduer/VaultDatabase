@@ -26,6 +26,35 @@
            <div class="info">
                <br>
                <?php
+                if ($result = $mysqli_d->query("SELECT COUNT(*) AS logged_in_count FROM sessions WHERE uuid = '$full_uuid'")) {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_object()) {
+                            $logged_in_count = $row->logged_in_count;
+                        }
+                    } else {
+                        $logged_in_count = "An Error has occured. Please contact an Administrator.";
+                    }
+                }
+                ?>
+               <h4>Times Logged In <span class="badge badge-secondary"><?php echo $logged_in_count ?></span></h4>
+               <br>
+               <?php
+                if ($result = $mysqli_d->query("SELECT AVG(duration) AS average_duration FROM sessions WHERE uuid = '$full_uuid'")) {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_object()) {
+                            $average_duration = secondsToTime($row->average_duration / 1000);
+                        }
+                    } else {
+                        $average_duration = "An Error has occured. Please contact an Administrator.";
+                    }
+                }
+                if ($average_duration == null) {
+                    $average_duration = "<i>This player has not joined  <br>since sessions were implemented.</i>";
+                }
+                ?>
+               <h4>Average Session Length <span class="badge badge-secondary"><?php echo $average_duration ?></span></h4>
+               <br>
+               <?php
                 if ($result = $mysqli_d->query("SELECT rank FROM players WHERE uuid = '$full_uuid'")) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_object()) {
@@ -62,49 +91,6 @@
                 }
                 ?>
                <h4>Has Web Account <?php echo (($web_account) ? "<span class=\"badge badge-success\">Yes</span>" : "<span class=\"badge badge-danger\">No</span>") ?></h4>
-               <br>
-               <?php
-                if ($result = $mysqli_d->query("SELECT lastseen FROM players WHERE uuid = '$full_uuid'")) {
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_object()) {
-                            if ($row->lastseen + 1209600000 > (time() * 1000) - 1209600000) {
-                                $active = true;
-                            } else {
-                                $active = false;
-                            }
-                        }
-                    } else {
-                        $active = "An Error has occured. Please contact an Administrator.";
-                    }
-                }
-                ?>
-               <h4>Is Active <?php echo (($active) ? "<span class=\"badge badge-success\">Yes</span>" : "<span class=\"badge badge-danger\">No</span>") ?></h4>
-               <br>
-               <?php
-                if ($result = $mysqli_d->query("SELECT COUNT(*) AS logged_in_count FROM sessions WHERE uuid = '$full_uuid'")) {
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_object()) {
-                            $logged_in_count = $row->logged_in_count;
-                        }
-                    } else {
-                        $logged_in_count = "An Error has occured. Please contact an Administrator.";
-                    }
-                }
-                ?>
-               <h4>Times Logged In <span class="badge badge-secondary"><?php echo $logged_in_count ?></span></h4>
-               <br>
-               <?php
-                if ($result = $mysqli_d->query("SELECT AVG(duration) AS average_duration FROM sessions WHERE uuid = '$full_uuid'")) {
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_object()) {
-                            $average_duration = $row->average_duration;
-                        }
-                    } else {
-                        $average_duration = "An Error has occured. Please contact an Administrator.";
-                    }
-                }
-                ?>
-               <h4>Average Session Length <span class="badge badge-secondary"><?php echo secondsToTime($average_duration/1000) ?></span></h4>
            </div>
        </div>
 
