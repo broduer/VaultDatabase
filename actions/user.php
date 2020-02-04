@@ -83,14 +83,10 @@
                 if ($result = $mysqli_d->query("SELECT timezone FROM web_accounts WHERE uuid = '$full_uuid'")) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_object()) {
-                            if (isset($row->timezone)) {
-                                $web_account = true;
-                            } else {
-                                $web_account = false;
-                            }
+                            $web_account = true;
                         }
                     } else {
-                        $logged_in_count = "An Error has occured. Please contact an Administrator.";
+                        $web_account = false;
                     }
                 }
                 ?>
