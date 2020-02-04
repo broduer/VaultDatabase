@@ -80,13 +80,17 @@
                <h4>Is Staff <?php echo (($is_staff) ? "<span class=\"badge badge-success\">Yes</span>" : "<span class=\"badge badge-danger\">No</span>") ?></h4>
                <br>
                <?php
-                if ($result = $mysqli_d->query("SELECT role FROM web_accounts WHERE uuid = '$full_uuid'")) {
+                if ($result = $mysqli_d->query("SELECT timezone FROM web_accounts WHERE uuid = '$full_uuid'")) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_object()) {
-                            $web_account = true;
+                            if (isset($row->timezone)) {
+                                $web_account = true;
+                            } else {
+                                $web_account = false;
+                            }
                         }
                     } else {
-                        $web_account = false;
+                        $logged_in_count = "An Error has occured. Please contact an Administrator.";
                     }
                 }
                 ?>
