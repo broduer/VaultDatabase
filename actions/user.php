@@ -83,9 +83,16 @@
                 if ($result = $mysqli_d->query("SELECT timezone FROM web_accounts WHERE uuid = '$full_uuid'")) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_object()) {
-                            $web_account = true;
+
+                            if (!$row->timezone == 0) {
+                                $web_account = true;
+                            } else {
+                                // used when they have a token but not web account
+                                $web_account = false;
+                            }
                         }
                     } else {
+                        // this will be used when they havent made a token, or web account
                         $web_account = false;
                     }
                 }
