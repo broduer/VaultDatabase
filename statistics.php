@@ -1,3 +1,11 @@
+<?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    require 'mojangAPI/mojang-api.class.php';
+    include 'config.php';
+    include 'functions.php';
+    include 'includes/navbar.php';
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,14 +20,6 @@
 
 <body>
   <div class="container-fluid">
-    <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    require 'mojangAPI/mojang-api.class.php';
-    include 'config.php';
-    include 'functions.php';
-    include 'includes/navbar.php';
-    ?>
     <?php if (isset($_SESSION["timezone"])) {
       $timezone = $_SESSION["timezone"];
     } else {

@@ -8,6 +8,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 require_once "config.php";
 include 'functions.php';
+include 'includes/navbar.php';
 
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
@@ -130,7 +131,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
   <div class="container-fluid">
-    <?php include 'includes/navbar.php'; ?>
 
     <br>
 
