@@ -8,7 +8,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 require_once "config.php";
 include 'functions.php';
-include 'includes/navbar.php';
 
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
@@ -130,6 +129,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+  <?php
+  include 'includes/navbar.php'
+  ?>
   <div class="container-fluid">
 
     <br>
@@ -141,11 +143,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <br>
-
     <div class="row">
       <div class="col-md-3">
       </div>
-
       <div class="col-md-6" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
           <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
@@ -174,9 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1 class="text-center">Change Timezone</h1>
       </div>
     </div>
-
     <br>
-
     <div class="row">
       <div class="col-md-3">
       </div>
@@ -204,12 +202,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="row">
       <div class="col-md-12">
-        <h1 class="text-center">Upload Schematic</h1>
+        <h1 class="text-center">Schematics</h1>
       </div>
     </div>
-
     <br>
-
     <div class="row">
       <div class="col-md-3">
       </div>
@@ -218,11 +214,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <input type="file" name="image" />
           <input type="submit" value="Upload" class="btn btn-primary"/>
         </form>
-        <div class="col-md-3">
-        </div>
+        <p>View all Schematics <a href="https://www.vaultmc.net/schems">here</a>.</p>
       </div>
+      <div class="col-md-3">
+        </div>
     </div>
     <?php include 'includes/footer.php' ?>
 </body>
-
 </html>
