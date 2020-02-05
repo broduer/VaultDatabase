@@ -14,21 +14,27 @@ $new_password_err = $confirm_password_err = "";
 
 $username = $_SESSION["username"];
 
+$schem_folder = "/srv/vaultmc/plugins/WorldEdit/schematics";
+
 $result = $mysqli_d->query("SELECT timezone FROM web_accounts WHERE username = '$username'");
 $row = $result->fetch_object();
 $timezone = $row->timezone;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   //upload schem
-  if (isset($_FILES['image'])) {
+  if (isset($_FILES['schem'])) {
     $errors = array();
-    $file_name = $_FILES['image']['name'];
-    $file_size = $_FILES['image']['size'];
-    $file_tmp = $_FILES['image']['tmp_name'];
-    $file_type = $_FILES['image']['type'];
-    $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
+    $file_name = $_FILES['schem']['name'];
+    $file_size = $_FILES['schem']['size'];
+    $file_tmp = $_FILES['schem']['tmp_name'];
+    $file_type = $_FILES['schem']['type'];
+    $file_ext = strtolower(end(explode('.', $_FILES['schem']['name'])));
 
     $extensions = array("schem", "schematic");
+
+    if (!is_dir($schem_folder . "/" . $username)) {
+      mkdir($schem_folder . "/" . $username);
+    }
 
     if (in_array($file_ext, $extensions) === false) {
       $errors[] = "Please choose a .schem or .schematic file.";
@@ -38,12 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $errors[] = "File size must be under 2 MB";
     }
 
-    if (file_exists("/srv/vaultmc/plugins/WorldEdit/schematics/" . $file_name)) {
+    if (file_exists($schem_folder . "/" . $username . "/" . $file_name)) {
       $errors[] = "That file already exists";
     }
 
     if (empty($errors) == true) {
-      move_uploaded_file($file_tmp, "/srv/vaultmc/plugins/WorldEdit/schematics/" . $file_name);
+      move_uploaded_file($file_tmp, $schem_folder . "/" . $username . "/" . $file_name);
 ?>
       <script>
         alert("Schematic has been uploaded!")
@@ -210,15 +216,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="col-md-3">
       </div>
       <div class="col-md-6" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
-        <form action="" method="POST" enctype="multipart/form-data">
-          <input type="file" name="image" />
-          <input type="submit" value="Upload" class="btn btn-primary"/>
-        </form>
-        <p>View all Schematics <a href="https://www.vaultmc.net/schems">here</a>.</p>
+        <br>
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Upload Schematic</h4>
+            <br>
+            <form action="" method="POST" enctype="multipart/form-data">
+              <input type="file" name="schem" />
+              <input type="submit" value="Upload" class="btn btn-primary" />
+            </form>
+            <br>
+          </div>
+          <div class="col-md-6">
+            <h4>Your Schematics</h4>
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Uploaded</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $iterator = new \FilesystemIterator($schem_folder . "/" . $username);
+                $isDirEmpty = !$iterator->valid();
+
+                if ($isDirEmpty) {
+                  echo "<tr align=\"center\"><td colspan=\"2\"><i>You have no Schematics.</i></td></tr>";
+                } else {
+                  foreach (new DirectoryIterator($schem_folder . "/" . $username) as $fileInfo) {
+                    // check if its a hidden file
+                    if ($fileInfo->isDot()) {
+                      continue;
+                    }
+                    echo "<tr>";
+                    echo "<td><a href=\"https://www.vaultmc.net/schems/" . $username . "/" . $fileInfo->getFilename() . "\">" . $fileInfo->getFilename() . "</a></td>";
+                    echo "<td>" . secondsToDate($fileInfo->getMTime(), $timezone, true) . "</td>";
+                    echo "</tr>";
+                  }
+                }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br>
+        <i>View all Schematics <a href="https://www.vaultmc.net/schems">here</a>.</i>
       </div>
       <div class="col-md-3">
-        </div>
+      </div>
     </div>
     <?php include 'includes/footer.php' ?>
 </body>
+
 </html>
