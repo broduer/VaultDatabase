@@ -19,9 +19,42 @@ $row = $result->fetch_object();
 $timezone = $row->timezone;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  //upload schem
+  if (isset($_FILES['image'])) {
+    $errors = array();
+    $file_name = $_FILES['image']['name'];
+    $file_size = $_FILES['image']['size'];
+    $file_tmp = $_FILES['image']['tmp_name'];
+    $file_type = $_FILES['image']['type'];
+    $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
 
+    $extensions = array("schem", "schematic");
+
+    if (in_array($file_ext, $extensions) === false) {
+      $errors[] = "Please choose a .schem or .schematic file.";
+    }
+
+    if ($file_size > 2097152) {
+      $errors[] = "File size must be under 2 MB";
+    }
+
+    if (file_exists("/srv/vaultmc/plugins/WorldEdit/schematics/" . $file_name)) {
+      $errors[] = "That file already exists";
+    }
+
+    if (empty($errors) == true) {
+      move_uploaded_file($file_tmp, "/srv/vaultmc/plugins/WorldEdit/schematics/" . $file_name);
+?>
+      <script>
+        alert("Schematic has been uploaded!")
+      </script>
+      <?php
+    } else {
+      print_r($errors);
+    }
+  }
+  // reset password
   if (isset($_POST["new_password"])) {
-
     if (empty(trim($_POST["new_password"]))) {
       $new_password_err = "Please enter the new password.";
     } elseif (strlen(trim($_POST["new_password"])) < 6) {
@@ -161,6 +194,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Submit">
           </div>
+        </form>
+        <div class="col-md-3">
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-center">Upload Schematic</h1>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-6" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
+        <form action="" method="POST" enctype="multipart/form-data">
+          <input type="file" name="image" />
+          <input type="submit" value="Upload" class="btn btn-primary"/>
         </form>
         <div class="col-md-3">
         </div>
