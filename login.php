@@ -99,9 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-
+<?php include 'includes/navbar.php'; ?>
   <div class="container-fluid">
-    <?php include 'includes/navbar.php'; ?>
     </br>
     <div class="row">
       <div class="col-md-12">

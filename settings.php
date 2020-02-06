@@ -217,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="col-md-6" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
         <br>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-5">
             <h4>Upload Schematic</h4>
             <br>
             <form action="" method="POST" enctype="multipart/form-data">
@@ -226,13 +226,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
             <br>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-7 table-responsive">
             <h4>Your Schematics</h4>
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th>Name</th>
                   <th>Uploaded</th>
+                  <th>Size</th>
                 </tr>
               </thead>
               <tbody>
@@ -241,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $isDirEmpty = !$iterator->valid();
 
                 if ($isDirEmpty) {
-                  echo "<tr align=\"center\"><td colspan=\"2\"><i>You have no Schematics.</i></td></tr>";
+                  echo "<tr align=\"center\"><td colspan=\"3\"><i>You have no Schematics.</i></td></tr>";
                 } else {
                   foreach (new DirectoryIterator($schem_folder . "/" . $username) as $fileInfo) {
                     // check if its a hidden file
@@ -251,6 +252,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "<tr>";
                     echo "<td><a href=\"https://www.vaultmc.net/schems/" . $username . "/" . $fileInfo->getFilename() . "\">" . $fileInfo->getFilename() . "</a></td>";
                     echo "<td>" . secondsToDate($fileInfo->getMTime(), $timezone, true) . "</td>";
+                    echo "<td>" . readableFilesize($fileInfo->getSize()) . "</td>";
                     echo "</tr>";
                   }
                 }

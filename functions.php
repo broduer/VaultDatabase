@@ -46,7 +46,8 @@ function secondsToDate($seconds, $timezone, $timestamp)
   }
 }
 
-function timezoneListSimple() {
+function timezoneListSimple()
+{
   $zones_array = array();
   foreach (timezone_identifiers_list() as $key => $zone) {
     date_default_timezone_set($zone);
@@ -93,4 +94,11 @@ function stripUrlParam($url, $parameter)
   } else {
     return substr($url, 0, strpos($url, "&" . $parameter));
   }
+}
+
+function readableFilesize($bytes, $decimals = 2)
+{
+  $size = array('B', 'kB', 'MB');
+  $factor = floor((strlen($bytes) - 1) / 3);
+  return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
 }

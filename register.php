@@ -17,6 +17,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 $token = $password = $confirm_password = "";
 $token_err = $password_err = $confirm_password_err = "";
+$timezone_error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if (empty(trim($_POST["token"]))) {
@@ -53,8 +54,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $confirm_password_err = "Password did not match.";
     }
   }
+  // validate timezone
+  if (!in_array($_POST['timezone'], timezoneListSimple())) {
+    $timezone_error = "That timezone is invalid.";
+  }
   // Check input errors before inserting in database
-  if (empty($token_err) && empty($password_err) && empty($confirm_password_err)) {
+  if (empty($token_err) && empty($password_err) && empty($confirm_password_err) && empty($timezone_error)) {
 
     $param_password = password_hash($password, PASSWORD_DEFAULT);
     $timezone = $_POST["timezone"];
@@ -87,9 +92,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+<?php include 'includes/navbar.php'; ?>
 
   <div class="container-fluid">
-    <?php include 'includes/navbar.php'; ?>
     </br>
     <div class="row">
       <div class="col-md-12">
@@ -129,6 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <?php echo $t['diff_from_GMT'] . ' - ' . $t['zone']; ?></option>
               <?php } ?>
             </select>
+            <span class="help-block" style="color:red"><?php echo $timezone_error; ?></span>
           </div>
 
           <div class="form-group">
