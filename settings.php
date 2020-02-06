@@ -98,21 +98,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   //timezone code
   if (isset($_POST["timezone"])) {
     $new_timezone = $_POST["timezone"];
-    $sql = "UPDATE web_accounts SET timezone = '$new_timezone' WHERE username = '$username'";
+    if (in_array($new_timezone, timezoneListSimple())) {
+      $sql = "UPDATE web_accounts SET timezone = '$new_timezone' WHERE username = '$username'";
 
-    if ($stmt = mysqli_prepare($mysqli_d, $sql)) {
+      if ($stmt = mysqli_prepare($mysqli_d, $sql)) {
 
-      if (mysqli_stmt_execute($stmt)) { ?>
-        <script>
-          alert('Updated your timezone.');
-        </script>
-
+        if (mysqli_stmt_execute($stmt)) { ?>
+          <script>
+            alert('Updated your timezone.');
+          </script>
 <?php
-        $_SESSION["timezone"] = $new_timezone;
-      } else {
-        echo "Something went wrong. Please try again later.";
+          $_SESSION["timezone"] = $new_timezone;
+        } else {
+          echo "Something went wrong. Please try again later.";
+        }
+        mysqli_stmt_close($stmt);
       }
-      mysqli_stmt_close($stmt);
+    } else {
+      echo "That timezone is invalid.";
     }
   }
 }
@@ -132,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
   <?php
-  include 'includes/navbar.php'
+  include 'includes/navbar.php';
   ?>
   <div class="container-fluid">
 

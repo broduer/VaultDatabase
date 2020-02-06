@@ -46,6 +46,15 @@ function secondsToDate($seconds, $timezone, $timestamp)
   }
 }
 
+function timezoneListSimple() {
+  $zones_array = array();
+  foreach (timezone_identifiers_list() as $key => $zone) {
+    date_default_timezone_set($zone);
+    $zones_array[$key] = $zone;
+  }
+  return $zones_array;
+}
+
 function listTimezones()
 {
   $zones_array = array();
