@@ -15,6 +15,8 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 }
 $username = $password = "";
 $username_err = $password_err = "";
+$schem_folder = "/srv/vaultmc/plugins/WorldEdit/schematics";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty(trim($_POST["username"]))) {
     $username_err = "Please enter username.";
@@ -61,6 +63,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               }
 
               $_SESSION["role"] = $role;
+
+              if (!is_dir($schem_folder . "/" . $username)) {
+                mkdir($schem_folder . "/" . $username);
+              }
 
               header('location: https://database.vaultmc.net');
             } else {

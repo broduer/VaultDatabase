@@ -32,10 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $extensions = array("schem", "schematic");
 
-    if (!is_dir($schem_folder . "/" . $username)) {
-      mkdir($schem_folder . "/" . $username);
-    }
-
     if (in_array($file_ext, $extensions) === false) {
       $errors[] = "Please choose a .schem or .schematic file.";
     }
