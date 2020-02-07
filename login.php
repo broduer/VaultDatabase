@@ -66,6 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
               if (!is_dir($schem_folder . "/" . $username)) {
                 mkdir($schem_folder . "/" . $username);
+                chmod($schem_folder . "/" . $username, 777);
+              } else {
+                chmod($schem_folder . "/" . $username, 777);
               }
 
               header('location: https://database.vaultmc.net');
@@ -99,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-<?php include 'includes/navbar.php'; ?>
+  <?php include 'includes/navbar.php'; ?>
   <div class="container-fluid">
     </br>
     <div class="row">
