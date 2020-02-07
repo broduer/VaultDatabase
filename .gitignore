@@ -4,3 +4,5 @@
 config.php
 test.php
 .vscode/
+vendor/
+composer.phar
