@@ -40,7 +40,7 @@ $clan = htmlspecialchars($_GET['clan']); ?>
                         while ($row = $result->fetch_object()) {
                             $username = MojangAPI::getUsername($row->player);
                             echo "<tr>";
-                            echo "<td><img src='https://crafatar.com/avatars/" . $row->player . "?size=24&overlay'> <a href='?action=user&user=" . $username . "'>$username</a></td>";
+                            echo "<td><img src='https://crafatar.com/avatars/" . $row->player . "?size=24&overlay'> <a href='?view=user&user=" . $username . "'>$username</a></td>";
                             echo "<td>" . ucfirst($row->rank) . "</td>";
                             echo "</tr>";
                         }

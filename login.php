@@ -64,13 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
               $_SESSION["role"] = $role;
 
-              if (!is_dir($schem_folder . "/" . $username)) {
-                mkdir($schem_folder . "/" . $username);
-                chmod($schem_folder . "/" . $username, 777);
-              } else {
-                chmod($schem_folder . "/" . $username, 777);
-              }
-
               header('location: https://database.vaultmc.net');
             } else {
               $password_err = "The password you entered was not valid.";

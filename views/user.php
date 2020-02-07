@@ -162,7 +162,7 @@
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_object()) {
                                                 echo "<tr>";
-                                                echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='?action=user&user=" . $row->username . "'>$row->username</a></td>";
+                                                echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->username . "'>$row->username</a></td>";
                                                 echo "<td>" . secondsToDate($row->lastseen / 1000, $timezone, true) . "</td>";
                                                 echo "</tr>";
                                             }
@@ -224,7 +224,7 @@
                                         $actoruuid = MojangAPI::getUuid($row->actor);
 
                                         echo "<tr>";
-                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?action=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
                                         echo "<td>" . $row->reason . "</td>";
                                         echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                         echo "</tr>";
@@ -265,7 +265,7 @@
                                             $status = "<span class=\"badge badge-success\">Pardoned</span>";
                                         }
                                         echo "<tr>";
-                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?action=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
                                         echo "<td>" . $row->reason . "</td>";
                                         echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                         echo "<td>" . $status . "</td>";
@@ -308,7 +308,7 @@
                                             $status = "<span class=\"badge badge-danger\">Banned</span>";
                                         }
                                         echo "<tr>";
-                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?action=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
                                         echo "<td>" . $row->reason . "</td>";
                                         echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                         echo "<td>" . secondsToDate($row->expiry, $timezone, true) . "</td>";
@@ -352,7 +352,7 @@
                                             $status = "<span class=\"badge badge-danger\">Muted</span>";
                                         }
                                         echo "<tr>";
-                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?action=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
                                         echo "<td>" . $row->reason . "</td>";
                                         echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                         echo "<td>" . $status . "</td>";
@@ -395,7 +395,7 @@
                                             $status = "<span class=\"badge badge-danger\">Muted</span>";
                                         }
                                         echo "<tr>";
-                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?action=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                        echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
                                         echo "<td>" . $row->reason . "</td>";
                                         echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                         echo "<td>" . secondsToDate($row->expiry, $timezone, true) . "</td>";
@@ -424,7 +424,7 @@
                     ?>
                            <h4>Clan:</h4>
                            <p>
-                               <a href="../?action=clan&clan=<?php echo htmlspecialchars($row->clan) ?>"><?php echo htmlspecialchars($row->clan) ?></a>
+                               <a href="../?view=clan&clan=<?php echo htmlspecialchars($row->clan) ?>"><?php echo htmlspecialchars($row->clan) ?></a>
                            </p>
                            <h4>Rank: </h4>
                            <p><?php echo ucfirst($row->rank) ?></p>

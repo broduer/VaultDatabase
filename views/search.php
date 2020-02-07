@@ -10,7 +10,7 @@
     <div class="col-md-6" align="center" style="background-color: #303030; border-radius:10px; padding:10px;">
         <h3>Player & Clan Information</h3>
         <form action="?" method="get">
-            <input type='hidden' name='action' value='search' />
+            <input type='hidden' name='view' value='search' />
             <div class="form-group">
                 <label for="playername">Search for a player or clan below</label>
                 <input type="text" class="form-control" id="playername" name="query" placeholder="Enter your query here.">
@@ -100,7 +100,7 @@
                     if ($pdoResult->rowCount() > 0) {
                         foreach ($pdoResult as $row) {
                             echo "<tr>";
-                            echo "<td><img src='https://crafatar.com/avatars/" . $row['uuid'] . "?size=24&overlay'> <a href=https://database.vaultmc.net/?action=user&user=" . $row['username'] . ">" . $row['username'] . "</a></td>";
+                            echo "<td><img src='https://crafatar.com/avatars/" . $row['uuid'] . "?size=24&overlay'> <a href=https://database.vaultmc.net/?view=user&user=" . $row['username'] . ">" . $row['username'] . "</a></td>";
                             echo "<td>" . ucfirst($row['rank']) . "</td>";
                             echo "</tr>";
                         }
@@ -140,7 +140,7 @@
                     if ($pdoResult->rowCount() > 0) {
                         foreach ($pdoResult as $row) {
                             echo "<tr>";
-                            echo "<td><a href=https://database.vaultmc.net/?action=clan&clan=" . $row['name'] . ">" . $row['name'] . "</a></td>";
+                            echo "<td><a href=https://database.vaultmc.net/?view=clan&clan=" . $row['name'] . ">" . $row['name'] . "</a></td>";
                             echo "</tr>";
                         }
                     } else {

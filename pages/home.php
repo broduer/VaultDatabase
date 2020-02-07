@@ -12,7 +12,7 @@
             <div class="col-md-6">
                 <h3>Player & Clan Information</h3>
                 <form role="form" action="?" method="get">
-                <input type='hidden' name='action' value='search'/>
+                <input type='hidden' name='view' value='search'/>
                     <div class="form-group">
                         <label for="playername">Search for a player or clan below</label>
                         <input type="text" class="form-control" name="query" placeholder="Enter your query here.">

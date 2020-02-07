@@ -42,7 +42,7 @@
             'settings',
             'statistics'
         );
-        $actions = array(
+        $views = array(
             'search',
             'user',
             'clan'
@@ -53,8 +53,8 @@
         );
         if (isset($_GET['page']) && in_array($_GET['page'], $pages)) {
             include("pages/" . $_GET['page'] . '.php');
-        } else if (isset($_GET['action']) && in_array($_GET['action'], $actions)) {
-            include("actions/" . $_GET['action'] . '.php');
+        } else if (isset($_GET['view']) && in_array($_GET['view'], $views)) {
+            include("views/" . $_GET['view'] . '.php');
         } else if (isset($_GET['blog']) && in_array($_GET['blog'], $pages)) {
             include("blog/" . $_GET['blog'] . '.php');
         } else {
