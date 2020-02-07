@@ -15,7 +15,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 }
 $username = $password = "";
 $username_err = $password_err = "";
-$schem_folder = "/srv/vaultmc/plugins/WorldEdit/schematics";
+$schem_folder = "/srv/vaultmc/plugins/VaultLoader/components/VaultCore/schems";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty(trim($_POST["username"]))) {

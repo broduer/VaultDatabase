@@ -14,7 +14,7 @@ $new_password_err = $confirm_password_err = "";
 
 $username = $_SESSION["username"];
 
-$schem_folder = "/srv/vaultmc/plugins/WorldEdit/schematics";
+$schem_folder = "/srv/vaultmc/plugins/VaultLoader/components/VaultCore/schems";
 
 $result = $mysqli_d->query("SELECT timezone FROM web_accounts WHERE username = '$username'");
 $row = $result->fetch_object();
