@@ -1,4 +1,3 @@
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-12">
         <h1 class="text-center">Search the Database</h1>
@@ -34,44 +33,44 @@
             case "u-asc":
                 $pdoQuery .= " ORDER BY username";
                 $u_link = "u-desc";
-                $u_icon = "fa fa-sort-up";
+                $u_icon = "fas fa-sort-up";
                 $r_link = "r-asc";
-                $r_icon = "fa fa-sort";
+                $r_icon = "fas fa-sort";
                 break;
             case "u-desc":
                 $pdoQuery .= " ORDER BY username DESC";
                 $u_link = "u-asc";
-                $u_icon = "fa fa-sort-down";
+                $u_icon = "fas fa-sort-down";
                 $r_link = "r-asc";
-                $r_icon = "fa fa-sort";
+                $r_icon = "fas fa-sort";
                 break;
             case "r-asc":
                 $pdoQuery .= " ORDER BY FIELD(rank,'Admin','Moderator','Trusted', 'Patreon', 'Member', 'Default')";
                 $r_link = "r-desc";
-                $r_icon = "fa fa-sort-up";
+                $r_icon = "fas fa-sort-up";
                 $u_link = "u-asc";
-                $u_icon = "fa fa-sort";
+                $u_icon = "fas fa-sort";
                 break;
             case "r-desc":
                 $pdoQuery .= " ORDER BY FIELD(rank,'Admin','Moderator','Trusted', 'Patreon', 'Member', 'Default') DESC";
                 $r_link = "r-asc";
-                $r_icon = "fa fa-sort-down";
+                $r_icon = "fas fa-sort-down";
                 $u_link = "u-asc";
-                $u_icon = "fa fa-sort";
+                $u_icon = "fas fa-sort";
                 break;
             default:
                 $pdoQuery .= " ORDER BY username";
                 $u_link = "u-desc";
-                $u_icon = "fa fa-sort-up";
+                $u_icon = "fas fa-sort-up";
                 $r_link = "r-asc";
-                $r_icon = "fa fa-sort";
+                $r_icon = "fas fa-sort";
         }
     } else {
         $pdoQuery .= " ORDER BY username";
         $u_link = "u-desc";
-        $u_icon = "fa fa-sort-up";
+        $u_icon = "fas fa-sort-up";
         $r_link = "r-asc";
-        $r_icon = "fa fa-sort";
+        $r_icon = "fas fa-sort";
     }
     ?>
     <div class="col-md-3"></div>

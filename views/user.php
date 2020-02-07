@@ -1,4 +1,3 @@
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <?php
 require 'vendor/autoload.php';
 $username = htmlspecialchars($_GET['user']);
@@ -25,16 +24,25 @@ $full_uuid = MojangAPI::formatUuid($uuid);
             <?php
             if ($result = $mysqli_d->query("SELECT discord_id FROM players WHERE uuid = '$full_uuid'")) {
                 if ($result->num_rows > 0) {
-                    $row = $result->fetch_object();
-                    $client = new GuzzleHttp\Client();
-                    $res = $client->get('https://discordapp.com/api/v6/users/' . $row->discord_id, [
-                        'headers' =>  [
-                            'Authorization' => 'Bot ' . $bot_token
-                        ]
-                    ]);
-                    $obj = json_decode($res->getBody());
-                    echo "<span style=\"font-size: 2em;\"><i class=\"fa fa-discord\" aria-hidden=\"true\"></i></span>";
-                    echo "<h5>" . $obj->username . "#" . $obj->discriminator . "</h5>";
+                    while ($row = $result->fetch_object()) {
+
+                        if (!$row->discord_id == 0) {
+                            $client = new GuzzleHttp\Client();
+                            $res = $client->get('https://discordapp.com/api/v6/users/' . $row->discord_id, [
+                                'headers' =>  [
+                                    'Authorization' => 'Bot ' . $bot_token
+                                ]
+                            ]);
+                            $obj = json_decode($res->getBody());
+                            // clean this up soon!!
+                            echo "<h5>
+                            <span style=\"font-size: 1em; background-color:#7289DA;\">
+                            <i class=\"fab fa-discord\" aria-hidden=\"true\"></i>
+                            " . $obj->username . "#" . $obj->discriminator . "</span></h5>";
+                        } else {
+                            echo "";
+                        }
+                    }
                 } else {
                     echo "";
                 }
