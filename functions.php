@@ -46,6 +46,10 @@ function secondsToDate($seconds, $timezone, $timestamp)
   }
 }
 
+/**
+ * @author Tadhg Boyle
+ * @return array Array of all php timezones
+ */
 function timezoneListSimple()
 {
   $zones_array = array();

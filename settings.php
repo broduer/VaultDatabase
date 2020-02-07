@@ -262,7 +262,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
         </div>
         <br>
-        <i>View all Schematics <a href="https://www.vaultmc.net/schems">here</a>.</i>
       </div>
       <div class="col-md-3">
       </div>

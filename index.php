@@ -18,8 +18,8 @@
     ini_set('display_errors', 1);
     require 'mojangAPI/mojang-api.class.php';
     include 'config.php';
-    include 'includes/navbar.php';
     include 'functions.php';
+    include 'includes/navbar.php';
     ?>
 
     <div class="container-fluid">
@@ -33,19 +33,32 @@
         <br>
 
         <?php
-        $actions = array(
+        $pages = array(
             'home',
+            'help',
+            'login',
+            'logout',
+            'register',
+            'settings',
+            'statistics'
+        );
+        $actions = array(
             'search',
             'user',
             'clan'
         );
-
-        if (isset($_GET['action']) && in_array($_GET['action'], $actions)) {
-            include("actions/" . $_GET['action'] . '.php');
-        } else if (isset($_GET['page']) && in_array($_GET['page'], $pages)) {
+        $blog = array(
+            'edit',
+            'new'
+        );
+        if (isset($_GET['page']) && in_array($_GET['page'], $pages)) {
             include("pages/" . $_GET['page'] . '.php');
+        } else if (isset($_GET['action']) && in_array($_GET['action'], $actions)) {
+            include("actions/" . $_GET['action'] . '.php');
+        } else if (isset($_GET['blog']) && in_array($_GET['blog'], $pages)) {
+            include("blog/" . $_GET['blog'] . '.php');
         } else {
-            header('Location: https://database.vaultmc.net/?action=home');
+            header('Location: https://database.vaultmc.net/?page=home');
             exit;
         }
         ?>
