@@ -50,7 +50,7 @@ ini_set('display_errors', 1);
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li class="nav-item">
-        <a class="nav-link" href="../?view=user&user=<?php echo $_SESSION["username"] ?>">
+        <a class="nav-link" href="../?view=user&user=<?php echo $_SESSION["uuid"] ?>">
           <img src='https://crafatar.com/avatars/<?php echo $_SESSION["uuid"] ?>?size=24&overlay'>
           <?php echo $_SESSION["username"] ?>
         </a>

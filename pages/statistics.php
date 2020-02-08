@@ -41,7 +41,7 @@
           if ($result = $mysqli_d->query("SELECT uuid, username, firstseen FROM players WHERE firstseen + 604800000 > ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - 604800000 ORDER BY firstseen DESC LIMIT 3")) {
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_object()) {
-                echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?view=user&user=" . $row->username . "'>$row->username</a></td>";
+                echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?view=user&user=" . $row->uuid. "'>$row->username</a></td>";
                 echo "<td>" . secondsToDate($row->firstseen / 1000, $timezone, true) . "</td>";
                 echo "</tr>";
               }
@@ -68,7 +68,7 @@
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_object()) {
                 echo "<tr>";
-                echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?view=user&user=" . $row->username . "'>$row->username</a></td>";
+                echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?view=user&user=" . $row->uuid. "'>$row->username</a></td>";
                 echo "<td>" . secondsToDate($row->lastseen / 1000, $timezone, true) . "</td>";
                 echo "</tr>";
               }
@@ -141,7 +141,7 @@
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_object()) {
                 echo "<tr>";
-                echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?view=user&user=" . $row->username . "'>$row->username</a></td>";
+                echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='https://database.vaultmc.net/?view=user&user=" . $row->uuid. "'>$row->username</a></td>";
                 echo "<td>" . secondsToTime($row->playtime / 20) . "</td>";
                 echo "</tr>";
               }

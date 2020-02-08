@@ -1,7 +1,8 @@
 <?php
 require 'vendor/autoload.php';
-$username = htmlspecialchars($_GET['user']);
-$uuid = MojangAPI::getUuid($username);
+$uuid = htmlspecialchars($_GET['user']);
+$full_uuid = MojangAPI::formatUuid($uuid);
+$username = MojangAPI::getUsername($full_uuid);
 if ($uuid == null || $username == "CONSOLE") { ?>
     <script>
         window.location.replace("http://database.vaultmc.net/?search=");
@@ -186,11 +187,11 @@ $full_uuid = MojangAPI::formatUuid($uuid);
                             </thead>
                             <tbody>
                                 <?php
-                                if ($result = $mysqli_d->query("SELECT uuid, username, lastseen FROM players WHERE ip = '$row->ip' AND username != '$username' ORDER BY username ASC")) {
+                                if ($result = $mysqli_d->query("SELECT uuid, username, lastseen FROM players WHERE ip = '$row->ip' AND uuid != '$uuid' ORDER BY username ASC")) {
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_object()) {
                                             echo "<tr>";
-                                            echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->username . "'>$row->username</a></td>";
+                                            echo "<td><img src='https://crafatar.com/avatars/" . $row->uuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->uuid . "'>$row->username</a></td>";
                                             echo "<td>" . secondsToDate($row->lastseen / 1000, $timezone, true) . "</td>";
                                             echo "</tr>";
                                         }
@@ -293,7 +294,7 @@ $full_uuid = MojangAPI::formatUuid($uuid);
                                         $status = "<span class=\"badge badge-success\">Pardoned</span>";
                                     }
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "<td>" . $status . "</td>";
@@ -336,7 +337,7 @@ $full_uuid = MojangAPI::formatUuid($uuid);
                                         $status = "<span class=\"badge badge-danger\">Banned</span>";
                                     }
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "<td>" . secondsToDate($row->expiry, $timezone, true) . "</td>";
@@ -380,7 +381,7 @@ $full_uuid = MojangAPI::formatUuid($uuid);
                                         $status = "<span class=\"badge badge-danger\">Muted</span>";
                                     }
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "<td>" . $status . "</td>";
@@ -423,7 +424,7 @@ $full_uuid = MojangAPI::formatUuid($uuid);
                                         $status = "<span class=\"badge badge-danger\">Muted</span>";
                                     }
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "<td>" . secondsToDate($row->expiry, $timezone, true) . "</td>";
