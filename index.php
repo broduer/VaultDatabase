@@ -49,13 +49,14 @@
         );
         $blog = array(
             'edit',
-            'new'
+            'new',
+            'view'
         );
         if (isset($_GET['page']) && in_array($_GET['page'], $pages)) {
             include("pages/" . $_GET['page'] . '.php');
         } else if (isset($_GET['view']) && in_array($_GET['view'], $views)) {
             include("views/" . $_GET['view'] . '.php');
-        } else if (isset($_GET['blog']) && in_array($_GET['blog'], $pages)) {
+        } else if (isset($_GET['blog']) && in_array($_GET['blog'], $blog)) {
             include("blog/" . $_GET['blog'] . '.php');
         } else {
             header('Location: https://database.vaultmc.net/?page=home');

@@ -39,10 +39,7 @@
                                 </div>
                             </div>
                             <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
-                            <br>
-                            <br>
                             <p><?php echo $row->content ?></p>
-                            <a href="../?blog=view&id=<?php echo $row->id ?>">Read More...</a>
                 <?php
                         }
                     } else {
