@@ -27,16 +27,22 @@
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_object()) {
                 ?>
-                            <h4><?php echo $row->title ?></h4>
-                            <p>Written By:</p>
-                            <img src='https://crafatar.com/avatars/<?php echo $row->author ?>?size=24&overlay'>
-                            <a href="../?view=user&user=<?php echo MojangAPI::getUsername($row->author) ?>">
-                                <?php echo MojangAPI::getUsername($row->author) ?>
-                            </a>
-                            <br>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h4><?php echo $row->title ?></h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <img src='https://crafatar.com/avatars/<?php echo $row->author ?>?size=24&overlay'>
+                                    <a href="../?view=user&user=<?php echo $row->author ?>">
+                                        <?php echo MojangAPI::getUsername($row->author) ?>
+                                    </a>
+                                </div>
+                            </div>
                             <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
+                            <br>
+                            <br>
                             <p><?php echo $row->content ?></p>
-                            <a href="../?blog=view&id=<?php echo $row->id?>">Read More...</a>
+                            <a href="../?blog=view&id=<?php echo $row->id ?>">Read More...</a>
                 <?php
                         }
                     } else {
