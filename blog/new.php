@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 
-if (!isset($_SESSION["role"]) && (!$_SESSION["role"] == "Admin")) {
+if (!isset($_SESSION["role"]) && (!$_SESSION["role"] == "admin")) {
     if (isset($_SERVER['HTTP_REFERER'])) {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     } else {
