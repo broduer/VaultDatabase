@@ -23,7 +23,7 @@
         <div class="row" style="background-color:#303030; border-radius:10px; padding:10px;">
             <div class="col-md-12">
                 <?php
-                if ($result = $mysqli_d->query("SELECT id, timestamp, author, title, content FROM blog_posts ORDER BY timestamp DESC LIMIT 1")) {
+                if ($result = $mysqli_d->query("SELECT id, timestamp, author, title, html_content FROM blog_posts ORDER BY timestamp DESC")) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_object()) {
                 ?>
@@ -39,11 +39,12 @@
                                 </div>
                             </div>
                             <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
-                            <p><?php echo $row->content ?></p>
+                            <hr>
+                            <p><?php echo htmlspecialchars_decode(stripslashes($row->html_content)) ?></p>
                 <?php
                         }
                     } else {
-                        echo "";
+                        echo "<i>There are no blog posts! Hopefully the Admins get their act together.</i>";
                     }
                 }
                 ?>

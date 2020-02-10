@@ -18,14 +18,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty(trim($_POST["content"]))) {
         $content_err = "Please enter content.";
-    } 
-    else {
-        $result = str_replace(' ', '&nbsp;', $_POST["content"]);
-        $result = nl2br($result);
+    } else {
         $Parsedown = new Parsedown();
 
+        $post_time = time();
+        $post_author = MojangAPI::formatUuid(MojangAPI::getUuid($_SESSION["username"]));
         $post_title = htmlspecialchars($_POST["title"]);
-        $post_content = htmlspecialchars($Parsedown->text(nl2br($result)));
+        $post_md_content = $_POST["content"];
+        $post_html_content = $Parsedown->text($_POST["content"]);
+
+        $sql = "INSERT INTO blog_posts (timestamp, author, title, md_content, html_content) VALUES ('$post_time', '$post_author', '$post_title', '$post_md_content', '$post_html_content')";
+
+        if ($mysqli_d->query($sql) === TRUE) {
+            header('Location: index.php');
+        } else {
+            echo "Error: " . $sql . "<br>" . $mysqli_d->error;
+        }
+
+        $mysqli_d->close();
     }
 }
 
