@@ -70,5 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script>
     var simplemde = new SimpleMDE({
         element: document.getElementById("content"),
+        status: false,
     });
 </script>

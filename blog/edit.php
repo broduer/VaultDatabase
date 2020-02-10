@@ -50,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Error: " . $sql . "<br>" . $mysqli_d->error;
         }
-
         $mysqli_d->close();
     }
 }
@@ -84,5 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script>
     var simplemde = new SimpleMDE({
         element: document.getElementById("content"),
+        status: false,
     });
 </script>

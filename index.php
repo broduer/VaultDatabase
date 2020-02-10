@@ -50,7 +50,7 @@
         $blog = array(
             'edit',
             'new',
-            'view'
+            'delete'
         );
         if (isset($_GET['page']) && in_array($_GET['page'], $pages)) {
             include("pages/" . $_GET['page'] . '.php');
