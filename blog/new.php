@@ -2,11 +2,7 @@
 require 'vendor/autoload.php';
 
 if (!isset($_SESSION["role"]) && (!$_SESSION["role"] == "admin")) {
-    if (isset($_SERVER['HTTP_REFERER'])) {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-    } else {
-        header('Location: index.php');
-    }
+    header("location: https://database.vaultmc.net?page=home&alert=no-permission");
 }
 $title_err = $content_err = "";
 
@@ -42,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             . "\n"
                             . "https://database.vaultmc.net/?blog=view&id=" . intval($row->auto_increment - 1);
 
-                        $webhookurl = $announcements_webhook;
+                        $webhookurl = $dev_webhook;
                         $json_data = array(
                             'content' => "$webhook_content",
                             'avatar_url' => "https://crafatar.com/avatars/" . $post_author
@@ -57,6 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         curl_setopt($ch, CURLOPT_HEADER, 0);
                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                         $response = curl_exec($ch);
+
+                        header('Location: https://database.vaultmc.net/?page=home&alert=blog-posted');
                     }
                 }
             } else {

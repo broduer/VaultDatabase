@@ -28,7 +28,54 @@
             $timezone = $_SESSION["timezone"];
         } else {
             $timezone = "null";
-        } ?>
+        }
+
+        if (isset($_GET["alert"])) {
+            switch ($_GET["alert"]) {
+                case "no-permission":
+                    $alert_type = "danger";
+                    $alert_message = "You do not have permission to view this page.";
+                    break;
+                case "not-signed-in":
+                    $alert_type = "danger";
+                    $alert_message = "You need to be signed in to view this page";
+                    break;
+                case "signed-in":
+                    $alert_type = "success";
+                    $alert_message = "You have been signed in.";
+                    break;
+                case "already-signed-in":
+                    $alert_type = "danger";
+                    $alert_message = "You are already signed in.";
+                    break;
+                case "blog-posted":
+                    $alert_type = "success";
+                    $alert_message = "Blog post successfully posted.";
+                    break;
+                case "blog-edited":
+                    $alert_type = "success";
+                    $alert_message = "Blog post successfully edited.";
+                    break;
+                case "blog-deleted":
+                    $alert_type = "success";
+                    $alert_message = "Blog post successfully deleted.";
+                    break;
+                case "blog-invalid-id":
+                    $alert_type = "danger";
+                    $alert_message = "Invalid blog ID";
+                    break;
+            }
+        ?>
+            <div class="alert alert-<?php echo $alert_type ?> alert-dismissible fade show" role="alert">
+                <?php echo $alert_message ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php
+        }
+
+        ?>
 
         <br>
 
@@ -50,7 +97,8 @@
         $blog = array(
             'edit',
             'new',
-            'delete'
+            'delete',
+            'view'
         );
         if (isset($_GET['page']) && in_array($_GET['page'], $pages)) {
             include("pages/" . $_GET['page'] . '.php');

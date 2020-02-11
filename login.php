@@ -7,11 +7,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-  if (isset($_SERVER['HTTP_REFERER'])) {
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-  } else {
-    header('Location: https://database.vaultmc.net');
-  }
+  header("location: https://database.vaultmc.net?page=home&alert=already-signed-in");
 }
 $username = $password = "";
 $username_err = $password_err = "";
@@ -63,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
               $_SESSION["role"] = $role;
 
-              header('location: https://database.vaultmc.net');
+              header('Location: https://database.vaultmc.net/?page=home&alert=signed-in');
             } else {
               $password_err = "The password you entered was not valid.";
             }

@@ -8,11 +8,7 @@ require('mojangAPI/mojang-api.class.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-  if (isset($_SERVER['HTTP_REFERER'])) {
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-  } else {
-    header('Location: index.php');
-  }
+  header('Location: index.php');
 }
 
 $token = $password = $confirm_password = "";
@@ -92,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-<?php include 'includes/navbar.php'; ?>
+  <?php include 'includes/navbar.php'; ?>
 
   <div class="container-fluid">
     </br>

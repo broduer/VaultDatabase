@@ -2,15 +2,11 @@
 require 'vendor/autoload.php';
 
 if ((!isset($_SESSION["role"]) && (!$_SESSION["role"] == "admin")) || !isset($_GET["id"])) {
-    if (isset($_SERVER['HTTP_REFERER'])) {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-    } else {
-        header('Location: index.php');
-    }
+    header("location: https://database.vaultmc.net?page=home&alert=no-permission");
 }
 
 if (!is_numeric($_GET["id"])) {
-    header('Location: index.php');
+    header('Location: https://database.vaultmc.net/?page=home&alert=blog-invalid-id');
 }
 
 if ($result = $mysqli_d->query("SELECT id, title, md_content FROM blog_posts WHERE id = " . $_GET["id"])) {
@@ -20,7 +16,7 @@ if ($result = $mysqli_d->query("SELECT id, title, md_content FROM blog_posts WHE
             $original_md_content = $row->md_content;
         }
     } else {
-        header('Location: index.php');
+        header('Location: https://database.vaultmc.net/?page=home&alert=blog-invalid-id');
     }
 }
 
@@ -46,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "UPDATE blog_posts SET title='$post_title', md_content='$post_md_content', html_content='$post_html_content' WHERE id = '$id'";
 
         if ($mysqli_d->query($sql) === TRUE) {
-            header('Location: index.php');
+            header('Location: https://database.vaultmc.net/?page=home&alert=blog-edited');
         } else {
             echo "Error: " . $sql . "<br>" . $mysqli_d->error;
         }
@@ -71,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="<?php echo $original_title ?>">
                 <span style="color:red"><?php echo $title_err; ?></span>
                 <br>
-                <textarea name="content" id="content"><?php echo $original_md_content?></textarea>
+                <textarea name="content" id="content"><?php echo $original_md_content ?></textarea>
                 <span style="color:red"><?php echo $content_err; ?></span>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>

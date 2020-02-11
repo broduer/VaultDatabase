@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  header("location: https://database.vaultmc.net");
+  header("location: https://database.vaultmc.net?page=home&alert=not-signed-in");
   exit;
 }
 
