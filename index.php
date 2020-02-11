@@ -24,6 +24,8 @@
 
     <div class="container-fluid">
 
+        <br>
+
         <?php if (isset($_SESSION["timezone"])) {
             $timezone = $_SESSION["timezone"];
         } else {
@@ -74,10 +76,7 @@
             </div>
         <?php
         }
-
         ?>
-
-        <br>
 
         <?php
         $pages = array(
