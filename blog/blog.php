@@ -3,17 +3,19 @@
 } else {
     $timezone = "null";
 } ?>
-<style>
-    span.nobreak {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-</style>
 <div class="row">
     <div class="col-md-12">
         <h2 class="text-center">VaultMC News</h2>
     </div>
+</div>
+<div align="center">
+    <?php
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "admin") {
+    ?>
+        <button type="submit" class="btn btn-primary" onclick="window.location.href = '?blog=new';">New Post</button>
+    <?php
+    }
+    ?>
 </div>
 <br>
 <div class="row">
@@ -40,12 +42,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-8">
-                                <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
+                                    <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
                                 </div>
                                 <div class="col-md-2">
                                     <?php
                                     if (isset($_SESSION["role"]) && $_SESSION["role"] == "admin") {
-                                        ?>
+                                    ?>
                                         <div align="right">
                                             <i class="fas fa-edit"></i><a href="?blog=edit&id=<?php echo $row->id ?>">Edit</a>
                                         </div>
@@ -67,10 +69,15 @@
                             </div>
                             <hr>
                             <p><?php echo htmlspecialchars_decode(stripslashes($row->html_content)) ?></p>
-                <?php
+                        <?php
                         }
-                    } else {
-                        echo "<i>There are no blog posts! Hopefully the Admins get their act together.</i>";
+                    } else { ?>
+                        <div class="row">
+                            <div class="col-md-12" align="center">
+                                <i>There are no blog posts! Hopefully the Admins get their act together.</i>
+                            </div>
+                        </div>
+                <?php
                     }
                 }
                 ?>
