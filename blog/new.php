@@ -29,21 +29,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $sql = "INSERT INTO blog_posts (timestamp, author, title, md_content, html_content) VALUES ('$post_time', '$post_author', '$post_title', '$post_md_content', '$post_html_content')";
 
+        $post_id = "SELECT auto_increment FROM information_schema.TABLES WHERE TABLE_SCHEMA = \"VaultMC_Data\" AND TABLE_NAME = \"blog_posts\"";
+
         if ($mysqli_d->query($sql) === TRUE) {
+            if ($result = $mysqli_d->query($post_id)) {
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_object()) {
+                        $webhook_content =
+                            "@everyone"
+                            . "\n"
+                            . ":loudspeaker: New blog post **" . $post_title . "** authored by *" . MojangAPI::getUsername($post_author) . "*"
+                            . "\n"
+                            . "https://database.vaultmc.net/?blog=view&id=" . intval($row->auto_increment - 1);
 
-            $webhookurl = "https://discordapp.com/api/webhooks/676673175786094593/pqlwnke6g8xtfGD6ofEVRaTU2_28OE-lDQ_lppI2sW_pofTH6JebK3haPMdrrUhGA6yz";
+                        $webhookurl = $announcements_webhook;
+                        $json_data = array(
+                            'content' => "$webhook_content",
+                            'avatar_url' => "https://crafatar.com/avatars/" . $post_author
+                        );
+                        $make_json = json_encode($json_data);
 
-            $json_data = array('content' => "$post_md_content");
-            $make_json = json_encode($json_data);
-
-            $ch = curl_init($webhookurl);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $make_json);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $response = curl_exec($ch);
+                        $ch = curl_init($webhookurl);
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+                        curl_setopt($ch, CURLOPT_POST, 1);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $make_json);
+                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                        curl_setopt($ch, CURLOPT_HEADER, 0);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        $response = curl_exec($ch);
+                    }
+                }
+            } else {
+                echo "Error: " . $post_id . "<br>" . $mysqli_d->error;
+            }
         } else {
             echo "Error: " . $sql . "<br>" . $mysqli_d->error;
         }

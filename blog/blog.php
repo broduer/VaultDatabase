@@ -69,6 +69,7 @@
                             </div>
                             <hr>
                             <p><?php echo htmlspecialchars_decode(stripslashes($row->html_content)) ?></p>
+                            <hr>
                         <?php
                         }
                     } else { ?>
