@@ -40,7 +40,7 @@ if (isset($_SESSION["loggedin"])) {
                 ?>
                             <div class="row">
                                 <div class="col-md-9">
-                                    <h3><?php echo $row->title ?></h3>
+                                    <h3><a href="?blog=view&id=<?php echo $row->id ?>"><?php echo $row->title ?></a></h3>
                                 </div>
                                 <div class="col-md-3">
                                     <img src='https://crafatar.com/avatars/<?php echo $row->author ?>?size=24&overlay'>
