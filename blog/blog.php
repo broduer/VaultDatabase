@@ -2,7 +2,16 @@
     $timezone = $_SESSION["timezone"];
 } else {
     $timezone = "null";
-} ?>
+} 
+if (isset($_SESSION["loggedin"])) {
+    if ($_SESSION["role"] == "admin") {
+        $admin = true;
+    } else if ($_SESSION["role"] == "moderator") {
+        $mod = true;
+    }
+}
+?>
+
 <div class="row">
     <div class="col-md-12">
         <h2 class="text-center">VaultMC News</h2>
@@ -46,7 +55,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <?php
-                                    if (isset($_SESSION["role"]) && $_SESSION["role"] == "admin") {
+                                    if (isset($admin)) {
                                     ?>
                                         <div align="right">
                                             <i class="fas fa-edit"></i><a href="?blog=edit&id=<?php echo $row->id ?>">Edit</a>
@@ -57,7 +66,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <?php
-                                    if (isset($_SESSION["role"]) && $_SESSION["role"] == "admin") {
+                                    if (isset($admin)) {
                                     ?>
                                         <div align="left">
                                             <i class="fas fa-trash-alt"></i><a href="?blog=delete&id=<?php echo $row->id ?>">Delete</a>

@@ -22,9 +22,7 @@
             </div>
             <div class="col-md-6">
                 <h3>About the VaultMC Database</h3>
-                <p>This custom interface helps you to view information about players on VaultMC. VaultClans
-                    plugin
-                    by yangyang200, VaultCore plugin & WebUI by Aberdeener.</p>
+                <p>This custom interface helps you to view information about players on VaultMC.</p>
             </div>
         </div>
     </div>

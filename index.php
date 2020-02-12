@@ -46,8 +46,12 @@
                     $alert_type = "success";
                     $alert_message = "You have been signed in.";
                     break;
+                case "signed-out":
+                    $alert_type = "success";
+                    $alert_message = "You have been signed out.";
+                    break;
                 case "already-signed-in":
-                    $alert_type = "danger";
+                    $alert_type = "warning";
                     $alert_message = "You are already signed in.";
                     break;
                 case "blog-posted":
@@ -68,11 +72,17 @@
                     break;
             }
         ?>
-            <div class="alert alert-<?php echo $alert_type ?> alert-dismissible fade show" role="alert">
-                <?php echo $alert_message ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="alert alert-<?php echo $alert_type ?> alert-dismissible fade show" role="alert">
+                        <?php echo $alert_message ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
             </div>
         <?php
         }

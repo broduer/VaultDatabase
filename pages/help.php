@@ -50,7 +50,7 @@
       </div>
       <div class="col-md-4">
          <h4>Why should I register?</h4>
-         <p>Great question! If you register on this website, you can customize your timezone while viewing player statistics, edit your clan description and manage the players in your clan (if you are the owner). More to come soon!</p>
+         <p>Registering on this website let's you customize your timezone while viewing player statistics, upload custom schematics which can be pasted in-game, and download schematics you made in-game. More to come soon!</p>
       </div>
       <div class="col-md-3">
          <h4>Is this open source?</h4>
