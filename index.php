@@ -50,6 +50,10 @@
                     $alert_type = "success";
                     $alert_message = "You have been signed out.";
                     break;
+                case "invalid-user":
+                    $alert_type = "danger";
+                    $alert_message = "That user does not exist.";
+                    break;
                 case "already-signed-in":
                     $alert_type = "warning";
                     $alert_message = "You are already signed in.";

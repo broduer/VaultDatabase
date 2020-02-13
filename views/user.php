@@ -5,7 +5,7 @@ $full_uuid = MojangAPI::formatUuid($uuid);
 $username = MojangAPI::getUsername($full_uuid);
 if ($uuid == null || $username == "CONSOLE") { ?>
     <script>
-        window.location.replace("http://database.vaultmc.net/?view=search&query=");
+        window.location.replace("http://database.vaultmc.net/?page=home&alert=invalid-user");
     </script>
 <?php }
 $full_uuid = MojangAPI::formatUuid($uuid);
@@ -177,7 +177,7 @@ if (isset($_SESSION["loggedin"])) {
                         }
                     } else { ?>
                         <script>
-                            window.location.replace("http://database.vaultmc.net/?search=");
+                            window.location.replace("http://database.vaultmc.net/?page=home&alert=invalid-user");
                         </script>
                     <?php }
                     if ((isset($admin) || isset($mod)) && $result->num_rows > 0) { ?>
