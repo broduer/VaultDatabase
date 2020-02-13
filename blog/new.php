@@ -4,16 +4,18 @@ require 'vendor/autoload.php';
 if (!isset($_SESSION["role"]) && (!$_SESSION["role"] == "admin")) {
     header("location: https://database.vaultmc.net?page=home&alert=no-permission");
 }
-$title_err = $content_err = "";
+$title_err = $content_err = $ping_err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty(trim($_POST["title"]))) {
         $title_err = "Please enter a title.";
     }
-
     if (empty(trim($_POST["content"]))) {
         $content_err = "Please enter content.";
+    }
+    if (in_array($_POST["ping"], $ping_sel)) {
+        $ping_err = "Invalid ping selection";
     } else {
         $Parsedown = new Parsedown();
 
@@ -22,6 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $post_title = htmlspecialchars($_POST["title"]);
         $post_md_content = $_POST["content"];
         $post_html_content = $Parsedown->text($_POST["content"]);
+
+        $ping = "@" . $_POST["ping"];
 
         $sql = "INSERT INTO blog_posts (timestamp, author, title, md_content, html_content) VALUES ('$post_time', '$post_author', '$post_title', '$post_md_content', '$post_html_content')";
 
@@ -32,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_object()) {
                         $webhook_content =
-                            "@everyone"
+                            $ping
                             . "\n"
                             . ":loudspeaker: New blog post **" . $post_title . "** authored by *" . MojangAPI::getUsername($post_author) . "*"
                             . "\n"
@@ -66,8 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mysqli_d->close();
     }
 }
-
-
 ?>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
@@ -86,10 +88,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" class="form-control" name="title" id="title" placeholder="Title">
                 <span style="color:red"><?php echo $title_err; ?></span>
                 <br>
-                <textarea name="content" id="content"></textarea>
+                <textarea name="content" id="content" placeholder="Content"></textarea>
                 <span style="color:red"><?php echo $content_err; ?></span>
+                <br>
+                <div class="row">
+                    <div class="col-md-9">
+                        <input type="radio" name="ping" value="">
+                        <label for="none">None</label>
+                        <input type="radio" name="ping" value="here" checked>
+                        <label for="here">Here</label>
+                        <input type="radio" name="ping" value="everyone">
+                        <label for="everyone">Everyone</label>
+                    </div>
+                    <span style="color:red"><?php echo $ping_err; ?></span>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Post</button>
         </form>
     </div>
     <div class="col-md-3"></div>

@@ -19,7 +19,7 @@ if (isset($_SESSION["loggedin"])) {
 </div>
 <div align="center">
     <?php
-    if (isset($_SESSION["role"]) && $_SESSION["role"] == "admin") {
+    if (isset($admin)) {
     ?>
         <button type="submit" class="btn btn-primary" onclick="window.location.href = '?blog=new';">New Post</button>
     <?php
