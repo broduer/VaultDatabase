@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="row">
     <div class="col-md-12">
-        <h2 class="text-center">New Blog Article</h2>
+        <h2 class="text-center">New Blog Post</h2>
     </div>
 </div>
 <br>

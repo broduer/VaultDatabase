@@ -62,16 +62,49 @@
                                 </div>
                                 <hr>
                                 <p><?php echo htmlspecialchars_decode(stripslashes($row->html_content)) ?></p>
-                <?php
+                                <hr>
+                                <h3>Comments</h3>
+                                <?php if ($result = $mysqli_d->query("SELECT id, timestamp, author, content FROM blog_comments WHERE post_id = " . $_GET["id"] . " ORDER BY timestamp DESC")) {
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_object()) {
+                                ?>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <img src='https://crafatar.com/avatars/<?php echo $row->author ?>?size=24&overlay'>
+                                                    <a href="../?view=user&user=<?php echo $row->author ?>">
+                                                        <?php echo MojangAPI::getUsername($row->author) ?>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
+                                                </div>
+                                            </div>
+                                            <p><?php echo $row->content ?>
+                                            <?php
+                                        }
+                                    } else {
+                                            ?>
+                                            <i>No Comments.</i>
+                                    <?php
+                                    }
+                                }
+                                    ?>
+                                    <?php
+                                    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === TRUE) {
+                                    ?>
+
+                    <?php
+                                    }
+                                }
+                            } else {
+                                header('Location: index.php');
                             }
-                        } else {
-                            header('Location: index.php');
                         }
+                    } else {
+                        header('Location: https://database.vaultmc.net/?page=home&alert=blog-invalid-id');
                     }
-                } else {
-                    header('Location: index.php');
-                }
-                ?>
+                    ?>
             </div>
         </div>
     </div>
