@@ -142,22 +142,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 </div>
                                             </div>
                                             <p><?php echo $row->content ?></p>
-                                            <form action="" method="post">
-                                                <div class="row">
-                                                    <div class="col-md-1">
+                                            <?php
+                                            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === TRUE) {
+                                            ?>
+                                                <form action="" method="post">
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                        </div>
+                                                        <div class="form-group col-md-8">
+                                                            <input type="hidden" name="reply_id" value="<?php echo $row->id ?>">
+                                                            <textarea name="reply" placeholder="Add a reply" style="min-width: 100%"></textarea>
+                                                            <span style="color:red"><?php echo $reply_err; ?></span>
+                                                            <br>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <button type="submit" class="btn btn-primary">Reply</button>
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group col-md-8">
-                                                        <input type="hidden" name="reply_id" value="<?php echo $row->id ?>">
-                                                        <textarea name="reply" placeholder="Add a reply" style="min-width: 100%"></textarea>
-                                                        <span style="color:red"><?php echo $reply_err; ?></span>
-                                                        <br>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <button type="submit" class="btn btn-primary">Reply</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-
+                                                </form>
+                                            <?php } ?>
                                             <?php if ($result = $mysqli_d->query("SELECT id, replied_id, timestamp, author, content FROM blog_comments WHERE replied_id = " . $row->id . " ORDER BY timestamp DESC")) {
                                                 if ($result->num_rows > 0) {
                                                     while ($row = $result->fetch_object()) {
