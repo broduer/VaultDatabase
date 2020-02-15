@@ -25,7 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $post_md_content = $_POST["content"];
         $post_html_content = $Parsedown->text($_POST["content"]);
 
-        $ping = "@" . $_POST["ping"];
+        if ($_POST["ping"] == "") {
+            $ping = "";
+        } else {
+            $ping = "@" . $_POST["ping"];
+        }
 
         $sql = "INSERT INTO blog_posts (timestamp, author, title, md_content, html_content) VALUES ('$post_time', '$post_author', '$post_title', '$post_md_content', '$post_html_content')";
 
@@ -42,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             . "\n"
                             . "https://database.vaultmc.net/?blog=view&id=" . intval($row->auto_increment - 1);
 
-                        $webhookurl = $dev_webhook;
+                        $webhookurl = $annoucements_webhook;
                         $json_data = array(
                             'content' => "$webhook_content",
                             'avatar_url' => "https://crafatar.com/avatars/" . $post_author

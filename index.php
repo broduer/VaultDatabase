@@ -74,6 +74,10 @@
                     $alert_type = "danger";
                     $alert_message = "Invalid blog ID";
                     break;
+                case "comment-posted":
+                    $alert_type = "success";
+                    $alert_message = "Comment posted successfully.";
+                    break;
             }
         ?>
             <div class="row">

@@ -3,6 +3,29 @@
 } else {
     $timezone = "null";
 } ?>
+<?php
+
+$comment_err = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty(trim($_POST["comment"]))) {
+        $comment_err = "Please enter a comment!";
+    } else {
+
+        $comment_post = $_GET["id"];
+        $comment_time = time();
+        $comment_author = MojangAPI::formatUuid(MojangAPI::getUuid($_SESSION["username"]));
+        $comment_content = htmlspecialchars($_POST["comment"]);
+
+        $sql = "INSERT INTO blog_comments (post_id, timestamp, author, content) VALUES ('$comment_post', '$comment_time', '$comment_author', '$comment_content')";
+
+        if ($mysqli_d->query($sql) === TRUE) {
+            header('Location: ' . currentUrl() . '&alert=comment-posted');
+        } else {
+            echo "Error: " . $post_id . "<br>" . $mysqli_d->error;
+        }
+    }
+}
+?>
 <div class="row">
     <div class="col-md-12">
         <h2 class="text-center">View Blog Post</h2>
@@ -64,6 +87,26 @@
                                 <p><?php echo htmlspecialchars_decode(stripslashes($row->html_content)) ?></p>
                                 <hr>
                                 <h3>Comments</h3>
+                                <?php
+                                if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === TRUE) {
+                                ?>
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-9">
+                                                <textarea name="comment" placeholder="Add a comment" style="min-width: 100%"></textarea>
+                                                <span style="color:red"><?php echo $comment_err; ?></span>
+                                                <br>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="submit" class="btn btn-primary">Comment</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                <?php
+                                }
+
+                                ?>
                                 <?php if ($result = $mysqli_d->query("SELECT id, timestamp, author, content FROM blog_comments WHERE post_id = " . $_GET["id"] . " ORDER BY timestamp DESC")) {
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_object()) {
@@ -86,24 +129,17 @@
                                     } else {
                                             ?>
                                             <i>No Comments.</i>
-                                    <?php
-                                    }
-                                }
-                                    ?>
-                                    <?php
-                                    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === TRUE) {
-                                    ?>
-
                     <?php
                                     }
                                 }
-                            } else {
-                                header('Location: index.php');
                             }
+                        } else {
+                            header('Location: index.php');
                         }
-                    } else {
-                        header('Location: https://database.vaultmc.net/?page=home&alert=blog-invalid-id');
                     }
+                } else {
+                    header('Location: https://database.vaultmc.net/?page=home&alert=blog-invalid-id');
+                }
                     ?>
             </div>
         </div>
