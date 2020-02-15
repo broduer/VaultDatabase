@@ -78,6 +78,10 @@
                     $alert_type = "success";
                     $alert_message = "Comment posted successfully.";
                     break;
+                case "reply-posted":
+                    $alert_type = "success";
+                    $alert_message = "Reply posted successfully.";
+                    break;
             }
         ?>
             <div class="row">

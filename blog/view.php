@@ -5,11 +5,15 @@
 } ?>
 <?php
 
-$comment_err = "";
+$comment_err = $reply_err = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty(trim($_POST["comment"]))) {
+    if (isset($_POST["comment"]) && empty(trim($_POST["comment"]))) {
         $comment_err = "Please enter a comment!";
-    } else {
+    }
+    if (isset($_POST["reply"]) && empty(trim($_POST["reply"]))) {
+        $reply_err = "Please enter a reply!";
+    }
+    if (isset($_POST["comment"]) && !empty(trim($_POST["comment"]))) {
 
         $comment_post = $_GET["id"];
         $comment_time = time();
@@ -21,7 +25,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($mysqli_d->query($sql) === TRUE) {
             header('Location: ' . currentUrl() . '&alert=comment-posted');
         } else {
-            echo "Error: " . $post_id . "<br>" . $mysqli_d->error;
+            echo "Error: " . $sql . "<br>" . $mysqli_d->error;
+        }
+    }
+    if (isset($_POST["reply"]) && !empty(trim($_POST["reply"]))) {
+
+        $reply_post = $_GET["id"];
+        $replied_id = $_POST["reply_id"];
+        $reply_time = time();
+        $reply_author = MojangAPI::formatUuid(MojangAPI::getUuid($_SESSION["username"]));
+        $reply_content = htmlspecialchars($_POST["reply"]);
+
+        $sql = "INSERT INTO blog_comments (post_id, replied_id, timestamp, author, content) VALUES ('$reply_post', '$replied_id', '$reply_time', '$reply_author', '$reply_content')";
+
+        if ($mysqli_d->query($sql) === TRUE) {
+            header('Location: ' . currentUrl() . '&alert=reply-posted');
+        } else {
+            echo "Error: " . $sql . "<br>" . $mysqli_d->error;
         }
     }
 }
@@ -102,12 +122,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </div>
                                         </div>
                                     </form>
-
                                 <?php
                                 }
-
                                 ?>
-                                <?php if ($result = $mysqli_d->query("SELECT id, timestamp, author, content FROM blog_comments WHERE post_id = " . $_GET["id"] . " ORDER BY timestamp DESC")) {
+                                <?php if ($result = $mysqli_d->query("SELECT id, timestamp, author, content FROM blog_comments WHERE post_id = " . $_GET["id"] . " AND replied_id IS NULL ORDER BY timestamp DESC")) {
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_object()) {
                                 ?>
@@ -123,13 +141,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
                                                 </div>
                                             </div>
-                                            <p><?php echo $row->content ?>
+                                            <p><?php echo $row->content ?></p>
+                                            <form action="" method="post">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                    </div>
+                                                    <div class="form-group col-md-8">
+                                                        <input type="hidden" name="reply_id" value="<?php echo $row->id ?>">
+                                                        <textarea name="reply" placeholder="Add a reply" style="min-width: 100%"></textarea>
+                                                        <span style="color:red"><?php echo $reply_err; ?></span>
+                                                        <br>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <button type="submit" class="btn btn-primary">Reply</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <?php if ($result = $mysqli_d->query("SELECT id, replied_id, timestamp, author, content FROM blog_comments WHERE replied_id = " . $row->id . " ORDER BY timestamp DESC")) {
+                                                if ($result->num_rows > 0) {
+                                                    while ($row = $result->fetch_object()) {
+                                            ?>
+                                                        <div class="row">
+                                                            <div class="col-md-1">
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <img src='https://crafatar.com/avatars/<?php echo $row->author ?>?size=24&overlay'>
+                                                                <a href="../?view=user&user=<?php echo $row->author ?>">
+                                                                    <?php echo MojangAPI::getUsername($row->author) ?>
+                                                                </a>
+                                                                <p><?php echo $row->content ?></p>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
+                                                            </div>
+                                                        </div>
                                             <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        <?php
                                         }
                                     } else {
-                                            ?>
-                                            <i>No Comments.</i>
-                    <?php
+                                        ?>
+                                        <i>No Comments.</i>
+                <?php
                                     }
                                 }
                             }
@@ -140,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     header('Location: https://database.vaultmc.net/?page=home&alert=blog-invalid-id');
                 }
-                    ?>
+                ?>
             </div>
         </div>
     </div>
