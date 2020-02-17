@@ -264,7 +264,7 @@ if (isset($_SESSION["loggedin"])) {
                                     $actoruuid = MojangAPI::getUuid($row->actor);
 
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "</tr>";

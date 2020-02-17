@@ -125,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php
                                 }
                                 ?>
-                                <?php if ($result = $mysqli_d->query("SELECT id, timestamp, author, content FROM blog_comments WHERE post_id = " . $_GET["id"] . " AND replied_id IS NULL ORDER BY timestamp DESC")) {
+                                <?php if ($result = $mysqli_d->query("SELECT id, timestamp, author, content FROM blog_comments WHERE post_id = " . htmlspecialchars($_GET["id"]) . " AND replied_id IS NULL ORDER BY timestamp DESC")) {
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_object()) {
                                 ?>

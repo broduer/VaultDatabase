@@ -8,11 +8,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 require_once "config.php";
 include 'functions.php';
+require 'mojangAPI/mojang-api.class.php';
 
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
 
 $username = $_SESSION["username"];
+$full_uuid = MojangAPI::formatUuid(MojangAPI::getUuid($username));
 
 $schem_folder = "/srv/vaultmc/plugins/VaultLoader/components/VaultCore/schems";
 
@@ -40,12 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $errors[] = "File size must be under 2 MB";
     }
 
-    if (file_exists($schem_folder . "/" . $username . "/" . $file_name)) {
+    if (file_exists($schem_folder . "/" . $full_uuid . "/" . $file_name)) {
       $errors[] = "That file already exists";
     }
 
     if (empty($errors) == true) {
-      move_uploaded_file($file_tmp, $schem_folder . "/" . $username . "/" . $file_name);
+      move_uploaded_file($file_tmp, $schem_folder . "/" . $full_uuid . "/" . $file_name);
 ?>
       <script>
         alert("Schematic has been uploaded!")
@@ -238,19 +240,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </thead>
               <tbody>
                 <?php
-                $iterator = new \FilesystemIterator($schem_folder . "/" . $username);
+                $iterator = new \FilesystemIterator($schem_folder . "/" . $full_uuid);
                 $isDirEmpty = !$iterator->valid();
 
                 if ($isDirEmpty) {
                   echo "<tr align=\"center\"><td colspan=\"3\"><i>You have no Schematics.</i></td></tr>";
                 } else {
-                  foreach (new DirectoryIterator($schem_folder . "/" . $username) as $fileInfo) {
+                  foreach (new DirectoryIterator($schem_folder . "/" . $full_uuid) as $fileInfo) {
                     // check if its a hidden file
                     if ($fileInfo->isDot()) {
                       continue;
                     }
                     echo "<tr>";
-                    echo "<td><a href=\"https://www.vaultmc.net/schems/" . $username . "/" . $fileInfo->getFilename() . "\">" . $fileInfo->getFilename() . "</a></td>";
+                    echo "<td><a href=\"https://www.vaultmc.net/schems/" . $full_uuid . "/" . $fileInfo->getFilename() . "\">" . $fileInfo->getFilename() . "</a></td>";
                     echo "<td>" . secondsToDate($fileInfo->getMTime(), $timezone, true) . "</td>";
                     echo "<td>" . readableFilesize($fileInfo->getSize()) . "</td>";
                     echo "</tr>";
