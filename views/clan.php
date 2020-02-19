@@ -35,7 +35,7 @@ $clan = htmlspecialchars($_GET['clan']); ?>
             </thead>
             <tbody>
                 <?php
-                if ($result = $mysqli_c->query("SELECT player, rank FROM playerClans WHERE clan = '$clan' ORDER BY rank ASC")) {
+                if ($result = $mysqli_c->query("SELECT player, rank FROM playerClans WHERE clan = '$clan' ORDER BY FIELD(rank,'Owner','Admin','Member')")) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_object()) {
                             $username = MojangAPI::getUsername($row->player);

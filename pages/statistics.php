@@ -264,14 +264,10 @@
           if ($result = $mysqli_c->query("SELECT COUNT(clan) AS members, clan FROM playerClans GROUP BY clan ORDER BY COUNT(*) DESC LIMIT 5")) {
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_object()) {
-                if ($row->clan == NULL) {
-                  echo "<i>Multiple Clans are tied. Click </i><a href='/?search='>here</a><i> to view all clans. </i>";
-                } else {
                   echo "<tr>";
                   echo "<td><a href='https://database.vaultmc.net/?view=clan&clan=" . $row->clan . "'>$row->clan</a></td>";
-                  echo "<td>" . $row->members . " " . (($row->members == 1) ? "member." : "members.") . "</td>";
+                  echo "<td>" . $row->members . " member" . (($row->members == 1) ? "." : "s.") . "</td>";
                   echo "</tr>";
-                }
               }
             } else {
               echo "No Data";
