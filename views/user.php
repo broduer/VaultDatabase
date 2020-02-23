@@ -261,10 +261,10 @@ if (isset($_SESSION["loggedin"])) {
                         if ($result = $mysqli_p->query("SELECT actor, reason, executionTime FROM kicks WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_object()) {
-                                    $actoruuid = MojangAPI::getUuid($row->actor);
+                                    $actor = MojangAPI::getUsername($row->actor);
 
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $row->actor . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "</tr>";
@@ -297,7 +297,7 @@ if (isset($_SESSION["loggedin"])) {
                         if ($result = $mysqli_p->query("SELECT actor, reason, executionTime, status FROM bans WHERE uuid = '$full_uuid'")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_object()) {
-                                    $actoruuid = MojangAPI::getUuid($row->actor);
+                                    $actor = MojangAPI::getUsername($row->actor);
                                     $status = null;
 
                                     if ($row->status) {
@@ -306,7 +306,7 @@ if (isset($_SESSION["loggedin"])) {
                                         $status = "<span class=\"badge badge-success\">Pardoned</span>";
                                     }
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $row->actor . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "<td>" . $status . "</td>";
@@ -342,7 +342,7 @@ if (isset($_SESSION["loggedin"])) {
                         if ($result = $mysqli_p->query("SELECT actor, reason, executionTime, expiry FROM tempbans WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_object()) {
-                                    $actoruuid = MojangAPI::getUuid($row->actor);
+                                    $actor = MojangAPI::getUsername($row->actor);
 
                                     if (time() - $row->executionTime > 0) {
                                         $status = "<span class=\"badge badge-success\">Not Banned</span>";
@@ -350,7 +350,7 @@ if (isset($_SESSION["loggedin"])) {
                                         $status = "<span class=\"badge badge-danger\">Banned</span>";
                                     }
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $row->actor . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "<td>" . secondsToDate($row->expiry, $timezone, true) . "</td>";
@@ -386,7 +386,7 @@ if (isset($_SESSION["loggedin"])) {
                         if ($result = $mysqli_p->query("SELECT actor, reason, executionTime, status FROM mutes WHERE uuid = '$full_uuid'")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_object()) {
-                                    $actoruuid = MojangAPI::getUuid($row->actor);
+                                    $actor = MojangAPI::getUsername($row->actor);
                                     $status = null;
 
                                     if ($row->status) {
@@ -395,7 +395,7 @@ if (isset($_SESSION["loggedin"])) {
                                         $status = "<span class=\"badge badge-danger\">Muted</span>";
                                     }
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $row->actor . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "<td>" . $status . "</td>";
@@ -431,7 +431,7 @@ if (isset($_SESSION["loggedin"])) {
                         if ($result = $mysqli_p->query("SELECT actor, reason, executionTime, expiry FROM tempmutes WHERE uuid = '$full_uuid' ORDER BY executionTime DESC")) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_object()) {
-                                    $actoruuid = MojangAPI::getUuid($row->actor);
+                                    $actor = MojangAPI::getUsername($row->actor);
 
                                     if (time() - $row->executionTime > 0) {
                                         $status = "<span class=\"badge badge-success\">Not Muted</span>";
@@ -439,7 +439,7 @@ if (isset($_SESSION["loggedin"])) {
                                         $status = "<span class=\"badge badge-danger\">Muted</span>";
                                     }
                                     echo "<tr>";
-                                    echo "<td><img src='https://crafatar.com/avatars/" . $actoruuid . "?size=24&overlay'> <a href='?view=user&user=" . $actoruuid . "'>$row->actor</a></td>";
+                                    echo "<td><img src='https://crafatar.com/avatars/" . $row->actor . "?size=24&overlay'> <a href='?view=user&user=" . $row->actor . "'>$actor</a></td>";
                                     echo "<td>" . $row->reason . "</td>";
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "<td>" . secondsToDate($row->expiry, $timezone, true) . "</td>";
