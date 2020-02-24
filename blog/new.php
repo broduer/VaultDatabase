@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             . "\n"
                             . "https://database.vaultmc.net/?blog=view&id=" . intval($row->auto_increment - 1);
 
-                        $webhookurl = $annoucements_webhook;
+                        $webhookurl = $announcements_webhook;
                         $json_data = array(
                             'content' => "$webhook_content",
                             'avatar_url' => "https://crafatar.com/avatars/" . $post_author
