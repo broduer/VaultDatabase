@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h1 class="text-center">VaultMC Database</h1>
+        <h1 class="text-center">VaultMC</h1>
     </div>
 </div>
 <br>
@@ -21,7 +21,7 @@
                 </form>
             </div>
             <div class="col-md-6">
-                <h3>About the VaultMC Database</h3>
+                <h3>About this site</h3>
                 <p>This custom interface helps you to view information about players on VaultMC.</p>
             </div>
         </div>

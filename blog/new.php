@@ -2,7 +2,7 @@
 require 'vendor/autoload.php';
 
 if (!isset($_SESSION["role"]) && (!$_SESSION["role"] == "admin")) {
-    header("location: https://database.vaultmc.net?page=home&alert=no-permission");
+    header("location: https://vaultmc.net?page=home&alert=no-permission");
 }
 $title_err = $content_err = $ping_err = "";
 
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             . "\n"
                             . ":loudspeaker: New blog post **" . $post_title . "** authored by *" . MojangAPI::getUsername($post_author) . "*"
                             . "\n"
-                            . "https://database.vaultmc.net/?blog=view&id=" . intval($row->auto_increment - 1);
+                            . "https://vaultmc.net/?blog=view&id=" . intval($row->auto_increment - 1);
 
                         $webhookurl = $announcements_webhook;
                         $json_data = array(
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                         $response = curl_exec($ch);
 
-                        header('Location: https://database.vaultmc.net/?page=home&alert=blog-posted');
+                        header('Location: https://vaultmc.net/?page=home&alert=blog-posted');
                     }
                 }
             } else {

@@ -7,8 +7,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ?>
 <nav class="navbar navbar-expand-lg py-0 navbar-dark bg-dark">
-  <a class="navbar-brand" href="https://www.vaultmc.net">
-    <img alt="VaultMC Logo" height="70" src="https://www.vaultmc.net/img/vaultmc-logo.png">
+  <a class="navbar-brand" href="https://vaultmc.net">
+    <img alt="VaultMC Logo" height="70" src="https://vaultmc.net/img/vaultmc-logo.png">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

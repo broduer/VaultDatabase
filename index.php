@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="https://www.vaultmc.net/favicon.ico" type="image/png">
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">
     <link href="css/styles.css" rel="stylesheet">
-    <title>VaultMC - Database</title>
+    <title>VaultMC - Home</title>
 </head>
 
 <body>
@@ -128,7 +128,7 @@
         } else if (isset($_GET['blog']) && in_array($_GET['blog'], $blog)) {
             include("blog/" . $_GET['blog'] . '.php');
         } else {
-            header('Location: https://database.vaultmc.net/?page=home');
+            header('Location: https://vaultmc.net/?page=home');
             exit;
         }
         ?>

@@ -198,7 +198,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }
                     }
                 } else {
-                    header('Location: https://database.vaultmc.net/?page=home&alert=blog-invalid-id');
+                    header('Location: https://vaultmc.net/?page=home&alert=blog-invalid-id');
                 }
                 ?>
             </div>

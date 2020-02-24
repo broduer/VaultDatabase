@@ -2,7 +2,7 @@
 <footer>
   <div class="container" align="center">
     <figure>
-      <img src="https://www.vaultmc.net/img/vaultmc-logo.png" alt="VaultMC Logo">
+      <img src="https://vaultmc.net/img/vaultmc-logo.png" alt="VaultMC Logo">
     </figure>
     <?php if (!isset($_SESSION["timezone"])) { ?>
       <i>Timezone: [Default] America/Vancouver</i>

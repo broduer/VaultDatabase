@@ -1,15 +1,16 @@
 # VaultDatabase
 ### _Now open source! :confetti_ball:_
 
-Code live on: https://database.vaultmc.net
+Code live on: https://vaultmc.net
 
 # Road Map:
 **High to Low sorting**
-- Better layout of the [statistics](https://database.vaultmc.net/statistics.php) page.
+- Better layout of the [statistics](https://vaultmc.net/statistics.php) page.
 - Reusable PDO connection
 - Sortable tables sitewide
-  - _Pages: ~~Search page~~ **(complete!)**, User page, Clans page, Statistics page. (Maybe make it a function for easier and more centralized use?)_
+  - _Pages: ~~Search page~~ **(complete!)**, Clans page._
 - Admin mode - Edit, delete and add punishments
+- Convert to Laravel?
 
 # Pull Requests
 I am open to any and all PR's and will be reviewing them as soon as I can. 

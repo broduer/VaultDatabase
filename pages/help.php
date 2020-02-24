@@ -31,7 +31,7 @@
       </div>
       <div class="col-md-4">
          <h4>How do I register?</h4>
-         <p>To register for this database service (includes some fun perks!) you will need your VaultMC token. If you do not have a token run <code>/token</code> in-game. (Do not lose this token, as it will connect you to our Discord server, this website and more to come soon!) Once you have your token register <a href="https://database.vaultmc.net/register.php">here</a>.</p>
+         <p>To register for this database service (includes some fun perks!) you will need your VaultMC token. If you do not have a token run <code>/token</code> in-game. (Do not lose this token, as it will connect you to our Discord server, this website and more to come soon!) Once you have your token register <a href="https://vaultmc.net/register.php">here</a>.</p>
       </div>
       <div class="col-md-3">
          <h4>Where do you get my skin image from?</h4>

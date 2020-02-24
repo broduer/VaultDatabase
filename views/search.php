@@ -99,7 +99,7 @@
                     if ($pdoResult->rowCount() > 0) {
                         foreach ($pdoResult as $row) {
                             echo "<tr>";
-                            echo "<td><img src='https://crafatar.com/avatars/" . $row['uuid'] . "?size=24&overlay'> <a href=https://database.vaultmc.net/?view=user&user=" . $row['uuid'] . ">" . $row['username'] . "</a></td>";
+                            echo "<td><img src='https://crafatar.com/avatars/" . $row['uuid'] . "?size=24&overlay'> <a href=https://vaultmc.net/?view=user&user=" . $row['uuid'] . ">" . $row['username'] . "</a></td>";
                             echo "<td>" . ucfirst($row['rank']) . "</td>";
                             echo "</tr>";
                         }
@@ -139,7 +139,7 @@
                     if ($pdoResult->rowCount() > 0) {
                         foreach ($pdoResult as $row) {
                             echo "<tr>";
-                            echo "<td><a href=https://database.vaultmc.net/?view=clan&clan=" . $row['name'] . ">" . $row['name'] . "</a></td>";
+                            echo "<td><a href=https://vaultmc.net/?view=clan&clan=" . $row['name'] . ">" . $row['name'] . "</a></td>";
                             echo "</tr>";
                         }
                     } else {
