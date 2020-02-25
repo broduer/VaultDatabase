@@ -261,7 +261,7 @@
         </thead>
         <tbody>
           <?php
-          if ($result = $mysqli_c->query("SELECT COUNT(clan) AS members, clan FROM playerClans GROUP BY clan ORDER BY COUNT(*) DESC LIMIT 5")) {
+          if ($result = $mysqli_c->query("SELECT COUNT(clan) AS members, clan FROM playerClans WHERE clan IS NOT NULL GROUP BY clan ORDER BY COUNT(clan) DESC LIMIT 5")) {
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_object()) {
                   echo "<tr>";
