@@ -106,95 +106,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <hr>
                                 <p><?php echo htmlspecialchars_decode(stripslashes($row->html_content)) ?></p>
                                 <hr>
-                                <h3>Comments</h3>
+                    <?php
+                            }
+                        } else {
+                            header('Location: https://vaultmc.net/?page=home&alert=blog-invalid-id');
+                        }
+                    }
+                    ?>
+                    <h3>Comments</h3>
+                    <?php
+                    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === TRUE) {
+                    ?>
+                        <form action="" method="post">
+                            <div class="row">
+                                <div class="form-group col-md-9">
+                                    <textarea name="comment" placeholder="Add a comment" style="min-width: 100%"></textarea>
+                                    <span style="color:red"><?php echo $comment_err; ?></span>
+                                    <br>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-primary">Comment</button>
+                                </div>
+                            </div>
+                        </form>
+                    <?php
+                    }
+                    ?>
+                    <?php if ($result = $mysqli_d->query("SELECT id, timestamp, author, content FROM blog_comments WHERE post_id = " . htmlspecialchars($_GET["id"]) . " AND replied_id IS NULL ORDER BY timestamp DESC")) {
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_object()) {
+                    ?>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <img src='https://crafatar.com/avatars/<?php echo $row->author ?>?size=24&overlay'>
+                                        <a href="../?view=user&user=<?php echo $row->author ?>">
+                                            <?php echo MojangAPI::getUsername($row->author) ?>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
+                                    </div>
+                                </div>
+                                <p><?php echo $row->content ?></p>
                                 <?php
                                 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === TRUE) {
                                 ?>
                                     <form action="" method="post">
                                         <div class="row">
-                                            <div class="form-group col-md-9">
-                                                <textarea name="comment" placeholder="Add a comment" style="min-width: 100%"></textarea>
-                                                <span style="color:red"><?php echo $comment_err; ?></span>
+                                            <div class="col-md-1">
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <input type="hidden" name="reply_id" value="<?php echo $row->id ?>">
+                                                <textarea name="reply" placeholder="Add a reply" style="min-width: 100%"></textarea>
+                                                <span style="color:red"><?php echo $reply_err; ?></span>
                                                 <br>
                                             </div>
                                             <div class="col-md-3">
-                                                <button type="submit" class="btn btn-primary">Comment</button>
+                                                <button type="submit" class="btn btn-primary">Reply</button>
                                             </div>
                                         </div>
                                     </form>
-                                <?php
-                                }
+                                <?php } ?>
+                                <?php if ($replies = $mysqli_d->query("SELECT id, replied_id, timestamp, author, content FROM blog_comments WHERE replied_id = " . $row->id . " ORDER BY timestamp DESC")) {
+                                    if ($replies->num_rows > 0) {
+                                        while ($reply = $replies->fetch_object()) {
                                 ?>
-                                <?php if ($result = $mysqli_d->query("SELECT id, timestamp, author, content FROM blog_comments WHERE post_id = " . htmlspecialchars($_GET["id"]) . " AND replied_id IS NULL ORDER BY timestamp DESC")) {
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_object()) {
-                                ?>
-                                            <hr>
                                             <div class="row">
-                                                <div class="col-md-8">
-                                                    <img src='https://crafatar.com/avatars/<?php echo $row->author ?>?size=24&overlay'>
-                                                    <a href="../?view=user&user=<?php echo $row->author ?>">
-                                                        <?php echo MojangAPI::getUsername($row->author) ?>
+                                                <div class="col-md-1">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <img src='https://crafatar.com/avatars/<?php echo $reply->author ?>?size=24&overlay'>
+                                                    <a href="../?view=user&user=<?php echo $reply->author ?>">
+                                                        <?php echo MojangAPI::getUsername($reply->author) ?>
                                                     </a>
+                                                    <p><?php echo $reply->content ?></p>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
+                                                    <i><?php echo secondsToDate($reply->timestamp, $timezone, true) ?></i>
                                                 </div>
                                             </div>
-                                            <p><?php echo $row->content ?></p>
-                                            <?php
-                                            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === TRUE) {
-                                            ?>
-                                                <form action="" method="post">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                        </div>
-                                                        <div class="form-group col-md-8">
-                                                            <input type="hidden" name="reply_id" value="<?php echo $row->id ?>">
-                                                            <textarea name="reply" placeholder="Add a reply" style="min-width: 100%"></textarea>
-                                                            <span style="color:red"><?php echo $reply_err; ?></span>
-                                                            <br>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <button type="submit" class="btn btn-primary">Reply</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            <?php } ?>
-                                            <?php if ($result = $mysqli_d->query("SELECT id, replied_id, timestamp, author, content FROM blog_comments WHERE replied_id = " . $row->id . " ORDER BY timestamp DESC")) {
-                                                if ($result->num_rows > 0) {
-                                                    while ($row = $result->fetch_object()) {
-                                            ?>
-                                                        <div class="row">
-                                                            <div class="col-md-1">
-                                                            </div>
-                                                            <div class="col-md-7">
-                                                                <img src='https://crafatar.com/avatars/<?php echo $row->author ?>?size=24&overlay'>
-                                                                <a href="../?view=user&user=<?php echo $row->author ?>">
-                                                                    <?php echo MojangAPI::getUsername($row->author) ?>
-                                                                </a>
-                                                                <p><?php echo $row->content ?></p>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <i><?php echo secondsToDate($row->timestamp, $timezone, true) ?></i>
-                                                            </div>
-                                                        </div>
-                                            <?php
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                        <?php
+                                <?php
                                         }
-                                    } else {
-                                        ?>
-                                        <i>No Comments.</i>
-                <?php
                                     }
                                 }
+                                ?>
+                            <?php
                             }
                         } else {
-                            header('Location: index.php');
+                            ?>
+                            <i>No Comments.</i>
+                <?php
                         }
                     }
                 } else {
