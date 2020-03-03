@@ -28,60 +28,16 @@
         $search = htmlspecialchars($_GET['query']);
     }
     $pdoQuery = "SELECT uuid, username, rank FROM players WHERE username LIKE ?";
-    if (isset($_GET['order'])) {
-        switch ($_GET['order']) {
-            case "u-asc":
-                $pdoQuery .= " ORDER BY username";
-                $u_link = "u-desc";
-                $u_icon = "fas fa-sort-up";
-                $r_link = "r-asc";
-                $r_icon = "fas fa-sort";
-                break;
-            case "u-desc":
-                $pdoQuery .= " ORDER BY username DESC";
-                $u_link = "u-asc";
-                $u_icon = "fas fa-sort-down";
-                $r_link = "r-asc";
-                $r_icon = "fas fa-sort";
-                break;
-            case "r-asc":
-                $pdoQuery .= " ORDER BY FIELD(rank,'Admin','Moderator','Trusted', 'Patreon', 'Member', 'Default')";
-                $r_link = "r-desc";
-                $r_icon = "fas fa-sort-up";
-                $u_link = "u-asc";
-                $u_icon = "fas fa-sort";
-                break;
-            case "r-desc":
-                $pdoQuery .= " ORDER BY FIELD(rank,'Admin','Moderator','Trusted', 'Patreon', 'Member', 'Default') DESC";
-                $r_link = "r-asc";
-                $r_icon = "fas fa-sort-down";
-                $u_link = "u-asc";
-                $u_icon = "fas fa-sort";
-                break;
-            default:
-                $pdoQuery .= " ORDER BY username";
-                $u_link = "u-desc";
-                $u_icon = "fas fa-sort-up";
-                $r_link = "r-asc";
-                $r_icon = "fas fa-sort";
-        }
-    } else {
-        $pdoQuery .= " ORDER BY username";
-        $u_link = "u-desc";
-        $u_icon = "fas fa-sort-up";
-        $r_link = "r-asc";
-        $r_icon = "fas fa-sort";
-    }
     ?>
     <div class="col-md-3"></div>
     <div class="col-md-3">
-        <table class="table table-bordered table-hover">
+        <table class="search">
             <thead>
                 <tr>
-                    <th scope="col"><a href="<?php echo stripUrlParam(currentUrl(), "order") . "&order=" . $u_link ?>">Players</a>
+                    <th scope="col">Players</a>
                         <i class="<?php echo $u_icon ?>">
                     </th>
-                    <th scope="col"><a href="<?php echo stripUrlParam(currentUrl(), "order") . "&order=" . $r_link ?>">Rank</a>
+                    <th scope="col">Rank</a>
                         <i class="<?php echo $r_icon ?>">
                     </th>
                 </tr>
@@ -114,7 +70,7 @@
         </table>
     </div>
     <div class="col-md-3">
-        <table class="table table-bordered table-hover">
+        <table class="search">
             <thead>
                 <tr>
                     <th scope="col">Clans</th>

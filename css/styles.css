@@ -11,3 +11,10 @@ div.info {
     position: sticky;
     top: 17px;
 }
+
+body {
+    background-image: url('https://vaultmc.net/img/lobby-min.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}

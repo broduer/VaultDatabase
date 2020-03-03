@@ -5,10 +5,27 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="https://www.vaultmc.net/favicon.ico" type="image/png">
-    <link href="css/bootstrap-dark.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="css/datatables.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <link rel="shortcut icon" href="https://www.vaultmc.net/favicon.ico" type="image/png">
     <title>VaultMC - Home</title>
+    <script>
+        $(document).ready(function() {
+            $('table.stats').DataTable({
+                "searching": false,
+                "paging": false,
+                "bInfo": false,
+            });
+            $('table.search').DataTable({
+                "searching": false,
+                "bInfo": false,
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -135,7 +152,6 @@
     </div>
 
     <?php include 'includes/footer.php' ?>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/4ff9aa1ee1.js" crossorigin="anonymous"></script>

@@ -187,7 +187,7 @@ if (isset($_SESSION["loggedin"])) {
                         <br>
                         <h4>Possible Alts: </h4>
                         <i>Based off their latest IP address.</i>
-                        <table class="table table-bordered table-hover">
+                        <table class="stats">
                             <thead>
                                 <tr>
                                     <th>Username</th>
@@ -204,18 +204,14 @@ if (isset($_SESSION["loggedin"])) {
                                             echo "<td>" . secondsToDate($row->lastseen / 1000, $timezone, true) . "</td>";
                                             echo "</tr>";
                                         }
-                                    } else { ?>
-                                        <tr align="center">
-                                            <td colspan="2"><i>No users share this IP</i></td>
-                                        </tr>
-                                <?php
                                     }
                                 }
                                 ?>
                             </tbody>
                         </table>
+                        <br>
                         <h4>IP History: </h4>
-                        <table class="table table-bordered table-hover">
+                        <table class="stats">
                             <thead>
                                 <tr>
                                     <th>IP</th>
@@ -232,11 +228,6 @@ if (isset($_SESSION["loggedin"])) {
                                             echo "<td>" . secondsToDate($row->start_time / 1000, $timezone, true) . "</td>";
                                             echo "</tr>";
                                         }
-                                    } else { ?>
-                                        <tr align="center">
-                                            <td colspan="2"><i>No IP Data</i></td>
-                                        </tr>
-                                <?php
                                     }
                                 }
                                 ?>
