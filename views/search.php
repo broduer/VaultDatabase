@@ -59,10 +59,6 @@
                             echo "<td>" . ucfirst($row['rank']) . "</td>";
                             echo "</tr>";
                         }
-                    } else {
-                        echo "<tr align=\"center\">
-                        <td colspan=\"2\"><i>No users to display<i></td>
-                        </tr>";
                     }
                 }
                 ?>
@@ -98,10 +94,6 @@
                             echo "<td><a href=https://vaultmc.net/?view=clan&clan=" . $row['name'] . ">" . $row['name'] . "</a></td>";
                             echo "</tr>";
                         }
-                    } else {
-                        echo "<tr align=\"center\">
-                        <td><i>No clans to display<i></td>
-                        </tr>";
                     }
                 }
                 ?>

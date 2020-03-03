@@ -15,14 +15,15 @@
     <title>VaultMC - Home</title>
     <script>
         $(document).ready(function() {
-            $('table.stats').DataTable({
-                "searching": false,
-                "paging": false,
-                "bInfo": false,
-            });
             $('table.search').DataTable({
                 "searching": false,
-                "bInfo": false,
+                "bInfo": false
+            });
+            $('table.stats').DataTable({
+                "order": [],
+                "searching": false,
+                "paging": false,
+                "bInfo": false
             });
         });
     </script>
