@@ -239,7 +239,7 @@ if (isset($_SESSION["loggedin"])) {
             <div class="tab-pane fade" id="nav-punishments" role="tabpanel" aria-labelledby="nav-punishments-tab">
                 <br>
                 <h4>Kicks</h4>
-                <table class="table table-bordered table-hover">
+                <table class="stats">
                     <thead>
                         <tr>
                             <th>Issuer</th>
@@ -260,12 +260,7 @@ if (isset($_SESSION["loggedin"])) {
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "</tr>";
                                 }
-                            } else { ?>
-                                <tr align="center">
-                                    <td colspan="3"><i>No Kicks</i></td>
-                                </tr>
-                        <?php
-                            }
+                            } 
                         } else {
                             echo "Error: " . $mysqli_p->error;
                         }
@@ -274,7 +269,7 @@ if (isset($_SESSION["loggedin"])) {
                 </table>
                 <br>
                 <h4>Bans</h4>
-                <table class="table table-bordered table-hover">
+                <table class="stats">
                     <thead>
                         <tr>
                             <th>Issuer</th>
@@ -303,12 +298,7 @@ if (isset($_SESSION["loggedin"])) {
                                     echo "<td>" . $status . "</td>";
                                     echo "</tr>";
                                 }
-                            } else { ?>
-                                <tr align="center">
-                                    <td colspan="4"><i>No Bans</i></td>
-                                </tr>
-                        <?php
-                            }
+                            } 
                         } else {
                             echo "Error: " . $mysqli_p->error;
                         }
@@ -317,7 +307,7 @@ if (isset($_SESSION["loggedin"])) {
                 </table>
                 <br>
                 <h4>Tempbans</h4>
-                <table class="table table-bordered table-hover">
+                <table class="stats">
                     <thead>
                         <tr>
                             <th>Issuer</th>
@@ -349,11 +339,6 @@ if (isset($_SESSION["loggedin"])) {
                                     echo "<td>" . $status . "</td>";
                                     echo "</tr>";
                                 }
-                            } else { ?>
-                                <tr align="center">
-                                    <td colspan="6"><i>No Tempbans</i></td>
-                                </tr>
-                        <?php
                             }
                         } else {
                             echo "Error: " . $mysqli_p->error;
@@ -363,7 +348,7 @@ if (isset($_SESSION["loggedin"])) {
                 </table>
                 <br>
                 <h4>Mutes</h4>
-                <table class="table table-bordered table-hover">
+                <table class="stats">
                     <thead>
                         <tr>
                             <th>Issuer</th>
@@ -392,12 +377,7 @@ if (isset($_SESSION["loggedin"])) {
                                     echo "<td>" . $status . "</td>";
                                     echo "</tr>";
                                 }
-                            } else { ?>
-                                <tr align="center">
-                                    <td colspan="4"><i>No Mutes</i></td>
-                                </tr>
-                        <?php
-                            }
+                            } 
                         } else {
                             echo "Error: " . $mysqli_p->error;
                         }
@@ -406,7 +386,7 @@ if (isset($_SESSION["loggedin"])) {
                 </table>
                 <br>
                 <h4>Tempmutes</h4>
-                <table class="table table-bordered table-hover">
+                <table class="stats">
                     <thead>
                         <tr>
                             <th>Issuer</th>
@@ -438,11 +418,6 @@ if (isset($_SESSION["loggedin"])) {
                                     echo "<td>" . $status . "</td>";
                                     echo "</tr>";
                                 }
-                            } else { ?>
-                                <tr align="center">
-                                    <td colspan="6"><i>No Mutes</i></td>
-                                </tr>
-                        <?php
                             }
                         } else {
                             echo "Error: " . $mysqli_p->error;

@@ -132,8 +132,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="https://www.vaultmc.net/favicon.ico" type="image/png">
   <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="css/datatables.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
   <link href="css/styles.css" rel="stylesheet">
   <title>VaultMC - Database</title>
+  <script>
+        $(document).ready(function() {
+            $('table.stats').DataTable({
+                "order": [],
+                "searching": false,
+                "paging": false,
+                "bInfo": false
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -231,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <div class="col-md-7 table-responsive">
             <h4>Your Schematics</h4>
-            <table class="table table-bordered table-hover">
+            <table class="stats">
               <thead>
                 <tr>
                   <th>Name</th>
