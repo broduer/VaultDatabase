@@ -12,7 +12,7 @@
             <input type='hidden' name='view' value='search' />
             <div class="form-group">
                 <label for="playername">Search for a player or clan below</label>
-                <input type="text" class="form-control" id="playername" name="query" placeholder="Enter your query here.">
+                <input type="text" class="form-control" id="searchBox" name="searchBox" placeholder="Enter your query here.">
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
@@ -31,7 +31,7 @@
     ?>
     <div class="col-md-3"></div>
     <div class="col-md-3">
-        <table class="search">
+        <table class="search" id="searchTable">
             <thead>
                 <tr>
                     <th scope="col">Players</a>
@@ -66,7 +66,7 @@
         </table>
     </div>
     <div class="col-md-3">
-        <table class="search">
+        <table class="search" id="searchTable">
             <thead>
                 <tr>
                     <th scope="col">Clans</th>
@@ -103,3 +103,10 @@
     <div class="col-md-3">
     </div>
 </div>
+<script>
+    if ($.fn.dataTable.isDataTable('#searchTable')) {
+        $('#searchBox').keyup(function() {
+            search.search($(this).val()).draw();
+        })
+    }
+</script>

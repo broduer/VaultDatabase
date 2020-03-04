@@ -100,6 +100,9 @@
                     $alert_type = "success";
                     $alert_message = "Reply posted successfully.";
                     break;
+                default:
+                    $alert_message = "";
+                break;
             }
         ?>
             <div class="row">
@@ -122,11 +125,9 @@
         $pages = array(
             'home',
             'help',
-            'login',
-            'logout',
-            'register',
             'settings',
-            'statistics'
+            'rules',
+            'staff'
         );
         $views = array(
             'search',

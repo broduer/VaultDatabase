@@ -24,8 +24,15 @@ ini_set('display_errors', 1);
       <li class="nav-item">
         <a class="nav-link" href="../?page=statistics">Statistics</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../?page=help">Help</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Info
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="../?page=rules">Rules</a>
+          <a class="dropdown-item" href="../?page=help">Help</a>
+          <a class="dropdown-item" href="../?page=staff">Staff</a>
+        </div>
       </li>
       <?php
       if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {

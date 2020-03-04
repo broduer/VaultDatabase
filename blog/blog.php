@@ -42,7 +42,7 @@ if (isset($_SESSION["loggedin"])) {
                                 <div class="col-md-9">
                                     <h3><a href="?blog=view&id=<?php echo $row->id ?>"><?php echo $row->title ?></a></h3>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" align="right">
                                     <img src='https://crafatar.com/avatars/<?php echo $row->author ?>?size=24&overlay'>
                                     <a href="../?view=user&user=<?php echo $row->author ?>">
                                         <?php echo MojangAPI::getUsername($row->author) ?>
