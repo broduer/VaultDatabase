@@ -25,7 +25,8 @@
     <div class="row">
         <div class="col-md-3">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 container">
+            <br>
             <ol>
                 <li>Use your brain and common sense. This rule makes most (if not all) of the following rules obsolete, a lack of knowledge of the rules does not exclude you from this rule.</li>
                 <li>Even if it's not in the rules, you can still be punished for an action if deemed inappropriate by a moderator.</li>

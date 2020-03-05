@@ -127,7 +127,8 @@
             'help',
             'settings',
             'rules',
-            'staff'
+            'staff',
+            'statistics'
         );
         $views = array(
             'search',

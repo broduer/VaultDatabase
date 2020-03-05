@@ -1,6 +1,6 @@
 <br>
 <footer>
-  <div class="container" align="center">
+  <div align="center">
     <figure>
       <img src="https://vaultmc.net/img/vaultmc-logo-min.png" alt="VaultMC Logo">
     </figure>
