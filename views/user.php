@@ -46,7 +46,7 @@ if (isset($_SESSION["loggedin"])) {
                             $obj = json_decode($res->getBody());
                             // clean this up soon!!
                             echo "<h5>
-                            <span style=\"font-size: 1em; background-color:#7289DA;\">
+                            <span class=\"discord\">
                             <i class=\"fab fa-discord\" aria-hidden=\"true\"></i>
                             " . $obj->username . "#" . $obj->discriminator . "</span></h5>";
                         } else {
