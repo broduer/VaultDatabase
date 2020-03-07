@@ -26,7 +26,7 @@ $clan = htmlspecialchars($_GET['clan']); ?>
     </div>
     <div class="col-md-3">
         <h4>Members</h4>
-        <table class="table table-bordered table-hover">
+        <table class="stats">
             <thead>
                 <tr>
                     <th scope="col">Username</th>
@@ -56,7 +56,7 @@ $clan = htmlspecialchars($_GET['clan']); ?>
     </div>
     <div class="col-md-3">
         <h4>Statistics</h4>
-        <table class="table table-bordered table-hover">
+        <table class="stats">
             <thead>
                 <tr>
                     <th scope="col">Level</th>
