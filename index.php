@@ -15,10 +15,6 @@
     <title>VaultMC - Home</title>
     <script>
         $(document).ready(function() {
-            $('table.search').DataTable({
-                "searching": false,
-                "bInfo": false
-            });
             $('table.stats').DataTable({
                 "order": [],
                 "searching": false,
@@ -102,7 +98,7 @@
                     break;
                 default:
                     $alert_message = "";
-                break;
+                    break;
             }
         ?>
             <div class="row">

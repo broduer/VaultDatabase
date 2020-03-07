@@ -19,7 +19,7 @@ ini_set('display_errors', 1);
         <a class="nav-link" href="../?page=home">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../?view=search&query=">Search</a>
+        <a class="nav-link" href="../?view=search">Search</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../?page=statistics">Statistics</a>
@@ -32,7 +32,11 @@ ini_set('display_errors', 1);
           <a class="dropdown-item" href="../?page=rules">Rules</a>
           <a class="dropdown-item" href="../?page=help">Help</a>
           <a class="dropdown-item" href="../?page=staff">Staff</a>
+          <a class="dropdown-item" href="https://status.vaultmc.net/">Status</a>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://store.vaultmc.net/">Donate</a>
       </li>
       <?php
       if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
