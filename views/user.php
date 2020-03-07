@@ -324,8 +324,7 @@ if (isset($_SESSION["loggedin"])) {
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_object()) {
                                     $actor = MojangAPI::getUsername($row->actor);
-
-                                    if (time() - $row->executionTime > 0) {
+                                    if (time() - $row->expiry > 0) {
                                         $status = "<span class=\"badge badge-success\">Not Banned</span>";
                                     } else {
                                         $status = "<span class=\"badge badge-danger\">Banned</span>";
@@ -404,7 +403,7 @@ if (isset($_SESSION["loggedin"])) {
                                 while ($row = $result->fetch_object()) {
                                     $actor = MojangAPI::getUsername($row->actor);
 
-                                    if (time() - $row->executionTime > 0) {
+                                    if (time() - $row->expiry > 0) {
                                         $status = "<span class=\"badge badge-success\">Not Muted</span>";
                                     } else {
                                         $status = "<span class=\"badge badge-danger\">Muted</span>";
