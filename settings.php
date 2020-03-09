@@ -21,7 +21,21 @@ $schem_folder = "/srv/vaultmc/plugins/VaultLoader/components/VaultCore/schems";
 $result = $mysqli_d->query("SELECT timezone FROM web_accounts WHERE username = '$username'");
 $row = $result->fetch_object();
 $timezone = $row->timezone;
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
+  if (isset($_GET['delete'])) {
+    if (!file_exists($schem_folder . "/" . $full_uuid . "/" . $_GET['delete'])) {
+      $errors[] = "That file doesn't exists";
+    } else {
+      unlink($schem_folder . "/" . $full_uuid . "/" . $_GET['delete']);
+?>
+      <script>
+        alert("Schematic has been deleted!")
+      </script>
+    <?php
+    }
+  }
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   //upload schem
   if (isset($_FILES['schem'])) {
@@ -48,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($errors) == true) {
       move_uploaded_file($file_tmp, $schem_folder . "/" . $full_uuid . "/" . $file_name);
-?>
+    ?>
       <script>
         alert("Schematic has been uploaded!")
       </script>
@@ -133,21 +147,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link rel="shortcut icon" href="https://www.vaultmc.net/favicon.ico" type="image/png">
   <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="css/datatables.css" />
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="css/datatables.css" />
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
   <link href="css/styles.css" rel="stylesheet">
   <title>VaultMC - Database</title>
   <script>
-        $(document).ready(function() {
-            $('table.stats').DataTable({
-                "order": [],
-                "searching": false,
-                "paging": false,
-                "bInfo": false
-            });
-        });
-    </script>
+    $(document).ready(function() {
+      $('table.stats').DataTable({
+        "order": [],
+        "searching": false,
+        "paging": false,
+        "bInfo": false
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -229,9 +243,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <br>
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-2">
       </div>
-      <div class="col-md-6" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
+      <div class="col-md-8" align="center" style="background-color: #303030; border-radius: 10px; padding: 10px;">
         <br>
         <div class="row">
           <div class="col-md-5">
@@ -251,6 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <th>Name</th>
                   <th>Uploaded</th>
                   <th>Size</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -259,7 +274,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $isDirEmpty = !$iterator->valid();
 
                 if ($isDirEmpty) {
-                  echo "<tr align=\"center\"><td colspan=\"3\"><i>You have no Schematics.</i></td></tr>";
+                  echo "<tr align=\"center\"><td colspan=\"4\"><i>You have no Schematics.</i></td></tr>";
                 } else {
                   foreach (new DirectoryIterator($schem_folder . "/" . $full_uuid) as $fileInfo) {
                     // check if its a hidden file
@@ -270,6 +285,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "<td><a href=\"https://www.vaultmc.net/schems/" . $full_uuid . "/" . $fileInfo->getFilename() . "\">" . $fileInfo->getFilename() . "</a></td>";
                     echo "<td>" . secondsToDate($fileInfo->getMTime(), $timezone, true) . "</td>";
                     echo "<td>" . readableFilesize($fileInfo->getSize()) . "</td>";
+                    echo "<td><a href=\"?delete=" . $fileInfo->getFilename() . "\">Delete</a></td>";
                     echo "</tr>";
                   }
                 }
@@ -280,7 +296,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <br>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
       </div>
     </div>
     <?php include 'includes/footer.php' ?>

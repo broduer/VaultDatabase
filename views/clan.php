@@ -46,7 +46,7 @@ $clan = htmlspecialchars($_GET['clan']); ?>
                         }
                     } else { ?>
                         <script>
-                            window.location.replace("http://vaultmc.net/?search=");
+                            window.location.replace("http://vaultmc.net/?view=search");
                         </script>
                 <?php }
                 }
@@ -75,7 +75,7 @@ $clan = htmlspecialchars($_GET['clan']); ?>
                     echo "</tr>";
                 } else { ?>
                     <script>
-                        window.location.replace("http://vaultmc.net/?search=");
+                        window.location.replace("http://vaultmc.net/?view=search");
                     </script>
                 <?php }
                 ?>

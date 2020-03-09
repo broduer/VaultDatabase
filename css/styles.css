@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-    box-shadow: inset 0 0 0 400px rgba(177, 175, 175, 0.2);
+    box-shadow: inset 0 0 0 500px rgba(177, 175, 175, 0.2);
     border-radius: 10px;
 }
 
