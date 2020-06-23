@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 
-if (!isset($_SESSION["role"]) && (!$_SESSION["role"] == "admin")) {
+if (!isset($_SESSION["role"]) && ($_SESSION["role"] == "player")) {
     header("location: https://vaultmc.net?page=home&alert=no-permission");
 }
 $title_err = $content_err = $ping_err = "";

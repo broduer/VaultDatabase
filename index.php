@@ -96,6 +96,10 @@
                     $alert_type = "success";
                     $alert_message = "Reply posted successfully.";
                     break;
+                case "linked_reddit":
+                    $alert_type = "success";
+                    $alert_message = "Linked your Reddit account successfully. Please rejoin VaultMC.";
+                    break;
                 default:
                     $alert_message = "";
                     break;

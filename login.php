@@ -58,8 +58,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               }
 
               $_SESSION["role"] = $role;
-
-              header('Location: https://vaultmc.net/?page=home&alert=signed-in');
+              $next_page = $_SESSION['next'] ?? null;
+              if ($next_page != null) {
+                $_SESSION['next'] = null;
+                header('Location: https://' . $next_page);
+              } else {
+                header('Location: https://vaultmc.net/?page=home&alert=signed-in');
+              }
             } else {
               $password_err = "The password you entered was not valid.";
             }

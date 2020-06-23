@@ -136,6 +136,23 @@ if (isset($_SESSION["loggedin"])) {
             }
             ?>
             <h4>Has Web Account <?php echo (($web_account) ? "<span class=\"badge badge-success\">Yes</span>" : "<span class=\"badge badge-danger\">No</span>") ?></h4>
+            <?php
+            if ($result = $mysqli_d->query("SELECT reddit_token FROM players WHERE uuid = '$full_uuid'")) {
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_object()) {
+                        if ($row->reddit_token != null) {
+                            $reddit = true;
+                        }else {
+                            $reddit = false;
+                        }
+                    }
+                } else {
+                    $reddit = false;
+                }
+            }
+            ?>
+            <br>
+            <h4>Linked Reddit <?php echo (($reddit) ? "<span class=\"badge badge-success\">Yes</span>" : "<span class=\"badge badge-danger\">No</span>") ?></h4>
         </div>
     </div>
 
@@ -260,7 +277,7 @@ if (isset($_SESSION["loggedin"])) {
                                     echo "<td>" . secondsToDate($row->executionTime, $timezone, true) . "</td>";
                                     echo "</tr>";
                                 }
-                            } 
+                            }
                         } else {
                             echo "Error: " . $mysqli_p->error;
                         }
@@ -298,7 +315,7 @@ if (isset($_SESSION["loggedin"])) {
                                     echo "<td>" . $status . "</td>";
                                     echo "</tr>";
                                 }
-                            } 
+                            }
                         } else {
                             echo "Error: " . $mysqli_p->error;
                         }
@@ -376,7 +393,7 @@ if (isset($_SESSION["loggedin"])) {
                                     echo "<td>" . $status . "</td>";
                                     echo "</tr>";
                                 }
-                            } 
+                            }
                         } else {
                             echo "Error: " . $mysqli_p->error;
                         }
